@@ -44,7 +44,7 @@ export default function Contact() {
             What are we building?
             <textarea name="project" required rows={5} placeholder="I run a pizza shop and want online orders..." />
           </label>
-          <button className="btn btn-red" type="submit">
+          <button className="btn btn-mocha" type="submit">
             {sent ? "Opening your mail app…" : "Send it"} <Arrow />
           </button>
         </Reveal>

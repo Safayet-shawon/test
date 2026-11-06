@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import { BUSINESSES } from "@/data/site";
+import { BUSINESSES, INTRO } from "@/data/site";
 import HeroScene from "./HeroScene";
 import { Arrow } from "./Icons";
 
@@ -17,9 +17,9 @@ function Letters({ text, base = 0 }) {
 }
 
 export default function Hero() {
-  const [idx, setIdx] = useState(0);
-  const onChange = useCallback((i) => setIdx(i), []);
-  const word = BUSINESSES[idx].label;
+  const [step, setStep] = useState(0);
+  const onChange = useCallback((i) => setStep(i), []);
+  const word = step === 0 ? INTRO.label : BUSINESSES[step - 1].label;
 
   return (
     <section id="top" className="hero">
@@ -31,44 +31,31 @@ export default function Hero() {
           </p>
           <h1>
             <span className="line">
-              <Letters text="We turn" />
+              <Letters text="Websites for" />
             </span>
+            {/* the sticker + dashed line ties this text to the animation on the right */}
             <span className="line word-line">
               <span className="word" key={word}>
                 <Letters text={word} />
               </span>
-            </span>
-            <span className="line">
-              <Letters text="into websites" base={8} />
+              <span className="link" aria-hidden="true" />
             </span>
             <span className="line hl">
-              <Letters text="nobody scrolls past." base={20} />
+              <Letters text="that stand out." base={12} />
             </span>
           </h1>
           <p className="lead">
-            We&apos;re a tiny, chronically-online dev + design crew. Bring us a business, an idea or a
-            half-baked Notion page — we ship it as a fast, loud, <b>actually fun</b> website, SaaS
-            or product.
+            Pizza shop or SaaS startup — whatever you run, we design and build the site.
+            Fast, loud and <b>actually fun</b> to scroll.
           </p>
           <div className="cta-row">
-            <a href="#contact" className="btn btn-red">
+            <a href="#contact" className="btn btn-mocha">
               Describe your project <Arrow />
             </a>
             <a href="#work" className="btn btn-ghost">
               See our work
             </a>
           </div>
-          <ul className="proof">
-            <li>
-              <b>0</b> templates
-            </li>
-            <li>
-              <b>Next.js</b> fast
-            </li>
-            <li>
-              <b>100%</b> custom
-            </li>
-          </ul>
         </div>
         <span className="scroll-hint">scroll</span>
       </div>

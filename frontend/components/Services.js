@@ -6,7 +6,7 @@ const PANELS = [
   {
     id: "saas",
     n: "01",
-    tone: "stone",
+    tone: "mocha",
     title: "SaaS",
     text: "From empty repo to paying users. Auth, billing, dashboards and onboarding that people actually finish.",
     tags: ["Dashboards", "Auth & billing", "MVP in weeks"],
@@ -15,7 +15,7 @@ const PANELS = [
   {
     id: "projects",
     n: "02",
-    tone: "blue",
+    tone: "sand",
     title: "Projects",
     text: "Custom websites and web apps for any business — restaurant, gym, studio, creator. Built around you, never a template.",
     tags: ["Brand sites", "Web apps", "Landing pages"],
@@ -118,7 +118,7 @@ export default function Services() {
           <span ref={bar} />
         </div>
         <div className="track" ref={track}>
-          <article className="panel tone-blue intro">
+          <article className="panel tone-sand intro">
             <p className="eyebrow">What we make</p>
             <h2>
               Three ways
@@ -144,7 +144,7 @@ export default function Services() {
             </article>
           ))}
 
-          <article className="panel tone-red cta-panel">
+          <article className="panel tone-deep cta-panel">
             <span className="num">04</span>
             <h3>
               Describe

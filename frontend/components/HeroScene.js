@@ -1,64 +1,89 @@
 "use client";
 import { useEffect, useState } from "react";
-import { BUSINESSES } from "@/data/site";
-import { BizIcon } from "./Icons";
+import { BUSINESSES, INTRO } from "@/data/site";
+import { BizIcon, goldenSpiral } from "./Icons";
 
-const IDLE = 2600; // ms showing the plain object
-const SITE_MS = 4400; // ms showing the generated website
+const SPIRAL = goldenSpiral(600, 12);
+const INTRO_MS = 3400; // "any business" collage
+const IDLE = 2400; // plain object
+const SITE_MS = 4400; // generated website
 
+// step 0 = intro (any business), steps 1..n = BUSINESSES[step-1]
 export default function HeroScene({ onChange }) {
-  const [idx, setIdx] = useState(0); // object currently shown
-  const [siteIdx, setSiteIdx] = useState(0); // website currently shown
+  const [step, setStep] = useState(0);
+  const [siteStep, setSiteStep] = useState(1);
   const [phase, setPhase] = useState("idle");
+  const total = BUSINESSES.length + 1;
 
   useEffect(() => {
-    onChange?.(idx);
-  }, [idx, onChange]);
+    onChange?.(step);
+  }, [step, onChange]);
 
   useEffect(() => {
     let t;
-    if (phase === "idle") {
+    if (step === 0) {
+      t = setTimeout(() => setStep(1), INTRO_MS);
+    } else if (phase === "idle") {
       t = setTimeout(() => {
-        setSiteIdx(idx);
+        setSiteStep(step);
         setPhase("site");
       }, IDLE);
     } else {
       t = setTimeout(() => {
-        setIdx((i) => (i + 1) % BUSINESSES.length);
+        setStep((s) => (s % (total - 1)) + 1); // loop 1..n; intro plays once
         setPhase("idle");
       }, SITE_MS);
     }
     return () => clearTimeout(t);
-  }, [phase, idx]);
+  }, [phase, step, total]);
 
-  const obj = BUSINESSES[idx];
-  const site = BUSINESSES[siteIdx];
+  const biz = step === 0 ? INTRO : BUSINESSES[step - 1];
+  const site = BUSINESSES[siteStep - 1];
 
   return (
-    <div className="scene" data-phase={phase}>
-      <div className="blob b-stone" />
-      <div className="blob b-red" />
+    <div className="scene" data-phase={step === 0 ? "intro" : phase}>
+      {/* golden spiral: its eye sits behind the focal object so the eye is led to the animation */}
+      <svg className="spiral" viewBox="-700 -700 1400 1400" aria-hidden="true">
+        <path d={SPIRAL} />
+      </svg>
+      <div className="blob b-mocha" />
       <div className="ring" />
       <span className="spark s1" />
       <span className="spark s2" />
       <span className="spark s3" />
-
       <span className="chip c1">SaaS</span>
       <span className="chip c2">Shop</span>
       <span className="chip c3">Booking</span>
 
-      {/* 1. the plain business */}
-      <div className="obj-layer" key={`o${idx}`}>
-        <div className="obj-float">
-          <BizIcon kind={obj.kind} />
-        </div>
+      <div className="obj-layer" key={`o${step}`}>
+        {step === 0 ? (
+          <div className="collage">
+            {BUSINESSES.map((b, i) => (
+              <span key={b.kind} className="col-item" style={{ "--a": `${i * (360 / BUSINESSES.length)}deg`, "--i": i }}>
+                <BizIcon kind={b.kind} />
+              </span>
+            ))}
+            <span className="col-core">any<br />business</span>
+          </div>
+        ) : (
+          <div className="obj-float">
+            <BizIcon kind={biz.kind} />
+          </div>
+        )}
         <p className="obj-label">
-          your <b>{obj.label.replace(/s$/, "")}</b>
-          <em> ...needs a website</em>
+          {step === 0 ? (
+            <>
+              we do <b>any business</b>
+            </>
+          ) : (
+            <>
+              your <b>{biz.single}</b>
+              <em> needs a website</em>
+            </>
+          )}
         </p>
       </div>
 
-      {/* 2. ...becomes its website */}
       <div className="site-layer">
         <div className="browser" style={{ "--bg": site.bg, "--fg": site.fg, "--ac": site.accent }}>
           <div className="bar">
@@ -109,6 +134,12 @@ export default function HeroScene({ onChange }) {
           </div>
         </div>
       </div>
+
+      <ol className="steps" aria-hidden="true">
+        {Array.from({ length: total }).map((_, i) => (
+          <li key={i} className={i === step ? "on" : i < step ? "done" : ""} />
+        ))}
+      </ol>
     </div>
   );
 }
