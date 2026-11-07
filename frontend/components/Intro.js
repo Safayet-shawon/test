@@ -135,9 +135,9 @@ export default function Intro() {
 
       // overhead lamp: soft violet light falling from the pivot
       const lamp = ctx.createRadialGradient(px, py - 40, 0, px, py - 40, h * 0.95);
-      lamp.addColorStop(0, "rgba(139,72,255,0.20)");
-      lamp.addColorStop(0.45, "rgba(120,50,200,0.07)");
-      lamp.addColorStop(1, "rgba(0,0,0,0)");
+      lamp.addColorStop(0, "rgba(255,251,242,0.7)");
+      lamp.addColorStop(0.5, "rgba(255,248,235,0.18)");
+      lamp.addColorStop(1, "rgba(255,248,235,0)");
       ctx.fillStyle = lamp;
       ctx.fillRect(0, 0, w, h);
 
@@ -147,7 +147,7 @@ export default function Intro() {
         if (d.y < -0.02) d.y = 1.02;
         const dx = d.x * w + Math.sin((now / 1800) + d.x * 9) * 6;
         const near = 1 - Math.min(1, Math.abs(dx - px) / (w * 0.5));
-        ctx.fillStyle = `rgba(230,200,255,${d.a * (0.35 + near * 0.65)})`;
+        ctx.fillStyle = `rgba(110,85,65,${Math.min(0.5, d.a * (0.4 + near * 0.8) * 1.3)})`;
         ctx.beginPath();
         ctx.arc(dx, d.y * h, d.r, 0, Math.PI * 2);
         ctx.fill();
@@ -155,17 +155,17 @@ export default function Intro() {
 
       // floor line + the ball's pool of light
       const fl = ctx.createLinearGradient(w * 0.12, 0, w * 0.88, 0);
-      fl.addColorStop(0, "rgba(255,255,255,0)");
-      fl.addColorStop(0.5, "rgba(255,255,255,0.22)");
-      fl.addColorStop(1, "rgba(255,255,255,0)");
+      fl.addColorStop(0, "rgba(70,52,38,0)");
+      fl.addColorStop(0.5, "rgba(70,52,38,0.28)");
+      fl.addColorStop(1, "rgba(70,52,38,0)");
       ctx.fillStyle = fl;
       ctx.fillRect(w * 0.12, floorY, w * 0.76, 1);
       ctx.save();
       ctx.translate(bx, floorY);
       ctx.scale(1, 0.1);
       const pool = ctx.createRadialGradient(0, 0, 0, 0, 0, 120);
-      pool.addColorStop(0, "rgba(190,110,255,0.55)");
-      pool.addColorStop(1, "rgba(190,110,255,0)");
+      pool.addColorStop(0, "rgba(80,50,120,0.4)");
+      pool.addColorStop(1, "rgba(80,50,120,0)");
       ctx.fillStyle = pool;
       ctx.beginPath();
       ctx.arc(0, 0, 120, 0, Math.PI * 2);
@@ -173,7 +173,7 @@ export default function Intro() {
       ctx.restore();
 
       // guide arc
-      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.strokeStyle = "rgba(60,45,35,0.17)";
       ctx.setLineDash([2, 9]);
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -187,7 +187,7 @@ export default function Intro() {
       ctx.lineCap = "round";
       for (let i = 1; i < trail.length; i++) {
         const a = i / trail.length;
-        ctx.strokeStyle = `rgba(176,96,255,${a * 0.6})`;
+        ctx.strokeStyle = `rgba(111,45,189,${a * 0.55})`;
         ctx.lineWidth = 0.8 + a * 5;
         ctx.beginPath();
         ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
@@ -205,7 +205,7 @@ export default function Intro() {
         }
         for (const off of [0, 0.18]) {
           const q = Math.max(0, p - off);
-          ctx.strokeStyle = `rgba(215,150,255,${0.65 * (1 - q)})`;
+          ctx.strokeStyle = `rgba(111,45,189,${0.5 * (1 - q)})`;
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.arc(r.x, r.y, 8 + q * 90, 0, Math.PI * 2);
@@ -214,12 +214,11 @@ export default function Intro() {
       }
 
       // mount, white string, ball
-      ctx.fillStyle = "rgba(255,255,255,0.55)";
+      ctx.fillStyle = "rgba(40,32,28,0.6)";
       ctx.fillRect(px - 70, py - 9, 140, 1);
-      ctx.strokeStyle = "#fff";
-      ctx.shadowColor = "rgba(255,255,255,0.45)";
-      ctx.shadowBlur = 6;
-      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = "#1d1b22";
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 1.3;
       ctx.beginPath();
       ctx.moveTo(px, py - 4);
       ctx.lineTo(bx, by);
@@ -227,7 +226,7 @@ export default function Intro() {
       ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(px, py - 5, 3.2, 0, Math.PI * 2);
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = "#e9e2d6";
       ctx.fill();
       ctx.stroke();
 
@@ -235,8 +234,8 @@ export default function Intro() {
       g.addColorStop(0, "#f2d9ff");
       g.addColorStop(0.4, "#b05cf0");
       g.addColorStop(1, "#5a21a3");
-      ctx.shadowColor = "rgba(176,96,255,1)";
-      ctx.shadowBlur = 30;
+      ctx.shadowColor = "rgba(111,45,189,0.55)";
+      ctx.shadowBlur = 16;
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(bx, by, 7, 0, Math.PI * 2);
@@ -290,7 +289,7 @@ export default function Intro() {
 
       <header className="p-top">
         <span className="p-brand">
-          <Logo />
+          <Logo tone="dark" />
         </span>
         <span className="p-kick">
           <u /> Selected work <u />
