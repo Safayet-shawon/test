@@ -260,7 +260,7 @@ export default function Work() {
               <p className="result">{p.result}</p>
               {p.link && (
                 <a className="visit" href={p.link} target="_blank" rel="noopener noreferrer">
-                  Visit site <Arrow />
+                  Visit website <Arrow />
                 </a>
               )}
             </div>
