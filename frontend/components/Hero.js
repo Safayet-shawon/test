@@ -18,7 +18,11 @@ function Letters({ text, base = 0 }) {
 
 export default function Hero() {
   const [step, setStep] = useState(0);
-  const onChange = useCallback((i) => setStep(i), []);
+  const [phase, setPhase] = useState("intro");
+  const onChange = useCallback((i, ph) => {
+    setStep(i);
+    setPhase(ph);
+  }, []);
   const cur = step === 0 ? INTRO : BUSINESSES[step - 1];
   const word = cur.label;
   const ref = useRef(null);
@@ -79,6 +83,15 @@ export default function Hero() {
         <span className="scroll-hint">scroll</span>
       </div>
       <div className="hero-right">
+        <div className="status" data-state={phase} key={`${step}-${phase}`} aria-live="polite">
+          <i />
+          <span>
+            {phase === "intro" && "Any business → one great website"}
+            {phase === "idle" && <>Designing your {cur.single}<b className="dots" /></>}
+            {phase === "site" && <>Live · {cur.url}</>}
+            {phase === "fall" && "Next business…"}
+          </span>
+        </div>
         <HeroScene onChange={onChange} />
       </div>
     </section>

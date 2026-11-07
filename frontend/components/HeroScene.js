@@ -6,7 +6,8 @@ import { BizIcon, ExplodePhone, goldenSpiral } from "./Icons";
 const SPIRAL = goldenSpiral(600, 12);
 const INTRO_MS = 3400; // "any business" collage
 const IDLE = 2400; // plain object
-const SITE_MS = 4400; // generated website
+const SITE_MS = 4400; // ms from "site opens" until the next business
+const FALL_MS = 850; // the site's pieces drop away under mild gravity
 
 
 /* ---- photo-led editorial site (real photography) ---- */
@@ -147,13 +148,25 @@ export default function HeroScene({ onChange }) {
   const [step, setStep] = useState(0);
   const [siteStep, setSiteStep] = useState(1);
   const [phase, setPhase] = useState("idle");
+  const [ready, setReady] = useState(false); // hero animation starts once the pendulum intro is done
+
+  useEffect(() => {
+    if (!document.documentElement.classList.contains("intro-lock")) {
+      setReady(true);
+      return;
+    }
+    const on = () => setReady(true);
+    window.addEventListener("prixon:intro-done", on, { once: true });
+    return () => window.removeEventListener("prixon:intro-done", on);
+  }, []);
   const total = BUSINESSES.length + 1;
 
   useEffect(() => {
-    onChange?.(step);
-  }, [step, onChange]);
+    onChange?.(step, step === 0 ? "intro" : phase);
+  }, [step, phase, onChange]);
 
   useEffect(() => {
+    if (!ready) return;
     let t;
     if (step === 0) {
       t = setTimeout(() => setStep(1), INTRO_MS);
@@ -162,14 +175,16 @@ export default function HeroScene({ onChange }) {
         setSiteStep(step);
         setPhase("site");
       }, IDLE);
+    } else if (phase === "site") {
+      t = setTimeout(() => setPhase("fall"), SITE_MS - FALL_MS);
     } else {
       t = setTimeout(() => {
         setStep((s) => (s % (total - 1)) + 1); // loop 1..n; intro plays once
         setPhase("idle");
-      }, SITE_MS);
+      }, FALL_MS);
     }
     return () => clearTimeout(t);
-  }, [phase, step, total]);
+  }, [phase, step, total, ready]);
 
   const biz = step === 0 ? INTRO : BUSINESSES[step - 1];
   const site = BUSINESSES[siteStep - 1];

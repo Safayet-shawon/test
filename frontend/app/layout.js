@@ -15,7 +15,16 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${serif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable}`}>
+      <head>
+        {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var r=document.documentElement;if(sessionStorage.getItem('prixon-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('intro-skip')}else{r.classList.add('intro-lock')}}catch(e){}",
+          }}
+        />
+      </head>
       <body>
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
