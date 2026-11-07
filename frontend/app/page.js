@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Work from "@/components/Work";
+import Care from "@/components/Care";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import Motion from "@/components/Motion";
@@ -18,6 +19,7 @@ export default function Page() {
       <About />
       <Services />
       <Work />
+      <Care />
       <Process />
       <Contact />
     </main>
