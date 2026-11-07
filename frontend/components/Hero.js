@@ -99,6 +99,10 @@ export default function Hero() {
         </div>
         <HeroScene onChange={onChange} />
       </div>
+          <div className="m-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <i />
+      </div>
     </section>
   );
 }

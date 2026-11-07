@@ -5964,3 +5964,189 @@ html.intro-lock .hero *::after {
 .about-row .about-link {
   font-size: 0.95rem;
 }
+
+/* ============ v20: phone hero (<= 700px): belt 30% top-to-bottom, demo, scroll hint ============ */
+.m-scroll {
+  display: none;
+}
+@media (max-width: 700px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100svh;
+    min-height: 0;
+    padding-top: 5.2rem; /* clears the floating nav */
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #040404 0%, #080808 45%, #131314 100%);
+  }
+  .hero-left {
+    flex: 0 0 30svh;
+    height: 30svh;
+    padding: 0 1rem;
+    display: block;
+  }
+  .hero-copy {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-copy .badge,
+  .hero-copy .lead,
+  .hero-copy .cta-row,
+  .hero-left .scroll-hint {
+    display: none; /* phones: no buttons / lead — space goes to the belt and demo */
+  }
+  .hero h1 {
+    font-size: 1.02rem;
+    line-height: 1.2;
+    margin: 0 0 0.35rem;
+    flex: none;
+  }
+  .hero h1 .line {
+    display: inline-block;
+    padding: 0 0.28em 0 0;
+    overflow: visible;
+  }
+  /* the vertical belt: far end on top, items travel down toward the demo */
+  .belt {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    perspective: 700px;
+    perspective-origin: 50% 90%;
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 84%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0, #000 84%, transparent 100%);
+  }
+  .belt-3d {
+    transform: rotateX(30deg);
+    transform-origin: 50% 100%;
+  }
+  .belt-band {
+    inset: -90% 5% 4% 5%;
+    border-block: 0;
+    border-inline: 1px solid rgba(255, 255, 255, 0.13);
+    background-image: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 26px),
+      linear-gradient(90deg, #14141a, #0b0b0e 50%, #14141a);
+    background-size: auto, 100% 100%;
+    background-position: 0 var(--shift, 0px), 0 0;
+    box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.6);
+  }
+  .belt-fog {
+    background: linear-gradient(180deg, #050507 0%, rgba(5, 5, 7, 0.86) 16%, rgba(5, 5, 7, 0.4) 36%, rgba(5, 5, 7, 0) 58%);
+  }
+  .t-item {
+    top: 0;
+    left: 12px;
+    right: 12px;
+    height: var(--th);
+    margin: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0 0.9rem;
+  }
+  .t-item .cat {
+    font-size: 1.05rem;
+    flex: 1;
+    white-space: nowrap;
+  }
+  .t-item small {
+    display: none;
+  }
+  /* the demo: the rest of the screen */
+  .hero-right {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 0.2rem 0.9rem 0.3rem;
+    display: grid;
+    place-items: center;
+  }
+  .hero-right::before {
+    inset: 0.2rem 0.9rem 0.3rem;
+    border-radius: 18px;
+  }
+  .hero-right > .scene {
+    height: min(calc(60svh - 5.8rem), calc(100vw - 2.4rem));
+    width: auto;
+    aspect-ratio: 1;
+    max-width: none;
+  }
+  .status {
+    display: none;
+  }
+  /* last 10%: scroll hint */
+  .m-scroll {
+    flex: 0 0 10svh;
+    height: 10svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .m-scroll i {
+    width: 1px;
+    height: 1.5rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff);
+    transform-origin: top;
+    animation: scrollBob 1.8s var(--ease) infinite;
+  }
+  @keyframes scrollBob {
+    0% {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(1) translateY(0.4rem);
+      opacity: 0;
+    }
+  }
+
+  /* About: tighter on phones */
+  .about {
+    min-height: 0;
+    padding-block: 1.6rem;
+  }
+  .about-kick {
+    margin-bottom: 0.6rem;
+    font-size: 0.7rem;
+  }
+  .about-lead {
+    font-size: 1.28rem;
+    line-height: 1.2;
+  }
+  .about-row {
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    gap: 0.6rem 1.4rem;
+  }
+  .about-row ul {
+    gap: 0.3rem 1.1rem;
+    font-size: 0.86rem;
+  }
+}
+
+/* phone title: static gradient text (the per-letter drop smudges at this size) */
+@media (max-width: 700px) {
+  .hero h1 .ltr {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    background: none;
+  }
+  .hero h1 .line {
+    animation: fadeUp 0.6s var(--ease) 0.1s both;
+  }
+}

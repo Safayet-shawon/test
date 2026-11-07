@@ -1,28 +1,40 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// A flat conveyor belt tilted in perspective: the left end is far and narrow, so businesses seem to come up
-// from behind, grow as they approach and stop at the station on the right (toward the website demo).
+// A conveyor belt tilted in perspective: the far end is narrow and dark, so businesses seem to come up from
+// behind, grow as they approach and stop at the station (toward the website demo).
+//   laptop / tablet: horizontal belt, far end on the LEFT, items travel left -> right
+//   phone (<= 700px): vertical belt, far end on TOP, items travel top -> bottom
 // A small spring drives the motion; speed adds a mild lean + blur.
 export default function Tape({ pos, item }) {
   const wrap = useRef(null);
   const list = useRef(null);
   const band = useRef(null);
   const posRef = useRef(pos);
-  const [m, setM] = useState({ w: 240, px: 360, ready: false });
+  const [m, setM] = useState({ w: 240, px: 360, th: 80, v: false, ready: false });
   posRef.current = pos;
 
   useEffect(() => {
     const el = wrap.current;
     const measure = () => {
       const r = el.getBoundingClientRect();
-      const small = r.width < 460;
-      setM({ w: small ? 168 : 240, px: r.width * (small ? 0.6 : 0.62), ready: true });
+      const v = window.innerWidth <= 700;
+      if (v) {
+        const pitch = r.height * 0.3; // distance between tiles
+        setM({ v, w: pitch, th: pitch * 0.84, px: r.height * 0.7, ready: true });
+      } else {
+        const small = r.width < 460;
+        setM({ v, w: small ? 168 : 240, th: 0, px: r.width * (small ? 0.6 : 0.62), ready: true });
+      }
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
-    return () => ro.disconnect();
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   useEffect(() => {
@@ -38,14 +50,16 @@ export default function Tape({ pos, item }) {
       band.current?.style.setProperty("--shift", `${(p * m.w).toFixed(2)}px`); // treads travel with the tiles
       const kids = list.current?.children;
       if (!kids) return;
-      const lean = clamp(v * -2.2, -7, 7); // mild velocity lean
+      const lean = clamp(v * -2.2, -7, 7); // mild velocity lean (horizontal only)
       const blur = Math.min(2.2, Math.abs(v) * 0.45);
       for (const el of kids) {
         const j = Number(el.dataset.j);
-        const u = p - j; // u < 0: still to come (far left, behind)   u > 0: already passed (right)
-        const x = m.px + u * m.w;
+        const u = p - j; // u < 0: still to come (far)   u > 0: already passed
+        const pos1 = m.px + u * m.w;
         const lift = 30 * clamp(1 - Math.abs(u)); // the tile at the station rises slightly
-        el.style.transform = `translate3d(${x - m.w / 2}px, -50%, ${8 + lift}px) skewX(${lean}deg)`;
+        el.style.transform = m.v
+          ? `translate3d(0, ${(pos1 - m.th / 2).toFixed(2)}px, ${8 + lift}px)`
+          : `translate3d(${(pos1 - m.w / 2).toFixed(2)}px, -50%, ${8 + lift}px) skewX(${lean}deg)`;
         const fadeIn = clamp((u + 3.4) / 1.9); // emerges from the dark
         const fadeOut = clamp((1.9 - u) / 1.0); // leaves toward the demo
         el.style.opacity = (fadeIn * fadeOut).toFixed(3);
@@ -82,14 +96,20 @@ export default function Tape({ pos, item }) {
   for (let j = Math.max(0, pos - 2); j <= pos + 5; j++) js.push(j);
 
   return (
-    <div className="belt" ref={wrap} style={{ "--w": `${m.w}px` }} aria-label="Businesses we build websites for">
+    <div
+      className="belt"
+      ref={wrap}
+      data-v={m.v ? "1" : undefined}
+      style={{ "--w": `${m.w}px`, "--th": `${m.th}px` }}
+      aria-label="Businesses we build websites for"
+    >
       <div className="belt-3d">
         <div className="belt-band" ref={band} aria-hidden="true" />
         <div className="belt-list" ref={list}>
           {js.map((j) => {
             const it = item(j);
             return (
-              <div key={j} data-j={j} className={`t-item ${j === pos ? "on" : ""}`} style={{ width: m.w - 14 }}>
+              <div key={j} data-j={j} className={`t-item ${j === pos ? "on" : ""}`} style={m.v ? undefined : { width: m.w - 14 }}>
                 <span className="no">{it.no}</span>
                 <b className="cat">{it.cat}</b>
                 <small>{it.sub}</small>
