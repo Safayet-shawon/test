@@ -5330,3 +5330,249 @@ html.intro-lock .hero *::after {
     animation: none;
   }
 }
+
+/* ============ v12: black hero + weighing-scale tape (grey gradient type, red needle) ============ */
+.hero {
+  background: radial-gradient(85% 70% at 18% 0%, #1b1b21 0%, #08080a 55%, #050507 100%);
+  color: #fff;
+}
+.hero-right::before {
+  background: linear-gradient(160deg, #17171b, #09090b);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.hero .badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  box-shadow: none;
+}
+.hero .badge i {
+  background: #ff2b2b;
+  box-shadow: 0 0 10px #ff2b2b;
+}
+/* grey-gradient type */
+.hero h1 .line {
+  background: linear-gradient(180deg, #ffffff 20%, #8d8d98 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero h1 .ltr {
+  -webkit-text-fill-color: transparent;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.hero h1 .line.hl {
+  background: linear-gradient(180deg, #a8a8b3 10%, #55555f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.hero .lead {
+  color: rgba(255, 255, 255, 0.66);
+}
+.hero .lead b {
+  color: #fff;
+  background: linear-gradient(transparent 82%, rgba(255, 43, 43, 0.9) 82%);
+}
+.hero .btn-violet {
+  background: linear-gradient(180deg, #f6f6f8, #b4b5bf);
+  color: #0a0a0c;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 #fff;
+}
+.hero .btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+.hero .scroll-hint {
+  color: rgba(255, 255, 255, 0.5);
+}
+.hero .scroll-hint::before {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* the tape */
+.tape {
+  --w: 232px;
+  --px: 150px;
+  position: relative;
+  width: min(100%, 540px);
+  height: 138px;
+  margin: 1.5rem 0 1.7rem;
+}
+.tape-win {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 78%, transparent 100%);
+}
+.tape-track {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  transition: transform 1.3s cubic-bezier(0.34, 1.45, 0.5, 1); /* needle-like overshoot, then settle */
+  will-change: transform;
+}
+.tape-ticks {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 30px;
+  transition: background-position 1.3s cubic-bezier(0.34, 1.45, 0.5, 1);
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.75) 0 1.5px, transparent 1.5px calc(var(--w) / 4)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.32) 0 1px, transparent 1px calc(var(--w) / 20));
+  background-size: 100% 30px, 100% 14px;
+  background-position-y: bottom, bottom;
+  background-repeat: no-repeat;
+  background-repeat: repeat-x;
+}
+.t-item {
+  position: absolute;
+  top: 0;
+  width: var(--w);
+  height: calc(100% - 30px);
+  padding: 0 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.t-item .no {
+  font: 600 0.66rem var(--font-body);
+  letter-spacing: 0.26em;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.5s;
+}
+.t-item .cat {
+  font: 800 clamp(1.15rem, 1.7vw, 1.75rem) / 1.08 var(--font-display);
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, #8e8e99, #4b4b55);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: transform 0.7s var(--ease);
+  transform-origin: left center;
+}
+.t-item small {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.28);
+  white-space: nowrap;
+  transition: color 0.5s;
+}
+.t-item.on .cat {
+  background: linear-gradient(180deg, #ffffff 15%, #a0a0ab);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: scale(1.12);
+}
+.t-item.on .no {
+  color: #ff4a4a;
+}
+.t-item.on small {
+  color: rgba(255, 255, 255, 0.7);
+}
+/* the red needle */
+.needle {
+  position: absolute;
+  z-index: 3;
+  left: var(--px);
+  top: -14px;
+  bottom: -2px;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(180deg, #ff2b2b, #ff2b2b 70%, rgba(255, 43, 43, 0.4));
+  box-shadow: 0 0 14px rgba(255, 43, 43, 0.85);
+}
+.needle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  translate: -50% 0;
+  border: 6px solid transparent;
+  border-top: 9px solid #ff2b2b;
+  border-bottom: 0;
+}
+.needle-cap {
+  position: absolute;
+  z-index: 3;
+  left: var(--px);
+  bottom: -1.5rem;
+  translate: -50% 0;
+  font: 700 0.58rem var(--font-body);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #ff4a4a;
+  white-space: nowrap;
+}
+
+/* nav: dark glass everywhere + neon-gradient logo */
+.nav,
+.nav.solid {
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.nav nav a:not(.nav-cta) {
+  color: rgba(255, 255, 255, 0.85);
+}
+.nav nav a:not(.nav-cta):hover {
+  color: #fff;
+}
+.nav .nav-cta {
+  background: linear-gradient(180deg, #f6f6f8, #b4b5bf);
+  color: #0a0a0c;
+}
+.nav .nav-cta:hover {
+  background: #fff;
+  box-shadow: 0 0 22px rgba(160, 190, 255, 0.55);
+}
+.logo {
+  background: linear-gradient(100deg, #b8b8c2 0%, #ffffff 22%, #7ec3ff 45%, #b58cff 68%, #d8d8e0 90%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 10px rgba(150, 140, 255, 0.55));
+  animation: logoShine 6s linear infinite;
+}
+.logo i {
+  background: linear-gradient(135deg, #7ec3ff, #b58cff);
+  box-shadow: 0 0 12px rgba(160, 140, 255, 0.9);
+}
+@keyframes logoShine {
+  to {
+    background-position: -220% 0;
+  }
+}
+@media (max-width: 900px) {
+  .tape {
+    width: 100%;
+    height: 124px;
+  }
+}
+
+/* tape: needle sits at the start of the current item, so the name reads cleanly beside it */
+.tape {
+  height: 150px;
+}
+.t-item {
+  padding: 0 0.9rem 0 1.15rem;
+}
+.t-item .cat {
+  font-size: clamp(1.2rem, 1.85vw, 1.95rem);
+}
+@media (max-width: 900px) {
+  .tape {
+    height: 132px;
+  }
+}

@@ -2,6 +2,7 @@
 import { useCallback, useRef, useState } from "react";
 import { BUSINESSES, INTRO } from "@/data/site";
 import HeroScene from "./HeroScene";
+import Tape from "./Tape";
 import { Arrow } from "./Icons";
 
 function Letters({ text, base = 0 }) {
@@ -19,12 +20,22 @@ function Letters({ text, base = 0 }) {
 export default function Hero() {
   const [step, setStep] = useState(0);
   const [phase, setPhase] = useState("intro");
+  const [pos, setPos] = useState(0); // ever-increasing: the tape moves one notch per business
+  const prevStep = useRef(0);
   const onChange = useCallback((i, ph) => {
     setStep(i);
     setPhase(ph);
+    if (i !== prevStep.current) {
+      prevStep.current = i;
+      setPos((p) => p + 1);
+    }
   }, []);
+  const item = (j) => {
+    if (j === 0) return { no: "00", cat: INTRO.label, sub: "yours is next" };
+    const b = BUSINESSES[(j - 1) % BUSINESSES.length];
+    return { no: String(((j - 1) % BUSINESSES.length) + 1).padStart(2, "0"), cat: b.label, sub: `${b.name} · ${b.url}` };
+  };
   const cur = step === 0 ? INTRO : BUSINESSES[step - 1];
-  const word = cur.label;
   const ref = useRef(null);
   const onMove = (e) => {
     const el = ref.current;
@@ -56,17 +67,11 @@ export default function Hero() {
             <span className="line">
               <Letters text="Websites for" />
             </span>
-            {/* the sticker + dashed line ties this text to the animation on the right */}
-            <span className="line word-line">
-              <span className="word" key={word}>
-                <Letters text={word} />
-              </span>
-              <span className="link" aria-hidden="true" />
-            </span>
             <span className="line hl">
-              <Letters text="that stand out." base={12} />
+              <Letters text="any business." base={12} />
             </span>
           </h1>
+          <Tape pos={pos} item={item} />
           <p className="lead">
             Pizza shop or SaaS startup — whatever you run, we design and build the site.
             Fast, loud and <b>actually fun</b> to scroll.
