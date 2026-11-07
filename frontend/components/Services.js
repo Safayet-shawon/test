@@ -10,6 +10,10 @@ const PANELS = [
     serif: "Software people actually finish onboarding.",
     text: "From empty repo to paying users. Auth, billing, dashboards and onboarding, built to scale from the first customer.",
     tags: ["Dashboards", "Auth & billing", "MVP in weeks"],
+    work: [
+      { img: "/projects/microservice-2.webp", name: "EcomMS — admin console" },
+      { img: "/projects/microservice.webp", name: "EcomMS — storefront" },
+    ],
     art: "bars",
   },
   {
@@ -19,6 +23,11 @@ const PANELS = [
     serif: "Never a template. Always you.",
     text: "Custom websites and web apps for any business: restaurant, studio, clinic, creator. Designed around your brand and your customers.",
     tags: ["Brand sites", "Web apps", "Landing pages"],
+    work: [
+      { img: "/projects/tomadachis.webp", name: "tomadachis.com" },
+      { img: "/projects/singledot.webp", name: "Single Dot Studio" },
+      { img: "/projects/architect.webp", name: "Architect Shakil" },
+    ],
     art: "browser",
   },
   {
@@ -28,6 +37,9 @@ const PANELS = [
     serif: "Scrolling that ends at checkout.",
     text: "Stores, drops and product pages that turn browsers into buyers. Fast, thumb-friendly and a little unhinged.",
     tags: ["E-commerce", "Drops & waitlists", "Product pages"],
+    work: [
+      { img: "/projects/microservice.webp", name: "EcomMS — customer storefront" },
+    ],
     art: "cards",
   },
 ];
@@ -202,6 +214,17 @@ export default function Services() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
+              <div className="wk">
+                <span className="wk-label">Real work</span>
+                <div className="wk-row">
+                  {p.work.map((w) => (
+                    <a key={w.name} href="#work" className="wk-box" aria-label={`${w.name} — see in our work`} title={w.name}>
+                      <i style={{ backgroundImage: `url(${w.img})` }} />
+                      <b>{w.name}</b>
+                    </a>
+                  ))}
+                </div>
+              </div>
               <a href="#work" className="more">
                 <span>See related work</span>
                 <i>
