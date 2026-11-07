@@ -14,7 +14,6 @@ const PANELS = [
       { img: "/projects/microservice-2.webp", name: "EcomMS — admin console" },
       { img: "/projects/microservice.webp", name: "EcomMS — storefront" },
     ],
-    art: "bars",
   },
   {
     id: "projects",
@@ -29,7 +28,6 @@ const PANELS = [
       { img: "/projects/architect.webp", name: "Architect Shakil" },
       { img: "/projects/moonstar.webp", name: "Moon Star Power & Technology" },
     ],
-    art: "browser",
   },
   {
     id: "products",
@@ -42,46 +40,8 @@ const PANELS = [
       { img: "/projects/microservice.webp", name: "EcomMS — customer storefront" },
       { img: "/projects/unifab.webp", name: "UNIFAB — cinematic clothing store" },
     ],
-    art: "cards",
   },
 ];
-
-function Art({ kind }) {
-  if (kind === "bars")
-    return (
-      <div className="art art-bars">
-        {[40, 70, 50, 90, 65, 100].map((h, i) => (
-          <i key={i} style={{ "--h": `${h}%`, "--i": i }} />
-        ))}
-      </div>
-    );
-  if (kind === "browser")
-    return (
-      <div className="art art-browser">
-        <div className="mini-bar">
-          <i />
-          <i />
-          <i />
-        </div>
-        <div className="mini-hero" />
-        <div className="mini-lines">
-          <i />
-          <i />
-          <i />
-        </div>
-      </div>
-    );
-  return (
-    <div className="art art-cards">
-      {[0, 1, 2].map((i) => (
-        <div key={i} style={{ "--i": i }}>
-          <span />
-          <b />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function Services() {
   const outer = useRef(null);
@@ -233,7 +193,6 @@ export default function Services() {
                   <Arrow />
                 </i>
               </a>
-              <Art kind={p.art} />
             </article>
           ))}
 
