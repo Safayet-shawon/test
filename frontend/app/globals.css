@@ -5481,31 +5481,10 @@ html.intro-lock .hero *::after {
   height: 230px;
   margin: 1.2rem 0 1.6rem;
   perspective: 1000px;
+  perspective-origin: 78% 50%;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
   mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
-}
-.belt-3d,
-.belt-band,
-.belt-list {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-}
-/* one continuous belt surface: thin slices on the same arc, treads scroll with the tiles */
-.bs {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  height: 152px;
-  margin-top: -76px;
-  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.085) 0 2px, transparent 2px 28px),
-    linear-gradient(180deg, #1b1b23, #0a0a0d);
-  background-size: auto, 100% 100%;
-  background-repeat: repeat-x, no-repeat;
-  background-position: calc(var(--shift, 0px) - var(--a, 0px)) 0, 0 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.1), inset 0 -14px 22px rgba(0, 0, 0, 0.55);
-  will-change: transform;
 }
 .t-item {
   position: absolute;
@@ -5685,4 +5664,44 @@ html.intro-lock .hero *::after {
   font-size: clamp(3.2rem, 14.6vw, 19rem);
   text-align: center;
   line-height: 0.95;
+}
+
+
+/* ============ v15: the flat tilted belt — far (left) end narrow, items come up from behind ============ */
+.belt-3d {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-26deg); /* the left end recedes: narrower, like coming from behind */
+  transform-origin: 100% 50%;
+}
+.belt-band {
+  position: absolute;
+  inset: 12% -4% 12% -60%;
+  border-radius: 14px;
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 28px),
+    linear-gradient(180deg, #181820, #09090c);
+  background-size: auto, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  background-position: var(--shift, 0px) 0, 0 0;
+  border-block: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -12px 26px rgba(0, 0, 0, 0.6);
+}
+.belt-list {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+/* depth: the far (left) end sinks into darkness */
+.belt-fog {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, #050507 0%, rgba(5, 5, 7, 0.88) 12%, rgba(5, 5, 7, 0.42) 32%, rgba(5, 5, 7, 0) 54%);
+}
+@media (max-width: 900px) {
+  .belt-3d {
+    transform: rotateY(-20deg);
+  }
 }
