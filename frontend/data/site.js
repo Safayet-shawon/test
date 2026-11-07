@@ -13,7 +13,7 @@ export const INTRO = {
   kind: "any",
   label: "any business",
   single: "business",
-  theme: { t: "#6f2dbd", on: "#ffffff" },
+  theme: { t: "#14121b", on: "#ffffff" },
 };
 
 export const BUSINESSES = [
@@ -98,7 +98,7 @@ export const BUSINESSES = [
     font: "display",
     label: "photographers",
     single: "photographer",
-    theme: { t: "#15151a", on: "#f5b700" },
+    theme: { t: "#3a3a46", on: "#f5b700" },
     url: "framelight.studio",
     name: "FRAME/LIGHT",
     nav: ["Work", "Prints", "About"],
