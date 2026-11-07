@@ -5636,3 +5636,49 @@ html.intro-lock .hero *::after {
 .scene[data-phase="fall"] .browser {
   animation-duration: 0.6s;
 }
+
+/* ============ v14: zerosoft logo (slashed-zero mark + wordmark) ============ */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: #fff;
+  animation: none;
+  text-shadow: none;
+  filter: none;
+  font: 800 1.35rem var(--font-display);
+  letter-spacing: -0.05em;
+}
+.logo-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+}
+.logo-text {
+  background: linear-gradient(100deg, #b8b8c2 0%, #ffffff 22%, #7ec3ff 45%, #b58cff 68%, #d8d8e0 90%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: logoShine 6s linear infinite;
+}
+.p-brand {
+  display: inline-flex;
+}
+.p-brand .logo {
+  font-size: 1.1rem;
+}
+.p-brand .logo-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* footer wordmark: "zerosoft" is longer than the old name */
+.wordmark {
+  font-size: clamp(3.2rem, 14.6vw, 19rem);
+  text-align: center;
+  line-height: 0.95;
+}

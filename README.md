@@ -1,4 +1,4 @@
-# Prixon portfolio
+# zerosoft portfolio
 
 Next.js site lives in [`/frontend`](./frontend).
 
@@ -14,7 +14,7 @@ Import the repo and set **Root Directory** to `frontend`. Framework preset: Next
 
 ## Edit content
 - Copy, hero businesses, projects, contact email: `frontend/data/site.js`
-- **Contact email**: change `SITE.email` (currently a placeholder, `hello@prixon.dev`). The form opens the visitor's mail app addressed to it.
+- **Contact email**: change `SITE.email` (currently a placeholder, `hello@zerosoft.dev`). The form opens the visitor's mail app addressed to it.
 - **Project screenshots**: add `frontend/public/projects/<project-id>.webp` (and optional `<project-id>-2.webp`, crossfades). Ids: `microservice`, `tomadachis`, `architect`, `singledot`. Without a file the card falls back to an animated stand-in. Tall screenshots auto-scroll. Add `link: "https://..."` on a project to show a "Visit site" button.
 - **Hero demo photos**: `frontend/public/hero/*.webp` (swap file-for-file).
 - **Intro work list**: `WORK` at the top of `frontend/components/Intro.js`.

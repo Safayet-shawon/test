@@ -156,8 +156,8 @@ export default function HeroScene({ onChange }) {
       return;
     }
     const on = () => setReady(true);
-    window.addEventListener("prixon:intro-done", on, { once: true });
-    return () => window.removeEventListener("prixon:intro-done", on);
+    window.addEventListener("zerosoft:intro-done", on, { once: true });
+    return () => window.removeEventListener("zerosoft:intro-done", on);
   }, []);
   const total = BUSINESSES.length + 1;
 

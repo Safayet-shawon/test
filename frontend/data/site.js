@@ -1,8 +1,8 @@
 // ---- Edit me: all copy / contact details live here ----
 export const SITE = {
-  name: "prixon",
+  name: "zerosoft",
   // Contact form opens the visitor's mail app addressed to this email.
-  email: "hello@prixon.dev",
+  email: "hello@zerosoft.dev",
 };
 
 // Hero animation order: "any business" intro first, then each business -> its website.

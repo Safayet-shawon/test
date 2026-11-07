@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./Icons";
+import Logo from "./Logo";
 
 // Pendulum in simple harmonic motion: theta(t) = theta0 * cos(w t).
 // Every turning point (end of each swing) presents one of our projects.
@@ -51,9 +52,9 @@ export default function Intro() {
     const done = () => {
       html.classList.remove("intro-lock");
       try {
-        sessionStorage.setItem("prixon-intro", "1");
+        sessionStorage.setItem("zerosoft-intro", "1");
       } catch {}
-      window.dispatchEvent(new Event("prixon:intro-done"));
+      window.dispatchEvent(new Event("zerosoft:intro-done"));
     };
     if (html.classList.contains("intro-skip") || !html.classList.contains("intro-lock")) {
       done();
@@ -289,7 +290,7 @@ export default function Intro() {
 
       <header className="p-top">
         <span className="p-brand">
-          prixon<i />
+          <Logo />
         </span>
         <span className="p-kick">
           <u /> Selected work <u />

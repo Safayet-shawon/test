@@ -6,7 +6,7 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
-  title: "prixon — websites for any business",
+  title: "zerosoft — websites for any business",
   description:
     "We design and build SaaS, custom websites and products that make people stop scrolling. Pizza shop or unicorn startup — we make the website.",
 };
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var r=document.documentElement;if(sessionStorage.getItem('prixon-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('intro-skip')}else{r.classList.add('intro-lock')}}catch(e){}",
+              "try{var r=document.documentElement;if(sessionStorage.getItem('zerosoft-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('intro-skip')}else{r.classList.add('intro-lock')}}catch(e){}",
           }}
         />
       </head>

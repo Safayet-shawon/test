@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { SITE } from "@/data/site";
+import Logo from "./Logo";
 
 export default function Nav() {
   const [solid, setSolid] = useState(false);
@@ -12,9 +12,8 @@ export default function Nav() {
   }, []);
   return (
     <header className={`nav ${solid ? "solid" : ""}`}>
-      <a href="#top" className="logo">
-        {SITE.name}
-        <i />
+      <a href="#top" aria-label="zerosoft home">
+        <Logo />
       </a>
       <nav>
         <a href="#services">Services</a>
