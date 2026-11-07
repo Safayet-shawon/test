@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BUSINESSES, INTRO } from "@/data/site";
-import { BizIcon, goldenSpiral } from "./Icons";
+import { BizIcon, ExplodeDevice, goldenSpiral } from "./Icons";
 
 const SPIRAL = goldenSpiral(600, 12);
 const INTRO_MS = 3400; // "any business" collage
@@ -85,7 +85,7 @@ export default function HeroScene({ onChange }) {
       </div>
 
       <div className="site-layer">
-        <div className="browser" style={{ "--bg": site.bg, "--fg": site.fg, "--ac": site.accent }}>
+        <div className="browser" style={{ "--bg": site.bg, "--fg": site.fg, "--ac": site.accent, "--aon": site.aon }}>
           <div className="bar">
             <i />
             <i />
@@ -116,7 +116,7 @@ export default function HeroScene({ onChange }) {
                 </button>
               </div>
               <div className="phero-art pop" style={{ "--i": 2 }}>
-                <BizIcon kind={site.kind} />
+                {site.explode ? <ExplodeDevice live /> : <BizIcon kind={site.kind} />}
               </div>
             </div>
             <div className="pcards">

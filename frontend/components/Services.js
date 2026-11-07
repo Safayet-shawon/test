@@ -74,40 +74,79 @@ export default function Services() {
   const track = useRef(null);
   const bar = useRef(null);
 
-  // Vertical scroll drives a horizontal track (desktop). On mobile it stacks natively.
+  // Vertical scroll drives a horizontal track (desktop). Progress is eased (lerp) every frame
+  // so the motion glides instead of snapping to the wheel; panels also get parallax vars.
   useEffect(() => {
     const o = outer.current;
     const t = track.current;
     const b = bar.current;
+    const panels = Array.from(t.children);
     const mq = window.matchMedia("(min-width: 901px)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
+    let cur = 0;
+    let target = 0;
+    let dist = 0;
+    let vw = 0;
 
-    const update = () => {
-      raf = 0;
+    const measure = () => {
       if (!mq.matches) {
         o.style.height = "";
         t.style.transform = "";
-        return;
+        panels.forEach((p) => {
+          p.style.removeProperty("--x");
+          p.style.removeProperty("--o");
+        });
+        return false;
       }
-      const dist = Math.max(0, t.scrollWidth - window.innerWidth);
+      vw = window.innerWidth;
+      dist = Math.max(0, t.scrollWidth - vw);
       o.style.height = `${window.innerHeight + dist}px`;
+      return true;
+    };
+    const readTarget = () => {
       const top = o.getBoundingClientRect().top;
-      const p = Math.min(1, Math.max(0, -top / (dist || 1)));
-      t.style.transform = `translate3d(${-p * dist}px,0,0)`;
-      b.style.transform = `scaleX(${p})`;
+      target = Math.min(1, Math.max(0, -top / (dist || 1)));
     };
-    const queue = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+    const paint = () => {
+      const x = -cur * dist;
+      t.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+      b.style.transform = `scaleX(${cur.toFixed(4)})`;
+      for (const p of panels) {
+        const c = (p.offsetLeft + x + p.offsetWidth / 2 - vw / 2) / vw; // -1..1 = distance from centre
+        p.style.setProperty("--x", c.toFixed(3));
+        p.style.setProperty("--o", Math.max(0.2, 1 - Math.max(0, Math.abs(c) - 0.55) * 1.6).toFixed(3));
+      }
     };
-    update();
-    window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", queue);
-    mq.addEventListener("change", queue);
+    const tick = () => {
+      raf = 0;
+      if (!mq.matches) return;
+      readTarget();
+      const d = target - cur;
+      cur = reduce || Math.abs(d) < 0.0004 ? target : cur + d * 0.11;
+      paint();
+      if (cur !== target) raf = requestAnimationFrame(tick);
+    };
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const onResize = () => {
+      if (measure()) {
+        readTarget();
+        cur = target;
+        paint();
+      }
+    };
+
+    onResize();
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("resize", onResize);
+    mq.addEventListener("change", onResize);
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", queue);
-      window.removeEventListener("resize", queue);
-      mq.removeEventListener("change", queue);
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("resize", onResize);
+      mq.removeEventListener("change", onResize);
     };
   }, []);
 

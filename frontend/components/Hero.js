@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { BUSINESSES, INTRO } from "@/data/site";
 import HeroScene from "./HeroScene";
 import { Arrow } from "./Icons";
@@ -19,11 +19,30 @@ function Letters({ text, base = 0 }) {
 export default function Hero() {
   const [step, setStep] = useState(0);
   const onChange = useCallback((i) => setStep(i), []);
-  const word = step === 0 ? INTRO.label : BUSINESSES[step - 1].label;
+  const cur = step === 0 ? INTRO : BUSINESSES[step - 1];
+  const word = cur.label;
+  const ref = useRef(null);
+  const onMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
 
   return (
-    <section id="top" className="hero">
-      <div className="hero-grid" />
+    <section
+      id="top"
+      className="hero"
+      ref={ref}
+      onMouseMove={onMove}
+      style={{ "--t": cur.theme.t, "--on": cur.theme.on }}
+    >
+      <div className="aurora" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </div>
       <div className="hero-left">
         <div className="hero-copy">
           <p className="badge">
