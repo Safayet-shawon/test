@@ -11,7 +11,7 @@ export const metadata = {
     "We design and build SaaS, custom websites and products that make people stop scrolling. Pizza shop or unicorn startup — we make the website.",
 };
 
-export const viewport = { themeColor: "#566A48" };
+export const viewport = { themeColor: "#6f2dbd" };
 
 export default function RootLayout({ children }) {
   return (

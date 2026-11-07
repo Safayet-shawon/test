@@ -68,7 +68,7 @@ export default function Hero() {
             Fast, loud and <b>actually fun</b> to scroll.
           </p>
           <div className="cta-row">
-            <a href="#contact" className="btn btn-mocha">
+            <a href="#contact" className="btn btn-violet">
               Describe your project <Arrow />
             </a>
             <a href="#work" className="btn btn-ghost">

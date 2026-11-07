@@ -202,7 +202,7 @@ function shotsFor(id) {
 
 function Clip({ p }) {
   const shots = shotsFor(p.id);
-  const host = p.link ? p.link.replace(/^https?:\/\//, "") : `${p.id}.app`;
+  const host = p.link ? p.link.replace(/^https?:\/\//, "") : p.title;
   return (
     <div className={`clip ${shots.length ? "has-shot" : ""}`} data-tilt>
       {p.video ? (

@@ -180,7 +180,7 @@ export default function HeroScene({ onChange }) {
       <svg className="spiral" viewBox="-700 -700 1400 1400" aria-hidden="true">
         <path d={SPIRAL} />
       </svg>
-      <div className="blob b-mocha" />
+      <div className="blob b-violet" />
       <div className="ring" />
       <span className="spark s1" />
       <span className="spark s2" />

@@ -6,7 +6,7 @@ const PANELS = [
   {
     id: "saas",
     n: "01",
-    tone: "mocha",
+    tone: "violet",
     title: "SaaS",
     text: "From empty repo to paying users. Auth, billing, dashboards and onboarding that people actually finish.",
     tags: ["Dashboards", "Auth & billing", "MVP in weeks"],

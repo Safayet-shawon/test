@@ -16,7 +16,6 @@ export default function Page() {
       <Marquee />
       <Services />
       <Work />
-      <Marquee className="alt" items={["Next.js", "React", "TypeScript", "Node", "NestJS", "Redis", "Docker", "Microservices"]} />
       <Process />
       <Contact />
     </main>

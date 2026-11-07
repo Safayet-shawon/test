@@ -13,7 +13,7 @@ export const INTRO = {
   kind: "any",
   label: "any business",
   single: "business",
-  theme: { t: "#566a48", on: "#ffffff" },
+  theme: { t: "#6f2dbd", on: "#ffffff" },
 };
 
 export const BUSINESSES = [
