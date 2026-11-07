@@ -2134,13 +2134,17 @@ h3 {
   animation: cap 8s linear infinite;
   animation-delay: calc(var(--s) * 8s);
 }
+.caps span:first-child {
+  animation-name: capShort;
+}
 
-/* ---- tomadaxhis: design -> features -> live ---- */
+/* ---- tomadachis.com: pet ecosystem (its real pink / peach / brown look) ---- */
 .scr-flow {
   flex-direction: column;
   gap: 5%;
   padding-top: 12%;
-  background: radial-gradient(80% 90% at 50% 0%, #2a1442, #0d0a16);
+  background: linear-gradient(160deg, #ffdbe5, #fff1e6);
+  color: #4a3228;
 }
 .stepper {
   display: flex;
@@ -2155,9 +2159,9 @@ h3 {
   align-items: center;
   gap: 0.5em;
   padding: 0.35em 0.6em;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.6);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7);
+  color: rgba(74, 50, 40, 0.65);
   animation: stepOn 8s linear infinite;
   animation-delay: calc(var(--s) * 8s);
 }
@@ -2168,73 +2172,103 @@ h3 {
   width: 1.6em;
   height: 1.6em;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(74, 50, 40, 0.12);
 }
 .canvas {
   position: relative;
   flex: 1;
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 12px;
+  background: #fff8f9;
   padding: 3%;
   display: flex;
   flex-direction: column;
   gap: 4%;
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(74, 50, 40, 0.18);
 }
 .wf {
   display: flex;
   gap: 3%;
-  border: 1.5px dashed #9aa0b4;
-  border-radius: 4px;
+  align-items: center;
+  border: 1.5px dashed #c9a9a3;
+  border-radius: 8px;
   padding: 1.5%;
   animation: wfFill 8s ease infinite;
 }
 .wf span,
-.wf b {
-  flex: 1;
-  height: 100%;
-  border-radius: 3px;
-  background: rgba(154, 160, 180, 0.35);
+.wf b,
+.wf .img,
+.wf em,
+.wf u,
+.wf i.sub {
+  display: block;
+  border-radius: 99px;
+  background: rgba(201, 169, 163, 0.4);
   animation: wfFillIn 8s ease infinite;
 }
 .wf.wnav {
-  height: 11%;
+  flex: none;
+  height: clamp(1.3rem, 3.4vw, 2.3rem);
 }
-.wf.wnav span:first-child {
-  flex: 0 0 18%;
+.wf.wnav span {
+  flex: 1;
+  height: 28%;
+}
+.wf.wnav .logo-m {
+  flex: 0 0 14%;
+  height: 60%;
+}
+.wf.wnav .login {
+  flex: 0 0 12%;
+  height: 60%;
 }
 .wf.whero {
-  height: 38%;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
 }
-.wf.cards {
-  height: 30%;
+.wf.whero .txt {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8%;
 }
-.feat {
-  position: absolute;
-  width: 7%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--neon);
-  box-shadow: 0 0 16px var(--neon-lt);
-  opacity: 0;
-  animation: featPop 8s var(--ease) infinite;
+.wf.whero .txt b {
+  height: 22%;
+  border-radius: 8px;
 }
-.f1 {
-  right: 8%;
-  top: 22%;
-  animation-delay: 0s;
+.wf.whero .txt b + b {
+  width: 80%;
 }
-.f2 {
-  right: 22%;
-  top: 38%;
-  animation-delay: 0.35s;
-  border-radius: 6px;
+.wf.whero .txt .sub {
+  height: 10%;
+  width: 60%;
 }
-.f3 {
-  right: 10%;
-  top: 56%;
-  animation-delay: 0.7s;
-  border-radius: 50% 50% 50% 0;
+.wf.whero .img {
+  flex: 1;
+  border-radius: 12px;
+}
+.wf.wpills {
+  flex: none;
+  height: clamp(1.5rem, 3.8vw, 2.7rem);
+  gap: 3%;
+}
+.wf.wpills span {
+  flex: 1;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: clamp(0.5rem, 1.05vw, 0.85rem);
+  font-weight: 700;
+  color: transparent;
+  animation: pillIn 8s ease infinite;
+}
+.wf.wpills .p2 {
+  animation-delay: 0.3s;
+}
+.wf.wpills .p3 {
+  animation-delay: 0.6s;
 }
 .live-badge {
   position: absolute;
@@ -2247,12 +2281,12 @@ h3 {
   background: #16a34a;
   padding: 0.3em 0.9em;
   border-radius: 99px;
-  box-shadow: 0 0 20px rgba(34, 197, 94, 0.9);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.7);
   opacity: 0;
   animation: liveOn 8s var(--ease) infinite;
 }
 .scr-flow .cur {
-  background: #14161f;
+  background: #4a3228;
 }
 
 /* ---- architect portfolio: count -> flash -> polaroid (their real mustard + charcoal) ---- */
@@ -2338,54 +2372,114 @@ h3 {
   z-index: 1;
 }
 
-/* ---- singledotstudio: a dot becomes a layout ---- */
-.scr-dot {
-  background: #0c0c10;
-  align-items: center;
+/* ---- Single Dot Studio: calculator -> quotation PDF -> email ---- */
+.scr-calc {
+  background: #f4efe8;
+  color: #1d1d1f;
+  gap: 5%;
+}
+.rooms {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 9%;
 }
-.scr-dot .dot {
+.room {
+  font-size: clamp(0.55rem, 1.05vw, 0.85rem);
+  font-weight: 700;
+}
+.trk {
+  position: relative;
+  height: 6px;
+  margin-top: 0.5em;
+  border-radius: 99px;
+  background: #d9d0c2;
+}
+.trk i {
   position: absolute;
-  width: 5%;
-  aspect-ratio: 1;
+  left: 0;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-  animation: dotLife 8s var(--ease) infinite;
+  background: #1d1d1f;
+  animation: slide 8s var(--ease) infinite;
+  animation-delay: calc(var(--i) * 0.5s);
 }
-.ripple {
-  position: absolute;
-  width: 8%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  opacity: 0;
-  animation: ripple 8s ease-out infinite;
+.est {
+  font-size: clamp(0.55rem, 1vw, 0.8rem);
+  letter-spacing: 0.12em;
 }
-.layout {
-  position: absolute;
-  inset: 12% 6% 6%;
-  display: grid;
-  grid-template-columns: 1.618fr 1fr;
-  grid-template-rows: 1.2fr 1fr;
-  gap: 3%;
-}
-.layout i {
+.est-bar {
+  margin-top: 0.5em;
+  height: 14px;
   border-radius: 6px;
+  background: #d9d0c2;
+  overflow: hidden;
+}
+.est-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #1d1d1f, #8a6a4a);
+  transform-origin: left;
+  animation: estGrow 8s var(--ease) infinite;
+}
+.pdf {
+  flex: 0.8;
+  align-self: center;
   background: #fff;
+  border-radius: 4px;
+  padding: 6% 6% 8%;
+  display: flex;
+  flex-direction: column;
+  gap: 7%;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
+  transform: translateY(130%) rotate(4deg);
+  animation: pdfIn 8s var(--ease) infinite;
+}
+.pdf h5 {
+  margin: 0;
+  font: 800 clamp(0.55rem, 1.1vw, 0.9rem) var(--font-display);
+  letter-spacing: 0.1em;
+}
+.pdf i {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: #e2dacd;
+}
+.pdf i:nth-of-type(2) {
+  width: 80%;
+}
+.pdf i:nth-of-type(3) {
+  width: 60%;
+}
+.pdf u {
+  text-decoration: none;
+  margin-top: auto;
+  font-size: clamp(0.5rem, 0.95vw, 0.75rem);
+  font-weight: 800;
+  padding-top: 5%;
+  border-top: 2px solid #1d1d1f;
+}
+.sent {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  translate: -50% 0;
+  font-size: clamp(0.55rem, 1.05vw, 0.85rem);
+  font-weight: 800;
+  color: #fff;
+  background: #16a34a;
+  padding: 0.4em 1em;
+  border-radius: 99px;
   opacity: 0;
-  transform: scale(0.4);
-  animation: blockIn 8s var(--ease) infinite;
-  animation-delay: calc(var(--i) * 0.18s);
+  animation: sentOn 8s var(--ease) infinite;
 }
-.layout i:nth-child(1) {
-  grid-row: 1 / 3;
-}
-.layout i:nth-child(2) {
-  background: var(--neon);
-}
-.layout i:nth-child(4) {
-  background: #3a3a46;
+.scr-calc .cur {
+  background: #1d1d1f;
 }
 
 /* ---- process ---- */
@@ -2516,48 +2610,125 @@ h3 {
     opacity: 0;
   }
 }
+@keyframes capShort {
+  0% {
+    opacity: 0;
+  }
+  1%,
+  8% {
+    opacity: 1;
+  }
+  10%,
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes stepOn {
   0%,
   100% {
-    background: rgba(255, 255, 255, 0.07);
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(74, 50, 40, 0.65);
   }
   2%,
   22% {
-    background: var(--neon);
+    background: linear-gradient(135deg, #f6b6c8, #e8956a);
     color: #fff;
-    box-shadow: 0 0 22px rgba(210, 123, 255, 0.7);
+    box-shadow: 0 6px 18px rgba(232, 149, 106, 0.6);
   }
   25% {
-    background: rgba(255, 255, 255, 0.07);
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(74, 50, 40, 0.65);
     box-shadow: none;
   }
 }
 @keyframes wfFill {
   0%,
   25% {
-    border-color: #9aa0b4;
+    border-color: #c9a9a3;
   }
   35%,
   92% {
     border-color: transparent;
   }
   100% {
-    border-color: #9aa0b4;
+    border-color: #c9a9a3;
   }
 }
 @keyframes wfFillIn {
   0%,
   25% {
-    background: rgba(154, 160, 180, 0.35);
+    background: rgba(201, 169, 163, 0.4);
   }
   38%,
   92% {
-    background: linear-gradient(135deg, var(--neon), #5b5bf0);
+    background: linear-gradient(135deg, #f9c9d6, #f2b08a);
   }
   100% {
     background: rgba(154, 160, 180, 0.35);
+  }
+}
+@keyframes pillIn {
+  0%,
+  45% {
+    background: rgba(201, 169, 163, 0.4);
+    color: transparent;
+  }
+  55%,
+  92% {
+    background: linear-gradient(135deg, #f6b6c8, #e8956a);
+    color: #fff;
+  }
+  100% {
+    background: rgba(201, 169, 163, 0.4);
+    color: transparent;
+  }
+}
+@keyframes slide {
+  0%,
+  6% {
+    left: 6%;
+  }
+  22%,
+  100% {
+    left: calc(30% + var(--i) * 22%);
+  }
+}
+@keyframes estGrow {
+  0%,
+  22% {
+    transform: scaleX(0.1);
+  }
+  40%,
+  100% {
+    transform: scaleX(0.85);
+  }
+}
+@keyframes pdfIn {
+  0%,
+  40% {
+    transform: translateY(130%) rotate(4deg);
+  }
+  54%,
+  92% {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+  100% {
+    transform: translateY(130%) rotate(4deg);
+  }
+}
+@keyframes sentOn {
+  0%,
+  66% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  72%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
   }
 }
 @keyframes featPop {

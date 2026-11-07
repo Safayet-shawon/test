@@ -2,20 +2,20 @@ import { PROJECTS } from "@/data/site";
 import Reveal from "./Reveal";
 import { Arrow } from "./Icons";
 
-/* ---------- Microservice architecture: request flows through the services ---------- */
+/* ---------- EcomMS: two apps -> API gateway -> four services ---------- */
 const NODES = [
-  { id: "auth", label: "Auth Service", sub: "verifies token", y: 6, s: 0.1 },
-  { id: "product", label: "Product Service", sub: "catalog & prices", y: 30, s: 0.28 },
-  { id: "inv", label: "Inventory Service", sub: "reserves stock", y: 54, s: 0.46 },
-  { id: "order", label: "Order Service", sub: "creates the order", y: 78, s: 0.64 },
+  { id: "auth", label: "Auth Service", sub: "sign-in & roles", y: 6, s: 0.1 },
+  { id: "product", label: "Product Service", sub: "catalog & inventory", y: 30, s: 0.26 },
+  { id: "order", label: "Order Service", sub: "cart to order", y: 54, s: 0.42 },
+  { id: "notif", label: "Notification Service", sub: "emails & alerts", y: 78, s: 0.58 },
 ];
 const CAPTIONS = [
-  ["Client sends a request to the API Gateway", 0],
-  ["Auth Service verifies the token", 0.1],
-  ["Product Service returns the item", 0.28],
-  ["Inventory Service reserves stock", 0.46],
-  ["Order Service creates the order", 0.64],
-  ["Gateway replies: order confirmed", 0.84],
+  ["Storefront sends a request to the API Gateway", 0],
+  ["Auth Service signs the customer in", 0.1],
+  ["Product Service serves catalog & stock", 0.26],
+  ["Order Service places the order", 0.42],
+  ["Notification Service confirms to the customer", 0.58],
+  ["Admin console updates products & inventory", 0.72],
 ];
 
 function Packet({ d, s, e, rev = false }) {
@@ -31,29 +31,33 @@ function Packet({ d, s, e, rev = false }) {
 
 function Micro() {
   const gw = (y) => `M66 50 C80 50 82 ${y} 96 ${y}`;
+  const clients = [
+    { id: "store", label: "Storefront", sub: "customers", y: 12, s: 0, to: "M26 23 C34 23 34 44 40 44" },
+    { id: "admin", label: "Admin", sub: "console", y: 62, s: 0.72, to: "M26 73 C34 73 34 56 40 56" },
+  ];
   return (
     <div className="scr scr-micro">
       <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid meet">
-        {/* connections */}
-        <path className="wire" d="M26 50 H40" />
+        {clients.map((c) => (
+          <path key={c.id} className="wire" d={c.to} />
+        ))}
         {NODES.map((n) => (
           <path key={n.id} className="wire" d={gw(n.y + 7.5)} />
         ))}
-        <path className="wire dashed" d="M117 69 V78" />
+        <path className="wire dashed" d="M118 69 V78" />
 
-        {/* client */}
-        <g className="mnode" style={{ "--s": 0 }}>
-          <rect x="4" y="38" width="22" height="24" rx="3" />
-          <text x="15" y="49" className="t">Client</text>
-          <text x="15" y="55" className="t2">browser</text>
-        </g>
-        {/* gateway */}
+        {clients.map((c) => (
+          <g key={c.id} className="mnode" style={{ "--s": c.s }}>
+            <rect x="4" y={c.y} width="22" height="22" rx="3" />
+            <text x="15" y={c.y + 10} className="t">{c.label}</text>
+            <text x="15" y={c.y + 15.5} className="t2">{c.sub}</text>
+          </g>
+        ))}
         <g className="mnode gw" style={{ "--s": 0.02 }}>
           <rect x="40" y="34" width="26" height="32" rx="3" />
           <text x="53" y="48" className="t">API</text>
           <text x="53" y="54" className="t">Gateway</text>
         </g>
-        {/* services */}
         {NODES.map((n) => (
           <g key={n.id} className="mnode svc" style={{ "--s": n.s }}>
             <rect x="96" y={n.y} width="44" height="15" rx="3" />
@@ -66,14 +70,15 @@ function Micro() {
           </g>
         ))}
 
-        {/* packets: request flows in, then out */}
-        <Packet d="M26 50 H40" s={0} e={0.1} />
-        <Packet d={gw(13.5)} s={0.1} e={0.2} />
-        <Packet d={gw(37.5)} s={0.28} e={0.38} />
-        <Packet d={gw(61.5)} s={0.46} e={0.56} />
-        <Packet d={gw(85.5)} s={0.64} e={0.74} />
-        <Packet d="M117 69 V78" s={0.74} e={0.8} />
-        <Packet d="M26 50 H40" s={0.86} e={0.96} rev />
+        {/* storefront journey */}
+        <Packet d={clients[0].to} s={0} e={0.09} />
+        <Packet d={gw(13.5)} s={0.1} e={0.19} />
+        <Packet d={gw(37.5)} s={0.26} e={0.35} />
+        <Packet d={gw(61.5)} s={0.42} e={0.51} />
+        <Packet d="M118 69 V78" s={0.58} e={0.66} />
+        {/* admin journey */}
+        <Packet d={clients[1].to} s={0.72} e={0.8} />
+        <Packet d={gw(37.5)} s={0.82} e={0.91} />
       </svg>
       <div className="caps">
         {CAPTIONS.map(([t, s]) => (
@@ -84,7 +89,7 @@ function Micro() {
   );
 }
 
-/* ---------- tomadaxhis: symbolic design -> features -> live workflow ---------- */
+/* ---------- tomadachis.com: its real look, built step by step ---------- */
 function Flow() {
   return (
     <div className="scr scr-flow">
@@ -97,12 +102,22 @@ function Flow() {
         ))}
       </ol>
       <div className="canvas">
-        <div className="wf wnav"><span /><span /><span /></div>
-        <div className="wf whero"><b /><b /></div>
-        <div className="wf cards"><span /><span /><span /></div>
-        <div className="feat f1" />
-        <div className="feat f2" />
-        <div className="feat f3" />
+        <div className="wf wnav">
+          <em className="logo-m" />
+          <span /><span /><span /><span />
+          <u className="login" />
+        </div>
+        <div className="wf whero">
+          <div className="txt">
+            <b /><b /><i className="sub" />
+          </div>
+          <div className="img" />
+        </div>
+        <div className="wf wpills">
+          <span className="p1">Shop Now</span>
+          <span className="p2">Vet Care</span>
+          <span className="p3">Adopt</span>
+        </div>
         <div className="live-badge">LIVE</div>
         <span className="cur" />
       </div>
@@ -125,19 +140,31 @@ function Arch() {
   );
 }
 
-/* ---------- singledotstudio: one dot -> a whole layout ---------- */
-function Dot() {
+/* ---------- Single Dot Studio: room sizes -> estimate -> quotation PDF -> email ---------- */
+function Calc() {
   return (
-    <div className="scr scr-dot">
-      <span className="dot" />
-      <span className="ripple" />
-      <div className="layout">
-        <i style={{ "--i": 0 }} />
-        <i style={{ "--i": 1 }} />
-        <i style={{ "--i": 2 }} />
-        <i style={{ "--i": 3 }} />
-        <i style={{ "--i": 4 }} />
+    <div className="scr scr-calc">
+      <div className="rooms">
+        {["Living room", "Bedroom", "Kitchen"].map((r, i) => (
+          <div key={r} className="room" style={{ "--i": i }}>
+            <span>{r}</span>
+            <div className="trk">
+              <i />
+            </div>
+          </div>
+        ))}
+        <div className="est">
+          <b>ESTIMATE</b>
+          <div className="est-bar"><i /></div>
+        </div>
       </div>
+      <div className="pdf">
+        <h5>QUOTATION</h5>
+        <i /><i /><i /><i />
+        <u>TOTAL</u>
+      </div>
+      <div className="sent">✓ sent to your inbox</div>
+      <span className="cur" />
     </div>
   );
 }
@@ -151,7 +178,7 @@ function Screen({ variant }) {
     case "arch":
       return <Arch />;
     default:
-      return <Dot />;
+      return <Calc />;
   }
 }
 
