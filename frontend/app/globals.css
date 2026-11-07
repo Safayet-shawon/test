@@ -5445,7 +5445,7 @@ html.intro-lock .hero *::after {
 }
 
 
-/* ============ v13: 50 / 50 hero + 3D conveyor belt (no ruler, no red, no glow) ============ */
+/* ============ v13: 50 / 50 hero + curved conveyor belt (no ruler, no red, no glow) ============ */
 :root {
   --mix: linear-gradient(100deg, #b8b8c2 0%, #ffffff 22%, #7ec3ff 45%, #b58cff 68%, #d8d8e0 90%);
 }
@@ -5464,79 +5464,80 @@ html.intro-lock .hero *::after {
   padding-right: clamp(1rem, 2.5vw, 2.5rem);
 }
 
-.belt {
-  --w: 240px;
-  position: relative;
-  width: min(100%, 680px);
-  height: 196px;
-  margin: 1.4rem 0 1.8rem;
-  perspective: 1000px;
-  perspective-origin: 78% 50%;
+/* two tones: near-black on the left, deep slate-indigo on the right, so the eye travels right */
+.hero {
+  background: linear-gradient(90deg, #050507 0%, #07070a 38%, #0d0f1d 58%, #151838 100%);
 }
-.belt-3d {
+.hero-right::before {
+  background: linear-gradient(160deg, #262b4a, #11132a);
+  border: 1px solid rgba(190, 200, 255, 0.16);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.belt {
+  --w: 236px;
+  position: relative;
+  width: min(100%, 700px);
+  height: 230px;
+  margin: 1.2rem 0 1.6rem;
+  perspective: 900px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
+}
+.belt-list {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transform: rotateY(-26deg); /* the left end recedes into the distance */
-  transform-origin: 100% 50%;
-}
-.belt-band {
-  position: absolute;
-  inset: 14% -4% 14% -40%;
-  border-radius: 14px;
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.075) 0 2px, transparent 2px 28px),
-    linear-gradient(180deg, #17171d, #0a0a0d);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-inline: 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -10px 24px rgba(0, 0, 0, 0.6);
-  transition: background-position 1.25s cubic-bezier(0.5, 0, 0.15, 1);
-}
-.belt-track {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0;
-  transform-style: preserve-3d;
-  transition: transform 1.25s cubic-bezier(0.5, 0, 0.15, 1); /* a belt: smooth start, smooth stop */
-  will-change: transform;
 }
 .t-item {
   position: absolute;
+  left: 0;
   top: 50%;
-  width: calc(var(--w) - 18px);
-  height: 112px;
-  margin: -56px 0 0 9px;
+  height: 122px;
   padding: 0 1.05rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.22rem;
   border-radius: 13px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  box-shadow: 0 22px 30px rgba(0, 0, 0, 0.55);
-  transition: transform 0.9s var(--ease), background 0.6s, border-color 0.6s;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  will-change: transform, opacity, filter;
+}
+/* the belt itself: a plate under every tile, so the tiles form one continuous curved belt */
+.t-item::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -20px;
+  height: 13px;
+  border-radius: 6px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 16px),
+    linear-gradient(180deg, #23232b, #0b0b0e);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .t-item .no {
   font: 600 0.66rem var(--font-body);
   letter-spacing: 0.26em;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.32);
 }
 .t-item .cat {
-  font: 800 clamp(1.1rem, 1.65vw, 1.7rem) / 1.08 var(--font-display);
+  font: 800 clamp(1.2rem, 1.9vw, 1.95rem) / 1.08 var(--font-display);
   letter-spacing: -0.04em;
-  background: linear-gradient(180deg, #8e8e99, #4b4b55);
+  background: linear-gradient(180deg, #a4a4b0, #5a5a66);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .t-item small {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.3);
   white-space: nowrap;
 }
 .t-item.on {
-  transform: translateZ(34px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
   border-color: transparent;
 }
 .t-item.on::before {
@@ -5558,58 +5559,20 @@ html.intro-lock .hero *::after {
   color: transparent;
 }
 .t-item.on .cat {
-  background: linear-gradient(180deg, #ffffff 15%, #aeb0bd);
+  background: linear-gradient(180deg, #ffffff 15%, #b4b7c6);
   -webkit-background-clip: text;
   background-clip: text;
 }
 .t-item.on small {
-  color: rgba(255, 255, 255, 0.72);
-}
-/* depth: the far (left) end sinks into darkness */
-.belt-fog {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(90deg, #060608 0%, rgba(6, 6, 8, 0.9) 14%, rgba(6, 6, 8, 0.45) 34%, rgba(6, 6, 8, 0) 56%),
-    linear-gradient(270deg, rgba(6, 6, 8, 0.5), transparent 14%);
+  color: rgba(255, 255, 255, 0.75);
 }
 @media (max-width: 900px) {
   .belt {
     width: 100%;
-    height: 170px;
-    perspective-origin: 70% 50%;
-  }
-  .belt-3d {
-    transform: rotateY(-20deg);
+    height: 196px;
   }
   .t-item {
-    height: 100px;
-    margin-top: -50px;
-  }
-}
-
-/* belt stays inside the left half: clip + fade the near (right) edge */
-.belt {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 78%, transparent 100%);
-  height: 210px;
-}
-.t-item {
-  height: 124px;
-  margin-top: -62px;
-}
-.t-item .cat {
-  font-size: clamp(1.2rem, 1.9vw, 1.95rem);
-}
-@media (max-width: 900px) {
-  .belt {
-    height: 176px;
-  }
-  .t-item {
-    height: 104px;
-    margin-top: -52px;
+    height: 108px;
   }
 }
 
@@ -5627,4 +5590,49 @@ html.intro-lock .hero *::after {
     white-space: normal;
     text-align: center;
   }
+}
+
+/* quicker hero: snappier drops so the finished website gets the screen time */
+@keyframes gravDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-15cqw) rotate(var(--r, -3deg));
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+  10% {
+    opacity: 1;
+  }
+  42% {
+    transform: translateY(0) rotate(0);
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+  }
+  58% {
+    transform: translateY(-1.3cqw);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+  72% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+  }
+  84% {
+    transform: translateY(-0.4cqw);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.obj-layer {
+  animation-duration: 0.85s;
+}
+.scene[data-phase="site"] .pop {
+  animation-duration: 0.9s;
+  animation-delay: calc(0.3s + var(--i) * 0.085s);
+}
+.scene[data-phase="fall"] .pop {
+  animation-duration: 0.55s;
+}
+.scene[data-phase="fall"] .browser {
+  animation-duration: 0.6s;
 }

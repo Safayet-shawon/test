@@ -4,10 +4,10 @@ import { BUSINESSES, INTRO } from "@/data/site";
 import { BizIcon, ExplodePhone, goldenSpiral } from "./Icons";
 
 const SPIRAL = goldenSpiral(600, 12);
-const INTRO_MS = 3400; // "any business" collage
-const IDLE = 2400; // plain object
-const SITE_MS = 4400; // ms from "site opens" until the next business
-const FALL_MS = 850; // the site's pieces drop away under mild gravity
+const INTRO_MS = 2500; // "any business" collage
+const IDLE = 1150; // short pre-context: the plain object
+const SITE_MS = 4300; // ms from "site opens" until the next business
+const FALL_MS = 650; // the site's pieces drop away under mild gravity
 
 
 /* ---- photo-led editorial site (real photography) ---- */
