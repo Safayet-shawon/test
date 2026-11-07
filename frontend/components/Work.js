@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { PROJECTS } from "@/data/site";
 import Reveal from "./Reveal";
 import { Arrow } from "./Icons";
@@ -182,12 +184,48 @@ function Screen({ variant }) {
   }
 }
 
+// Real screenshots: drop `public/projects/<id>.webp` (and optionally `<id>-2.webp`) and the card
+// shows them (slow auto-pan, crossfading) instead of the animated stand-in. No code change needed.
+function shotsFor(id) {
+  const dir = path.join(process.cwd(), "public", "projects");
+  const out = [];
+  for (const suffix of ["", "-2", "-3"]) {
+    for (const ext of ["webp", "png", "jpg"]) {
+      if (fs.existsSync(path.join(dir, `${id}${suffix}.${ext}`))) {
+        out.push(`/projects/${id}${suffix}.${ext}`);
+        break;
+      }
+    }
+  }
+  return out;
+}
+
 function Clip({ p }) {
+  const shots = shotsFor(p.id);
+  const host = p.link ? p.link.replace(/^https?:\/\//, "") : `${p.id}.app`;
   return (
-    <div className="clip">
-      {p.video ? <video src={p.video} autoPlay muted loop playsInline /> : <Screen variant={p.variant} />}
+    <div className={`clip ${shots.length ? "has-shot" : ""}`} data-tilt>
+      {p.video ? (
+        <video src={p.video} autoPlay muted loop playsInline />
+      ) : shots.length ? (
+        <>
+          <div className="chrome">
+            <i />
+            <i />
+            <i />
+            <span>{host}</span>
+          </div>
+          <div className={`shots n${shots.length}`}>
+            {shots.map((src, i) => (
+              <div key={src} className="shot" style={{ backgroundImage: `url(${src})`, "--i": i }} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <Screen variant={p.variant} />
+      )}
       <span className="rec">
-        <i /> loop
+        <i /> {shots.length ? "snapshot" : "loop"}
       </span>
     </div>
   );
