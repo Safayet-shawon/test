@@ -1,35 +1,46 @@
 const D = "#14161f"; // neutral outline (not our brand ink — these are "client" colours)
 
-// Isometric exploded-view device. `live` loops explode/implode.
-export function ExplodeDevice({ live = false }) {
-  const plate = (y, top, side, extra) => (
-    <>
-      <polygon points={`40,${y} 100,${y + 30} 100,${y + 40} 40,${y + 10}`} fill={side} />
-      <polygon points={`160,${y} 100,${y + 30} 100,${y + 40} 160,${y + 10}`} fill={side} opacity=".75" />
-      <polygon points={`100,${y - 30} 160,${y} 100,${y + 30} 40,${y}`} fill={top} stroke={D} strokeWidth="2.5" strokeLinejoin="round" />
-      {extra}
-    </>
-  );
+// Apple-style exploded phone: layers float apart in 3D (CSS), labels appear as they separate.
+const PHONE_LAYERS = [
+  ["back", "Back glass"],
+  ["batt", "Battery"],
+  ["logic", "Logic board + chip"],
+  ["cam", "Camera system"],
+  ["oled", "OLED display"],
+  ["glass", "Cover glass"],
+];
+export function ExplodePhone({ live = false }) {
   return (
-    <svg viewBox="0 0 200 200" className={`biz-icon dev ${live ? "live" : ""}`} aria-hidden="true">
-      {/* leader lines + labels fade in when exploded */}
-      <g className="dev-lines" stroke="#00D1FF" strokeWidth="1.5" strokeDasharray="3 3" fill="none">
-        <path d="M100 150 V10" />
-      </g>
-      <g className="xl" style={{ "--i": 0 }}>{plate(150, "#2b3140", "#1a1f2b")}</g>
-      <g className="xl" style={{ "--i": 1 }}>
-        {plate(150, "#00a8e8", "#0077a8", <polygon points="100,138 130,150 100,162 70,150" fill="#00D1FF" opacity=".55" />)}
-      </g>
-      <g className="xl" style={{ "--i": 2 }}>
-        {plate(150, "#1fa86a", "#13794b",
-          <>
-            <polygon points="100,138 124,150 100,162 76,150" fill="#0d1117" stroke="#9affc8" strokeWidth="1.5" />
-            <path d="M52 150 L76 138 M148 150 L124 162 M100 168 V176" stroke="#9affc8" strokeWidth="1.5" fill="none" />
-          </>
-        )}
-      </g>
-      <g className="xl" style={{ "--i": 3, opacity: 0.92 }}>{plate(150, "rgba(255,255,255,.55)", "rgba(255,255,255,.4)")}</g>
-    </svg>
+    <div className={`phone ${live ? "live" : ""}`} aria-hidden="true">
+      <div className="stage">
+        {PHONE_LAYERS.map(([k], i) => (
+          <div key={k} className={`pl pl-${k}`} style={{ "--i": i }}>
+            {k === "logic" && (
+              <>
+                <b className="chip1" />
+                <b className="chip2" />
+                <b className="chip3" />
+              </>
+            )}
+            {k === "cam" && (
+              <span className="lenses">
+                <i />
+                <i />
+                <i />
+              </span>
+            )}
+            {k === "oled" && <span className="notch" />}
+          </div>
+        ))}
+      </div>
+      <ul className="plabels">
+        {PHONE_LAYERS.map(([k, label], i) => (
+          <li key={k} style={{ "--i": i }}>
+            {label}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -99,7 +110,22 @@ export function BizIcon({ kind }) {
         </svg>
       );
     case "hardware":
-      return <ExplodeDevice />;
+      return (
+        <svg viewBox="0 0 200 200" className="biz-icon" aria-hidden="true">
+          <rect x="60" y="14" width="80" height="172" rx="18" fill="#12151c" stroke="#8b93a3" strokeWidth="4" />
+          <rect x="67" y="22" width="66" height="156" rx="12" fill="url(#ph-g)" />
+          <defs>
+            <linearGradient id="ph-g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#1a1040" />
+              <stop offset=".6" stopColor="#0a2f6b" />
+              <stop offset="1" stopColor="#3a1d7a" />
+            </linearGradient>
+          </defs>
+          <rect x="88" y="28" width="24" height="6" rx="3" fill="#000" />
+          <circle cx="100" cy="112" r="22" fill="none" stroke="#4da3ff" strokeWidth="3" opacity=".7" />
+          <circle cx="100" cy="112" r="9" fill="#4da3ff" opacity=".85" />
+        </svg>
+      );
     default:
       return null;
   }

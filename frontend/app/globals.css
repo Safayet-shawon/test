@@ -4229,3 +4229,318 @@ body::before {
     font-size: clamp(3rem, 15vw, 5rem);
   }
 }
+
+/* ============ v8: professional type + exploded phone ============ */
+:root {
+  --font-display: var(--font-body); /* one clean family (Geist); Instrument Serif for italic accents */
+}
+body {
+  font-feature-settings: "ss01", "cv11";
+}
+h1,
+h2,
+h3 {
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 3.3vw, 3.7rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+.logo {
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+.lead {
+  font-size: clamp(1.02rem, 1.2vw, 1.2rem);
+  line-height: 1.55;
+}
+.eyebrow,
+.kicker,
+.panel .kicker {
+  letter-spacing: 0.16em;
+  font-weight: 600;
+}
+.panel h3 {
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+.panel h2 {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.work-head h2,
+.process h2,
+.contact h2 {
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+.card h3 {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.marquee-row span {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+/* serif accents: Instrument Serif is a single (regular) weight, so no faux bold */
+.psite.f-serif h4,
+.psite.f-serif .ph-nav b {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.psite.f-serif .ph-copy h4 {
+  font-size: 8.4cqw;
+  font-weight: 400;
+  line-height: 1;
+}
+.panel h2 em,
+.panel .serif {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.panel h2 em {
+  font-size: 1.1em;
+}
+
+/* ---- exploded phone ---- */
+.phone {
+  --gap: 12;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 90cqw;
+}
+.phone .stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13cqw;
+  height: 27cqw;
+  margin: -13.5cqw 0 0 -6.5cqw;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-34deg);
+  animation: phoneSway 9s ease-in-out infinite alternate;
+}
+.pl {
+  position: absolute;
+  inset: 0;
+  border-radius: 2.3cqw;
+  transform: translateZ(calc(var(--i) * var(--gap) * 0.12cqw));
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.pl-back {
+  background: linear-gradient(160deg, #2b2f3a, #12151c);
+}
+.pl-back::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 55%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 0.35cqw solid rgba(255, 255, 255, 0.18);
+}
+.pl-batt {
+  background: transparent;
+  box-shadow: none;
+}
+.pl-batt::after {
+  content: "";
+  position: absolute;
+  inset: 14% 12%;
+  border-radius: 1.4cqw;
+  background: linear-gradient(160deg, #cfd6e4, #8e99ad);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 0 0 0.5cqw rgba(0, 0, 0, 0.1);
+}
+.pl-logic {
+  background: transparent;
+  box-shadow: none;
+}
+.pl-logic::before {
+  content: "";
+  position: absolute;
+  inset: 4% 10% 38% 10%;
+  border-radius: 1.2cqw;
+  background: linear-gradient(160deg, #1f3a33, #0f1c19);
+  box-shadow: 0 0 0 1px rgba(160, 255, 220, 0.35);
+}
+.pl-logic b {
+  position: absolute;
+  background: #0b0f14;
+  border: 1px solid #d9b36a;
+  border-radius: 0.4cqw;
+}
+.pl-logic .chip1 {
+  left: 22%;
+  top: 11%;
+  width: 36%;
+  height: 14%;
+  background: linear-gradient(135deg, #30343d, #101217);
+  box-shadow: 0 0 1.6cqw rgba(77, 163, 255, 0.7);
+}
+.pl-logic .chip2 {
+  left: 66%;
+  top: 10%;
+  width: 16%;
+  height: 8%;
+}
+.pl-logic .chip3 {
+  left: 24%;
+  top: 31%;
+  width: 22%;
+  height: 7%;
+}
+.pl-cam {
+  background: transparent;
+  box-shadow: none;
+}
+.lenses {
+  position: absolute;
+  left: 8%;
+  top: 4%;
+  width: 54%;
+  aspect-ratio: 1;
+  border-radius: 1.2cqw;
+  background: linear-gradient(160deg, #3a3f4b, #1b1e26);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.lenses i {
+  position: absolute;
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4da3ff, #0b1220 60%);
+  box-shadow: 0 0 0 0.3cqw #8b93a3;
+}
+.lenses i:nth-child(1) {
+  left: 8%;
+  top: 8%;
+}
+.lenses i:nth-child(2) {
+  left: 8%;
+  top: 54%;
+}
+.lenses i:nth-child(3) {
+  left: 54%;
+  top: 30%;
+}
+.pl-oled {
+  background: linear-gradient(165deg, #1a1040, #0a2f6b 60%, #3a1d7a);
+}
+.pl-oled .notch {
+  position: absolute;
+  left: 50%;
+  top: 3%;
+  width: 32%;
+  height: 3.2%;
+  translate: -50% 0;
+  border-radius: 99px;
+  background: #000;
+}
+.pl-glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08));
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55), inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.12);
+}
+.phone .plabels {
+  position: absolute;
+  left: 52%;
+  top: 0;
+  bottom: 0;
+  font-size: 1.75cqw;
+  font-weight: 600;
+  color: #cfe3ff;
+}
+.phone .plabels li {
+  position: absolute;
+  left: 0;
+  top: calc(66% - var(--i) * var(--gap) * 0.1cqw);
+  white-space: nowrap;
+  padding-left: 3.2cqw;
+  opacity: clamp(0, calc((var(--gap) - 18) / 14), 1);
+}
+.phone .plabels li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2.4cqw;
+  height: 1px;
+  background: rgba(207, 227, 255, 0.7);
+}
+.phone.live {
+  animation: explode 4.6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+}
+.scene:not([data-phase="site"]) .phone.live {
+  animation-play-state: paused;
+}
+.gsite .phero {
+  grid-template-columns: 1fr 1.25fr;
+  align-items: center;
+}
+.gsite .phero-art {
+  height: 46cqw;
+  animation: none;
+  filter: drop-shadow(0 0 3cqw rgba(77, 163, 255, 0.35));
+}
+.gsite .phero h4 {
+  font-size: 5.4cqw;
+  letter-spacing: -0.04em;
+}
+@keyframes phoneSway {
+  from {
+    transform: rotateX(58deg) rotateZ(-40deg);
+  }
+  to {
+    transform: rotateX(58deg) rotateZ(-26deg);
+  }
+}
+
+/* v8: larger phone so the layers read clearly */
+.phone .stage {
+  width: 16cqw;
+  height: 33cqw;
+  margin: -16.5cqw 0 0 -8cqw;
+  border-radius: 3cqw;
+}
+.pl {
+  border-radius: 2.8cqw;
+  transform: translateZ(calc(var(--i) * var(--gap) * 0.15cqw));
+}
+.phone .plabels {
+  font-size: 2.05cqw;
+  left: 54%;
+}
+.phone .plabels li {
+  top: calc(64% - var(--i) * var(--gap) * 0.125cqw);
+}
+.gsite .phero-art {
+  height: 52cqw;
+  margin-top: -4cqw;
+}
+
+/* v8: keep the phone clear of the nav */
+.gsite .pnav {
+  position: relative;
+  z-index: 3;
+}
+.gsite .phero-art {
+  margin-top: 4cqw;
+  height: 48cqw;
+}
+.phone .stage {
+  width: 14.5cqw;
+  height: 30cqw;
+  margin: -15cqw 0 0 -7.25cqw;
+}
+.pl {
+  transform: translateZ(calc(var(--i) * var(--gap) * 0.13cqw));
+}
+.phone .plabels li {
+  top: calc(64% - var(--i) * var(--gap) * 0.108cqw);
+}

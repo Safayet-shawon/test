@@ -1,9 +1,8 @@
-import { Unbounded, Space_Grotesk, Fraunces } from "next/font/google";
+import { Geist, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const display = Unbounded({ subsets: ["latin"], variable: "--font-display", display: "swap" });
-const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
-const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif", display: "swap" });
+const sans = Geist({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
   title: "prixon — websites for any business",
@@ -15,7 +14,7 @@ export const viewport = { themeColor: "#6f2dbd" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${serif.variable}`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body>
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>

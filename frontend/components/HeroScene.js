@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BUSINESSES, INTRO } from "@/data/site";
-import { BizIcon, ExplodeDevice, goldenSpiral } from "./Icons";
+import { BizIcon, ExplodePhone, goldenSpiral } from "./Icons";
 
 const SPIRAL = goldenSpiral(600, 12);
 const INTRO_MS = 3400; // "any business" collage
@@ -126,7 +126,7 @@ function GenericSite({ site }) {
           <button type="button" tabIndex={-1} className="pop pbtn" style={{ "--i": 3 }}>{site.cta}</button>
         </div>
         <div className="phero-art pop" style={{ "--i": 2 }}>
-          <ExplodeDevice live />
+          <ExplodePhone live />
         </div>
       </div>
       <div className="pcards">
