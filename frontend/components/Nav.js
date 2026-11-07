@@ -16,6 +16,7 @@ export default function Nav() {
         <Logo />
       </a>
       <nav>
+        <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#work">Work</a>
         <a href="#contact" className="nav-cta">

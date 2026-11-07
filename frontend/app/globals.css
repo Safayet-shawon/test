@@ -763,37 +763,6 @@ h3 {
   background: var(--t, var(--violet));
 }
 
-/* ============ MARQUEE (white block) ============ */
-.marquee {
-  background: #fff;
-  color: var(--ink);
-  overflow: hidden;
-  padding: 0.9rem 0;
-  border-block: var(--bw) solid var(--ink);
-  position: relative;
-  z-index: 5;
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 32s linear infinite;
-}
-.marquee-row {
-  display: flex;
-  flex-shrink: 0;
-}
-.marquee-row span {
-  font: 800 clamp(1.2rem, 2.6vw, 2rem) var(--font-display);
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  padding-right: 1.4rem;
-  white-space: nowrap;
-}
-.marquee-row em {
-  font-style: normal;
-  color: var(--pink);
-  padding-left: 1rem;
-}
 
 /* ============ SERVICES — horizontal half-page panels ============ */
 .services {
@@ -1684,11 +1653,6 @@ h3 {
     top: 47%;
   }
 }
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
 @keyframes nudge {
   50% {
     transform: translateX(8px);
@@ -2533,17 +2497,6 @@ h3 {
 .step4 p {
   font-size: 0.95rem;
   color: var(--violet-deep);
-}
-.marquee.alt {
-  background: var(--violet);
-  color: #fff;
-  border-top: var(--bw) solid var(--ink);
-}
-.marquee.alt .marquee-row em {
-  color: var(--neon-lt);
-}
-.marquee.alt .marquee-track {
-  animation-direction: reverse;
 }
 
 /* ---- keyframes (v2) ---- */
@@ -3638,16 +3591,6 @@ body::before {
 }
 
 /* marquee: frosted band */
-.marquee {
-  background: var(--glass-strong);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-block: 1px solid var(--glass-line);
-}
-.marquee-row span {
-  font-weight: 700;
-  color: var(--violet-deep);
-}
 
 /* services panels: gradient violet, hairline dividers */
 .panel {
@@ -5844,4 +5787,133 @@ html.intro-lock .hero *::after {
 }
 .p-rail li.on b {
   color: #6f2dbd;
+}
+
+/* ============ v18: About section — light sand, Helvetica Light ============ */
+/* Helvetica Neue Light where it exists (macOS/iOS); Inter Light elsewhere so it is light on every device */
+:root {
+  --font-helv: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", var(--font-light), Helvetica, Arial, sans-serif;
+}
+.about {
+  position: relative;
+  background: var(--sand);
+  color: #14121b;
+  padding: var(--u4) clamp(1rem, 4vw, 4rem) var(--u4);
+  overflow: hidden;
+  isolation: isolate;
+  font-family: var(--font-helv);
+  font-weight: 300;
+}
+.about::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 45vw;
+  height: 45vw;
+  right: -14vw;
+  top: -6vw;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.9;
+  filter: blur(120px);
+  pointer-events: none;
+}
+.about-in {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.about-kick {
+  font-family: var(--font-helv);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(20, 18, 27, 0.55);
+  margin-bottom: 1.6rem;
+}
+.about-lead {
+  font-family: var(--font-helv);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 4vw, 3.7rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  max-width: 24em;
+  color: #14121b;
+}
+.about-lead .zero {
+  font-weight: 300;
+  background: linear-gradient(100deg, #2a2833 0%, #4d7fe8 55%, #8b3df0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  margin-top: var(--u3);
+}
+.about-pt {
+  border-top: 1px solid rgba(20, 18, 27, 0.22);
+  padding-top: 1.2rem;
+}
+.about-pt .n {
+  display: block;
+  font-weight: 400;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: rgba(20, 18, 27, 0.5);
+  margin-bottom: 1.1rem;
+}
+.about-pt h3 {
+  font-family: var(--font-helv);
+  font-weight: 300;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.8rem;
+  color: #14121b;
+}
+.about-pt p {
+  font-weight: 300;
+  font-size: 1.06rem;
+  line-height: 1.6;
+  color: rgba(20, 18, 27, 0.72);
+  max-width: 26rem;
+}
+.about-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.4rem 3rem;
+  margin-top: var(--u3);
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(20, 18, 27, 0.22);
+}
+.about-foot p {
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.45;
+  max-width: 34rem;
+  color: rgba(20, 18, 27, 0.8);
+}
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #14121b;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #14121b;
+  transition: gap 0.3s var(--ease);
+}
+.about-link:hover {
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
 }

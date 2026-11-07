@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
+import About from "@/components/About";
 import Services from "@/components/Services";
 import Work from "@/components/Work";
 import Process from "@/components/Process";
@@ -15,7 +15,7 @@ export default function Page() {
       <Motion />
       <Nav />
       <Hero />
-      <Marquee />
+      <About />
       <Services />
       <Work />
       <Process />

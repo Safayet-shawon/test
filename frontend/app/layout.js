@@ -1,8 +1,9 @@
-import { Unbounded, Space_Grotesk, Fraunces } from "next/font/google";
+import { Unbounded, Space_Grotesk, Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 
 const display = Unbounded({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
+const light = Inter({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-light", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
@@ -15,7 +16,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${light.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
