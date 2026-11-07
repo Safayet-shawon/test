@@ -8893,3 +8893,126 @@ header.nav .nav-cta:hover {
   height: 21cqw;
   top: 13cqw;
 }
+
+/* ============ v27: designed identity + bigger nav + larger phone teardown ============ */
+.logo {
+  --cut: #0b0b0d;
+}
+.logo-dark {
+  --cut: #e9e2d6;
+}
+header.nav,
+header.nav.solid {
+  height: 76px;
+}
+header.nav .logo,
+.p-brand .logo {
+  gap: 0.7rem;
+  font: 300 1.4rem var(--font-body);
+  letter-spacing: -0.035em;
+}
+.logo .logo-text b {
+  font-weight: 700;
+}
+.logo-mark {
+  width: 2.15rem;
+  height: 2.15rem;
+}
+.p-brand .logo {
+  font-size: 1.2rem;
+}
+.p-brand .logo-mark {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+header.nav nav {
+  gap: 2.4rem;
+}
+header.nav nav a:not(.nav-cta) {
+  font-size: 0.95rem;
+}
+header.nav .nav-cta {
+  font-size: 0.92rem;
+  padding: 0.72em 1.35em;
+  border-radius: 10px;
+}
+@media (max-width: 700px) {
+  header.nav,
+  header.nav.solid {
+    height: 62px;
+  }
+  header.nav .logo {
+    font-size: 1.2rem;
+  }
+  .logo-mark {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  .hero {
+    padding-top: 4.6rem !important;
+  }
+}
+
+/* phone teardown: much larger, labels in a clear column to the right */
+.dm-tech .tech-phone {
+  top: 22cqw;
+  width: 82cqw;
+  height: 62cqw;
+}
+.dm-tech .phone .stage {
+  width: 25cqw;
+  height: 52cqw;
+  margin: -26cqw 0 0 -16cqw;
+  border-radius: 4cqw;
+}
+.dm-tech .pl {
+  transform: translateZ(calc(var(--i) * var(--gap) * 0.17cqw));
+}
+.dm-tech .phone .plabels {
+  left: 70%;
+}
+.dm-tech .phone .plabels li {
+  top: calc(80% - var(--i) * var(--gap) * 0.19cqw);
+  font-size: 2.1cqw;
+}
+@keyframes explode7 {
+  from {
+    --gap: 9;
+  }
+  to {
+    --gap: 24;
+  }
+}
+.dm-tech .tech-head {
+  top: 8.5cqw;
+}
+.dm-tech .tech-head h4 {
+  font-size: 6.8cqw;
+}
+.dm-tech .tech-head p {
+  font-size: 2.1cqw;
+  margin-top: 0.8cqw;
+}
+.dm-tech .sp0 {
+  top: 36cqw;
+}
+.dm-tech .sp1 {
+  top: 52cqw;
+}
+.dm-tech .sp2 {
+  top: 69cqw;
+}
+
+.dm-tech .sp2 {
+  left: 4cqw;
+  right: auto;
+  top: 68cqw;
+  text-align: left;
+  border-right: 0 !important;
+  border-left: 0.3cqw solid #4da3ff !important;
+  padding-left: 1.6cqw !important;
+  padding-right: 0 !important;
+}
+.dm-tech .phone .plabels {
+  left: 74%;
+}
