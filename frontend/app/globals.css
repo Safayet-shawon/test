@@ -5480,15 +5480,32 @@ html.intro-lock .hero *::after {
   width: min(100%, 700px);
   height: 230px;
   margin: 1.2rem 0 1.6rem;
-  perspective: 900px;
+  perspective: 1000px;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
   mask-image: linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
 }
+.belt-3d,
+.belt-band,
 .belt-list {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+}
+/* one continuous belt surface: thin slices on the same arc, treads scroll with the tiles */
+.bs {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 152px;
+  margin-top: -76px;
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.085) 0 2px, transparent 2px 28px),
+    linear-gradient(180deg, #1b1b23, #0a0a0d);
+  background-size: auto, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  background-position: calc(var(--shift, 0px) - var(--a, 0px)) 0, 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.1), inset 0 -14px 22px rgba(0, 0, 0, 0.55);
+  will-change: transform;
 }
 .t-item {
   position: absolute;
@@ -5504,19 +5521,6 @@ html.intro-lock .hero *::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
   border: 1px solid rgba(255, 255, 255, 0.12);
   will-change: transform, opacity, filter;
-}
-/* the belt itself: a plate under every tile, so the tiles form one continuous curved belt */
-.t-item::after {
-  content: "";
-  position: absolute;
-  left: -5px;
-  right: -5px;
-  bottom: -20px;
-  height: 13px;
-  border-radius: 6px;
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 16px),
-    linear-gradient(180deg, #23232b, #0b0b0e);
-  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .t-item .no {
   font: 600 0.66rem var(--font-body);
