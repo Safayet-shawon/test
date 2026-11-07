@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useRef, useState } from "react";
-import { BUSINESSES, INTRO } from "@/data/site";
+import { BUSINESSES } from "@/data/site";
 import HeroScene from "./HeroScene";
 import Tape from "./Tape";
 import { Arrow } from "./Icons";
@@ -18,10 +18,10 @@ function Letters({ text, base = 0 }) {
 }
 
 export default function Hero() {
-  const [step, setStep] = useState(0);
-  const [phase, setPhase] = useState("intro");
+  const [step, setStep] = useState(1);
+  const [phase, setPhase] = useState("site");
   const [pos, setPos] = useState(0); // ever-increasing: the tape moves one notch per business
-  const prevStep = useRef(0);
+  const prevStep = useRef(1);
   const onChange = useCallback((i, ph) => {
     setStep(i);
     setPhase(ph);
@@ -31,11 +31,11 @@ export default function Hero() {
     }
   }, []);
   const item = (j) => {
-    if (j === 0) return { no: "00", cat: INTRO.label, sub: "yours is next" };
-    const b = BUSINESSES[(j - 1) % BUSINESSES.length];
-    return { no: String(((j - 1) % BUSINESSES.length) + 1).padStart(2, "0"), cat: b.label, sub: `${b.name} · ${b.url}` };
+    const k = j % BUSINESSES.length;
+    const b = BUSINESSES[k];
+    return { no: String(k + 1).padStart(2, "0"), cat: b.label, sub: `${b.name} · ${b.url}` };
   };
-  const cur = step === 0 ? INTRO : BUSINESSES[step - 1];
+  const cur = BUSINESSES[step - 1];
   const ref = useRef(null);
   const onMove = (e) => {
     const el = ref.current;
@@ -91,9 +91,7 @@ export default function Hero() {
         <div className="status" data-state={phase} key={`${step}-${phase}`} aria-live="polite">
           <i />
           <span>
-            {phase === "intro" && "Any business → one great website"}
-            {phase === "idle" && <>Designing your {cur.single}<b className="dots" /></>}
-            {phase === "site" && <>Live · {cur.url}</>}
+                                    {phase === "site" && <>Live · {cur.url}</>}
             {phase === "fall" && "Next business…"}
           </span>
         </div>

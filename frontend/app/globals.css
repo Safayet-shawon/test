@@ -9016,3 +9016,33 @@ header.nav .nav-cta {
 .dm-tech .phone .plabels {
   left: 74%;
 }
+
+/* ============ v28: websites only — smooth hand-off from one site to the next ============ */
+.scene[data-phase="wait"] .site-layer {
+  clip-path: circle(0% at 50% 50%);
+}
+/* the browser itself drops in with the same soft gravity each time a new site starts */
+.scene[data-phase="site"] .browser {
+  animation: gravDrop 0.85s both;
+}
+.scene[data-phase="fall"] .browser {
+  animation: fallAway 0.65s cubic-bezier(0.5, 0, 0.9, 0.5) both;
+}
+.scene[data-phase="fall"] .pop {
+  animation-duration: 0.5s;
+}
+.site-layer {
+  transition: clip-path 0.7s var(--ease2);
+}
+.scene[data-phase="fall"] .site-layer {
+  clip-path: circle(140% at 50% 50%);
+}
+.status {
+  animation: none;
+}
+
+/* no object step any more: the coloured blob behind it goes too */
+.blob.b-violet,
+.b-violet {
+  display: none;
+}
