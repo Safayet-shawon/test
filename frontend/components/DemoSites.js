@@ -292,7 +292,112 @@ function TechSite({ site }) {
   );
 }
 
+/* ---------- 7. Perfume store: luxury product page, glass bottle, scent notes ---------- */
+function PerfumeSite({ site }) {
+  return (
+    <div className="page dm dm-pf">
+      <div className="pf-nav pop" style={{ "--i": 0 }}>
+        <u>{site.nav[0]}</u>
+        <b>{site.name}</b>
+        <em>{site.nav[2]} (1)</em>
+      </div>
+      <div className="pf-glow" />
+      <div className="pf-name pop" style={{ "--i": 1 }} aria-hidden="true">{site.headline}</div>
+      <div className="pf-bottle pop" style={{ "--i": 2 }}>
+        <div className="pf-spin">
+          <svg viewBox="0 0 120 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="pfg" x1="0" x2="1">
+                <stop offset="0" stopColor="#6e4a1f" stopOpacity=".95" />
+                <stop offset=".35" stopColor="#e7c98d" />
+                <stop offset=".7" stopColor="#a67c3c" />
+                <stop offset="1" stopColor="#4d3213" />
+              </linearGradient>
+              <linearGradient id="pfc" x1="0" x2="1">
+                <stop offset="0" stopColor="#8a6a35" />
+                <stop offset=".4" stopColor="#f1dba8" />
+                <stop offset="1" stopColor="#6b4d22" />
+              </linearGradient>
+            </defs>
+            <rect x="44" y="4" width="32" height="28" rx="3" fill="url(#pfc)" />
+            <rect x="52" y="30" width="16" height="14" fill="#d8c9a8" opacity=".8" />
+            <rect x="14" y="42" width="92" height="150" rx="14" fill="url(#pfg)" stroke="rgba(255,255,255,.4)" strokeWidth="1.2" />
+            <rect x="30" y="100" width="60" height="50" rx="3" fill="#f3ead6" opacity=".95" />
+            <text x="60" y="124" textAnchor="middle" fontSize="7.4" fill="#5b4220" fontFamily="serif" letterSpacing="1.2">MAISON AURE</text>
+            <text x="60" y="140" textAnchor="middle" fontSize="7" fill="#8a6a35" fontFamily="serif">EAU DE PARFUM</text>
+            <path d="M24 56 V178" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity=".5" />
+          </svg>
+          <i className="sheen" />
+        </div>
+      </div>
+      <ul className="pf-notes">
+        {site.notes.map(([a, b], i) => (
+          <li key={a} className="pop" style={{ "--i": 3 + i, "--n": i }}>
+            <small>{a}</small>
+            <b>{b}</b>
+          </li>
+        ))}
+      </ul>
+      <div className="pf-buy pop" style={{ "--i": 6 }}>
+        <small>{site.kicker} · 50 ml</small>
+        <u>{site.cta}</u>
+      </div>
+      <span className="cursor" />
+    </div>
+  );
+}
+
+/* ---------- 8. Gym: bold type, class booking, live capacity ring, weekly streak ---------- */
+function GymSite({ site }) {
+  return (
+    <div className="page dm dm-gym">
+      <div className="gym-nav pop" style={{ "--i": 0 }}>
+        <b>{site.name}</b>
+        <span>
+          {site.nav.map((n) => (
+            <u key={n}>{n}</u>
+          ))}
+        </span>
+      </div>
+      <h4 className="gym-h pop" style={{ "--i": 1 }}>
+        <span>STRONGER</span>
+        <span>EVERY</span>
+        <span className="lime">DAY.</span>
+      </h4>
+      <div className="gym-ring pop" style={{ "--i": 2 }}>
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="15" className="trk" />
+          <circle cx="18" cy="18" r="15" className="val" pathLength="100" />
+        </svg>
+        <b>78%</b>
+        <small>full now</small>
+      </div>
+      <div className="gym-list">
+        {site.classes.map(([t, n, l], i) => (
+          <div key={t} className={`cls pop ${i === 1 ? "pick" : ""}`} style={{ "--i": 3 + i }}>
+            <b>{t}</b>
+            <span>{n}</span>
+            <em>{l}</em>
+          </div>
+        ))}
+      </div>
+      <div className="gym-streak pop" style={{ "--i": 6 }}>
+        <small>This week</small>
+        <span>
+          {[1, 1, 1, 0, 1, 0, 0].map((v, i) => (
+            <i key={i} className={v ? "on" : ""} style={{ "--k": i }} />
+          ))}
+        </span>
+      </div>
+      <u className="gym-cta pop" style={{ "--i": 6 }}>{site.cta} →</u>
+      <span className="cursor" />
+    </div>
+  );
+}
+
 export const SITES = {
+  perfume: PerfumeSite,
+  gym: GymSite,
   interior: InteriorSite,
   estate: EstateSite,
   travel: TravelSite,

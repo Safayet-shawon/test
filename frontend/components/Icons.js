@@ -218,6 +218,27 @@ export function BizIcon({ kind }) {
           <rect x="132" y="80" width="22" height="70" fill="#0F1536" />
         </svg>
       );
+    case "perfume":
+      return (
+        <svg viewBox="0 0 200 200" className="biz-icon" aria-hidden="true">
+          <rect x="84" y="16" width="32" height="26" rx="4" fill="#b08d57" />
+          <rect x="94" y="40" width="12" height="14" fill="#d8c9a8" />
+          <rect x="50" y="54" width="100" height="130" rx="18" fill="#efe6d4" fillOpacity=".9" stroke="#b08d57" strokeWidth="3" />
+          <rect x="66" y="108" width="68" height="44" rx="4" fill="none" stroke="#b08d57" strokeWidth="1.5" />
+          <text x="100" y="136" textAnchor="middle" fontSize="13" fill="#8a6a35" fontFamily="serif">AURE</text>
+          <path d="M62 66 V170" stroke="#fff" strokeWidth="6" strokeLinecap="round" opacity=".6" />
+        </svg>
+      );
+    case "gym":
+      return (
+        <svg viewBox="0 0 200 200" className="biz-icon" aria-hidden="true">
+          <rect x="62" y="92" width="76" height="16" rx="5" fill="#e5e7eb" stroke="#0b0b0f" strokeWidth="3" />
+          <rect x="34" y="60" width="26" height="80" rx="8" fill="#c6ff00" stroke="#0b0b0f" strokeWidth="6" />
+          <rect x="140" y="60" width="26" height="80" rx="8" fill="#c6ff00" stroke="#0b0b0f" strokeWidth="6" />
+          <rect x="14" y="76" width="18" height="48" rx="6" fill="#fff" stroke="#0b0b0f" strokeWidth="6" />
+          <rect x="168" y="76" width="18" height="48" rx="6" fill="#fff" stroke="#0b0b0f" strokeWidth="6" />
+        </svg>
+      );
     case "hardware":
       return (
         <svg viewBox="0 0 200 200" className="biz-icon" aria-hidden="true">
