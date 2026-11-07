@@ -46,6 +46,7 @@ export default function Nav() {
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#work">Work</a>
+          <a href="#care">DevOps</a>
           <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}>
             Start a project
           </a>

@@ -9219,3 +9219,97 @@ html.menu-open {
     display: none; /* very narrow screens: mark only, so CTA + menu always fit */
   }
 }
+
+/* ============ v31: phone density pass (<= 700px only; desktop untouched) ============ */
+@media (max-width: 700px) {
+  /* What we make: no dead space */
+  .panel.tone-dark,
+  .panel.tone-dark.intro {
+    min-height: 0;
+    padding: 3.2rem 1.3rem 2.6rem;
+    gap: 0.9rem;
+  }
+  .panel h2 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+  }
+  .panel h3 {
+    font-size: clamp(2.6rem, 14vw, 3.8rem);
+  }
+  .panel .serif {
+    font-size: 1.15rem;
+  }
+  .ghostnum {
+    font-size: 7.5rem;
+    top: 0.8rem;
+  }
+  .cta-panel h3 {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+  }
+  .go {
+    width: 4.6rem;
+  }
+
+  /* Our work: compact cards */
+  .work {
+    padding: 3.5rem 0.9rem 3rem;
+  }
+  .work-head {
+    margin-bottom: 1.8rem;
+  }
+  .work-head h2 {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+  }
+  .card {
+    padding: 1rem;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(20, 16, 28, 0.18);
+  }
+  .card h3 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0.4rem;
+  }
+  .card-info p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-info .result {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+  }
+  .card .tags li {
+    font-size: 0.72rem;
+    padding: 0.25em 0.7em;
+  }
+  .visit {
+    margin-top: 0.7rem;
+    padding: 0.45em 1em;
+    font-size: 0.85rem;
+  }
+
+  /* Care + process + contact */
+  .care,
+  .process,
+  .contact {
+    padding-top: 3.2rem;
+    padding-bottom: 3rem;
+  }
+  .contact-in {
+    padding-bottom: 2.4rem;
+  }
+  .care-title,
+  .process h2,
+  .contact h2 {
+    font-size: clamp(2.2rem, 11vw, 3rem);
+  }
+  .care-grid {
+    margin-top: 1.8rem;
+    gap: 0.9rem;
+  }
+}
