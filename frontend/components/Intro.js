@@ -58,6 +58,8 @@ export default function Intro() {
     };
     size();
     window.addEventListener("resize", size);
+    const onKey = (e) => (e.key === "Escape" || e.key === "Enter" || e.key === " ") && exit();
+    window.addEventListener("keydown", onKey);
 
     const exit = () => {
       if (exiting) return;
@@ -165,6 +167,7 @@ export default function Intro() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", size);
+      window.removeEventListener("keydown", onKey);
     };
   }, []);
 
