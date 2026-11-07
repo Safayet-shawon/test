@@ -171,6 +171,80 @@ function Calc() {
   );
 }
 
+/* ---------- Winner Apparels: garment-factory management (modules + production flow) ---------- */
+function Erp() {
+  const nav = ["Dashboard", "Catalog", "Inventory", "Manufacturing", "Procurement", "HR", "Reports"];
+  const flow = ["Cutting", "Sewing", "Finishing", "Packing"];
+  return (
+    <div className="scr scr-erp">
+      <ul className="erp-nav">
+        {nav.map((n, i) => (
+          <li key={n} style={{ "--k": i }}>
+            <i />
+            {n}
+          </li>
+        ))}
+      </ul>
+      <div className="erp-main">
+        <div className="erp-kpis">
+          <b /> <b /> <b />
+        </div>
+        <div className="erp-flow">
+          {flow.map((n, i) => (
+            <div key={n} className="stage" style={{ "--k": i }}>
+              <span>{n}</span>
+              <em>
+                <u />
+              </em>
+            </div>
+          ))}
+        </div>
+        <div className="erp-bars">
+          {[40, 62, 48, 78, 58, 90, 70].map((h, i) => (
+            <i key={i} style={{ "--h": `${h}%`, "--i": i }} />
+          ))}
+        </div>
+      </div>
+      <span className="cur" />
+    </div>
+  );
+}
+
+/* ---------- Sohrab Air International: bilingual site + admin CRM pipeline ---------- */
+function Air() {
+  return (
+    <div className="scr scr-air">
+      <div className="air-top">
+        <b>Sohrab Air</b>
+        <span className="lang">
+          <i>BN</i>
+          <i>EN</i>
+        </span>
+      </div>
+      <div className="air-hero">
+        <h5>Hajj &amp; Umrah, tickets and careers</h5>
+        <u>Request a package</u>
+      </div>
+      <div className="air-tiles">
+        {["Hajj & Umrah", "Ticketing", "Recruitment", "Group leaders"].map((t, i) => (
+          <span key={t} style={{ "--i": i }}>
+            {t}
+          </span>
+        ))}
+      </div>
+      <div className="air-crm">
+        {["New", "Contacted", "Booked"].map((c) => (
+          <div key={c} className="col">
+            <small>{c}</small>
+          </div>
+        ))}
+        <i className="lead" />
+      </div>
+      <span className="cur" />
+    </div>
+  );
+}
+
 function Screen({ variant }) {
   switch (variant) {
     case "micro":
@@ -179,6 +253,10 @@ function Screen({ variant }) {
       return <Flow />;
     case "arch":
       return <Arch />;
+    case "erp":
+      return <Erp />;
+    case "air":
+      return <Air />;
     default:
       return <Calc />;
   }
@@ -225,7 +303,7 @@ function Clip({ p }) {
         <Screen variant={p.variant} />
       )}
       <span className="rec">
-        <i /> {shots.length ? "snapshot" : "loop"}
+        <i /> {shots.length ? p.shotLabel || "snapshot" : "loop"}
       </span>
     </div>
   );

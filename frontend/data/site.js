@@ -127,7 +127,7 @@ export const BUSINESSES = [
 ];
 
 // Real work. `link` shows a "Visit site" button. Edit the copy freely.
-export const PROJECTS = [
+export const PROJECTS_CORE = [
   {
     id: "microservice",
     variant: "micro",
@@ -178,6 +178,62 @@ export const PROJECTS = [
   },
 ];
 
+
+// Added from the repos: read, not run. unifab + moonstar show real imagery from the projects; the other two use
+// designed stand-ins until real screenshots are added at public/projects/<id>.webp.
+export const MORE_PROJECTS = [
+  {
+    id: "unifab",
+    variant: "shot",
+    tag: "Product",
+    shotLabel: "gallery",
+    title: "UNIFAB — cinematic clothing store",
+    blurb:
+      "A scroll-driven storefront for one concept garment: a sandstone cotton panjabi. A real-time 3D scene (three.js) with GSAP and smooth scrolling walks through the cloth, the cut, the stitch and the finished looks, with photography art-directed to a written spec for colour, weave and thread.",
+    stack: ["three.js", "GSAP", "Lenis", "Vite"],
+    result: "Concept product · 3D scroll story",
+    link: null,
+    video: null,
+  },
+  {
+    id: "moonstar",
+    variant: "shot",
+    tag: "Project",
+    shotLabel: "gallery",
+    title: "Moon Star Power & Technology",
+    blurb:
+      "A premium website for a power-equipment company (substations, transformers, panels, generators, solar, lifts), plus a private staff portal: role-based quotations, price book, approvals, PDFs and reports, with an engineering load-sizing engine behind it.",
+    stack: ["Next.js 16", "Express", "PostgreSQL", "three.js + GSAP"],
+    result: "Website + staff portal + quotation engine",
+    link: null,
+    video: null,
+  },
+  {
+    id: "winner",
+    variant: "erp",
+    tag: "SaaS",
+    title: "Winner Apparels — Garments Management",
+    blurb:
+      "A management app for a garment manufacturer: product catalog, inventory (raw materials, finished goods, warehouses, reservations), manufacturing plans and material requirements, procurement, merchandising, HR and reports.",
+    stack: ["React", "Vite", "Laravel API", "Recharts"],
+    result: "Catalog → Inventory → Manufacturing",
+    link: null,
+    video: null,
+  },
+  {
+    id: "sohrab",
+    variant: "air",
+    tag: "Project",
+    title: "Sohrab Air International",
+    blurb:
+      "A bilingual (Bangla and English) website for a Hajj, Umrah, ticketing, recruitment and group-leader business, with an admin CRM: lead pipeline, accounts, packages and staff attendance, tasks, payroll and performance. Private passport file storage on the API.",
+    stack: ["Next.js", "Spring Boot", "PostgreSQL", "Bilingual"],
+    result: "Website + admin CRM",
+    link: null,
+    video: null,
+  },
+];
+
 // "How we work" strip
 export const PROCESS = [
   ["01", "Discover", "We learn your business, your customers and what a win looks like."],
@@ -185,3 +241,5 @@ export const PROCESS = [
   ["03", "Build", "Fast, accessible code. You see progress from week one."],
   ["04", "Launch", "We ship, measure and keep improving after day one."],
 ];
+
+export const PROJECTS = [...PROJECTS_CORE, ...MORE_PROJECTS];

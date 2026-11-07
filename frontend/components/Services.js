@@ -27,6 +27,7 @@ const PANELS = [
       { img: "/projects/tomadachis.webp", name: "tomadachis.com" },
       { img: "/projects/singledot.webp", name: "Single Dot Studio" },
       { img: "/projects/architect.webp", name: "Architect Shakil" },
+      { img: "/projects/moonstar.webp", name: "Moon Star Power & Technology" },
     ],
     art: "browser",
   },
@@ -39,6 +40,7 @@ const PANELS = [
     tags: ["E-commerce", "Drops & waitlists", "Product pages"],
     work: [
       { img: "/projects/microservice.webp", name: "EcomMS — customer storefront" },
+      { img: "/projects/unifab.webp", name: "UNIFAB — cinematic clothing store" },
     ],
     art: "cards",
   },
