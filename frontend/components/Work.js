@@ -51,6 +51,9 @@ export default function Work() {
         <Reveal as="p" delay={80} className="work-sub">
           Recent client projects, from small business websites to software that runs a whole operation.
         </Reveal>
+        <p className="swipe-hint" aria-hidden="true">
+          Swipe to see more <Arrow />
+        </p>
       </div>
 
       <div className="stack">
@@ -67,8 +70,8 @@ export default function Work() {
               </ul>
               <p className="result">{p.result}</p>
               {p.link && (
-                <a className="visit" href={p.link} target="_blank" rel="noopener noreferrer">
-                  Visit website <Arrow />
+                <a className="visit" href={p.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${p.title} website`}>
+                  <span className="visit-text">Visit website</span> <Arrow />
                 </a>
               )}
             </div>
