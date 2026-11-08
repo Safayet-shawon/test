@@ -5492,13 +5492,13 @@ html.menu-open {
   }
 }
 
-/* ============ Light hero ("paper white") + light top bar ============
+/* ============ Light hero (white with a faint onion tone) + light top bar ============
    One variable sets the colour. Tested: #fafaf8 paper white (chosen), #f5f3ef warm off-white,
    #f3f4f6 cool grey-white, #ffffff pure white. Paper white lets every project in the preview stand
    out most while staying warm enough to match the sand and cream sections below. */
 :root {
-  --hero-bg: #fafaf8;
-  --hero-bg-rgb: 250, 250, 248;
+  --hero-bg: #fbf7f9; /* white with a faint onion-skin (pink-lilac) tone */
+  --hero-bg-rgb: 251, 247, 249;
   --hero-ink: #14121b;
   --hero-accent: #5b3fd6;
 }
@@ -5641,4 +5641,136 @@ header.nav.is-open .menu-btn {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* ============ Services (after the hero): icon, name, three tags ============ */
+.svc {
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1rem, 4vw, 4rem) clamp(4rem, 8vw, 7rem);
+}
+.svc-in {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.svc h2 {
+  margin: 0 0 clamp(1.75rem, 3.5vw, 2.75rem);
+  font: 800 clamp(2.2rem, 5vw, 4.5rem) / 1 var(--font-display);
+  letter-spacing: -0.045em;
+}
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.svc-card {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.4rem, 2.2vw, 1.75rem);
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(20, 18, 27, 0.07);
+  box-shadow: 0 1px 2px rgba(20, 18, 27, 0.04), 0 14px 34px -18px rgba(20, 18, 27, 0.18);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.svc-card.svc-wide {
+  grid-column: span 3;
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1px 2px rgba(20, 18, 27, 0.04), 0 24px 44px -20px rgba(20, 18, 27, 0.26);
+}
+.svc-ico {
+  display: inline-grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.6rem;
+  border-radius: 14px;
+}
+.svc-ico-0 {
+  background: var(--hero-accent);
+  color: #fff;
+}
+.svc-ico-1 {
+  background: rgba(91, 63, 214, 0.1);
+  color: var(--hero-accent);
+}
+.svc-ico-2 {
+  background: var(--hero-ink);
+  color: #fff;
+}
+.svc-card h3 {
+  margin: 0 0 1rem;
+  font: 700 clamp(1.25rem, 1.7vw, 1.45rem) / 1.2 var(--font-body);
+  letter-spacing: -0.02em;
+}
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+.svc-tags li {
+  padding: 0.3em 0.75em;
+  border-radius: 99px;
+  border: 1px solid rgba(20, 18, 27, 0.14);
+  font-size: 0.8rem;
+  color: rgba(20, 18, 27, 0.72);
+}
+@media (max-width: 900px) {
+  .svc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .svc-card,
+  .svc-card.svc-wide {
+    grid-column: span 1;
+  }
+  .svc-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 560px) {
+  .svc-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .svc-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+  }
+  .svc-ico {
+    width: 2.6rem;
+    height: 2.6rem;
+    margin: 0;
+    border-radius: 12px;
+  }
+  .svc-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+  .svc-tags {
+    flex-basis: 100%;
+    margin-top: 0.85rem;
+  }
+}
+/* nav: five links; tighten the gap on smaller laptops */
+@media (min-width: 901px) and (max-width: 1180px) {
+  header.nav nav {
+    gap: 1.4rem;
+  }
+}
+/* open mobile menu: the bar sits on the dark panel */
+header.nav.is-open,
+header.nav.solid.is-open {
+  background: #0a0a0d;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }

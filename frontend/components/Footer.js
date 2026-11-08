@@ -3,10 +3,11 @@ import Logo from "./Logo";
 import { Arrow } from "./Icons";
 
 const LINKS = [
+  ["Services", "/#services"],
   ["Process", "/#process"],
-  ["Selected work", "/#work"],
+  ["Our work", "/#work"],
   ["All projects", "/work"],
-  ["DevOps & care", "/#care"],
+  ["After launch", "/#care"],
   ["About", "/#about"],
   ["Contact", "/#contact"],
 ];

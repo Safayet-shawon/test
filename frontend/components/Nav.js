@@ -5,9 +5,10 @@ import Logo from "./Logo";
 
 // Page sections, in page order. Used by the mobile menu (with a one-line hint each).
 const LINKS = [
+  ["services", "Services", "What we build"],
   ["process", "Process", "How a project runs"],
-  ["work", "Work", "Selected client projects"],
-  ["care", "DevOps & care", "We keep it running"],
+  ["work", "Our work", "Projects we have completed"],
+  ["care", "After launch", "Hosting, updates and care"],
   ["about", "About", "Who we are"],
   ["contact", "Contact", "Tell us about your project"],
 ];
@@ -79,9 +80,10 @@ export default function Nav() {
           <Logo />
         </a>
         <nav aria-label="Main">
+          <a href="/#services">Services</a>
           <a href="/#process">Process</a>
-          <a href="/#work">Work</a>
-          <a href="/#care">DevOps</a>
+          <a href="/#work">Our work</a>
+          <a href="/#care">After launch</a>
           <a href="/#about">About</a>
           <a href="/#contact" className="nav-cta" onClick={(e) => open && go(e, "contact")}>
             Start a project
