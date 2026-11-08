@@ -6,8 +6,9 @@ Next.js site lives in [`/frontend`](./frontend).
 Import the repo and set **Root Directory** to `frontend`. Framework preset: Next.js (auto-detected). No env vars needed.
 
 ## What's on the page
-1. **Pendulum intro** (`components/Intro.js`): three real projects in about 3 seconds. Plays once per tab; any key,
-   click, scroll or swipe skips it; skipped for reduced-motion users.
+1. **Brand intro** (`components/Intro.js`, styles under "Brand intro" in `globals.css`): about 1 second. A loader
+   ring draws in and becomes the "0" of the logo mark, the mark slides left and "zerosoft26" appears. Plays once per
+   tab; any key, click, scroll or swipe skips it; skipped for reduced-motion users.
 2. **Hero** (`Hero.js`, `HeroScene.js`, `DemoSites.js`): "Websites for any business." with a carousel that mixes
    real client projects (labelled "Client project") and concept designs (labelled "Concept design").
 3. **Selected work** (`Work.js`): six projects with real screenshots, then an "Also built" list.
