@@ -22,13 +22,6 @@ const WORK = [
     link: "https://tomadachis.com",
   },
   {
-    n: "Architect Shakil",
-    s: "A portfolio in motion",
-    tags: "Portfolio · Next.js + NestJS",
-    img: "/projects/architect.webp",
-    link: null,
-  },
-  {
     n: "Single Dot Studio",
     s: "Interiors, estimated instantly",
     tags: "Website · Calculator + admin",
@@ -36,7 +29,7 @@ const WORK = [
     link: "https://singledotstudio.com",
   },
 ];
-const PERIOD = 2.4; // seconds for one full swing there and back
+const PERIOD = 1.8; // seconds for one full swing there and back (one project every 0.9s)
 const THETA0 = (26 * Math.PI) / 180;
 
 export default function Intro() {
@@ -102,11 +95,14 @@ export default function Intro() {
       setTimeout(() => {
         done();
         setGone(true);
-      }, 1000);
+      }, 600);
     };
     finish.current = exit;
-    const onKey = (e) => (e.key === "Escape" || e.key === "Enter" || e.key === " ") && exit();
+    // Never hold visitors hostage: any key, wheel or swipe skips the intro.
+    const onKey = (e) => (e.key === "Tab" ? undefined : exit());
     window.addEventListener("keydown", onKey);
+    window.addEventListener("wheel", exit, { passive: true });
+    window.addEventListener("touchmove", exit, { passive: true });
 
     const frame = (now) => {
       if (!paused.current) t += (now - last) / 1000; // hovering a card pauses the pendulum
@@ -117,7 +113,7 @@ export default function Intro() {
       if (k !== lastN) {
         lastN = k;
         setN(k);
-        if (k >= WORK.length) setTimeout(exit, 500);
+        if (k >= WORK.length) setTimeout(exit, 250);
       }
       const px = w / 2;
       const py = h * 0.12;
@@ -255,6 +251,8 @@ export default function Intro() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", size);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("wheel", exit);
+      window.removeEventListener("touchmove", exit);
     };
   }, []);
 
@@ -273,17 +271,12 @@ export default function Intro() {
     if (e.currentTarget.dataset.local) {
       e.preventDefault();
       finish.current();
-      setTimeout(() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }), 1100);
+      setTimeout(() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }), 700);
     }
   };
 
   return (
     <div className="pend" ref={root} onClick={() => finish.current()} role="presentation">
-      {n >= 0 && n < WORK.length && (
-        <div className="p-ghost" key={`g${n}`} aria-hidden="true">
-          {String(n + 1).padStart(2, "0")}
-        </div>
-      )}
       <canvas ref={canvas} aria-hidden="true" />
       <div className="p-vig" aria-hidden="true" />
 

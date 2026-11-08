@@ -269,35 +269,3 @@ export function Arrow({ className = "" }) {
   );
 }
 
-// Golden spiral (quarter arcs, each radius = previous / phi), centred on its "eye".
-const PHI = 1.618033988749895;
-export function goldenSpiral(r0 = 600, arcs = 12) {
-  let x = 0,
-    y = 0,
-    tx = 1,
-    ty = 0,
-    r = r0;
-  const pts = [[x, y]];
-  const segs = [];
-  for (let i = 0; i < arcs; i++) {
-    const nx = ty, // rotate tangent 90deg
-      ny = -tx;
-    const cx = x + r * nx,
-      cy = y + r * ny;
-    const ex = cx + r * tx,
-      ey = cy + r * ty;
-    segs.push({ r, ex, ey });
-    pts.push([ex, ey]);
-    x = ex;
-    y = ey;
-    tx = nx;
-    ty = ny;
-    r /= PHI;
-  }
-  const eye = pts[pts.length - 1];
-  let d = `M${(pts[0][0] - eye[0]).toFixed(1)} ${(pts[0][1] - eye[1]).toFixed(1)}`;
-  segs.forEach((s) => {
-    d += ` A${s.r.toFixed(1)} ${s.r.toFixed(1)} 0 0 1 ${(s.ex - eye[0]).toFixed(1)} ${(s.ey - eye[1]).toFixed(1)}`;
-  });
-  return d;
-}

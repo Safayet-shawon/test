@@ -1,52 +1,10 @@
 import { ExplodePhone } from "./Icons";
 
-/* Six different demo websites for the hero. Each has its own layout, type and interaction,
+/* Concept demo websites for the hero. Each has its own layout, type and interaction,
    so we never look like we make the same site twice. Sizes are in cqw (they scale with the scene). */
 
-/* ---------- 1. Interior studio: editorial + before/after slider ---------- */
-function InteriorSite({ site }) {
-  return (
-    <div className="page dm dm-int">
-      <div className="int-nav pop" style={{ "--i": 0 }}>
-        <b>{site.name}</b>
-        <span>
-          {site.nav.map((n) => (
-            <u key={n}>{n}</u>
-          ))}
-        </span>
-        <em>{site.navCta}</em>
-      </div>
-      <div className="int-copy pop" style={{ "--i": 1 }}>
-        <small>{site.kicker}</small>
-        <h4>{site.headline}</h4>
-        <p>{site.sub}</p>
-        <button type="button" tabIndex={-1}>{site.cta}</button>
-        <div className="int-sw" aria-hidden="true">
-          {site.swatches.map((c, i) => (
-            <i key={c} style={{ "--c": c, "--k": i }} />
-          ))}
-        </div>
-      </div>
-      <div className="int-wrap pop" style={{ "--i": 2 }}>
-        <div className="cmp">
-          <img className="cmp-after" src={site.after} alt="" />
-          <div className="cmp-before">
-            <img src={site.before} alt="" />
-          </div>
-          <span className="cmp-tag l">Before</span>
-          <span className="cmp-tag r">After</span>
-          <div className="cmp-h">
-            <i />
-            <span className="cursor" />
-          </div>
-          <div className="cmp-chip">{site.room}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-/* ---------- 2. Real estate: search + 3D coverflow of listings ---------- */
+/* ---------- Real estate: search + 3D coverflow of listings ---------- */
 function EstateSite({ site }) {
   return (
     <div className="page dm dm-est">
@@ -97,7 +55,7 @@ function EstateSite({ site }) {
   );
 }
 
-/* ---------- 3. Travel: full-bleed destination, fanned photo stack, flight route ---------- */
+/* ---------- Travel: full-bleed destination, fanned photo stack, flight route ---------- */
 function TravelSite({ site }) {
   return (
     <div className="page dm dm-tr">
@@ -141,54 +99,8 @@ function TravelSite({ site }) {
   );
 }
 
-/* ---------- 4. Photographer: camera viewfinder + film strip ---------- */
-function PhotoSite({ site }) {
-  const strip = [...site.strip, ...site.strip];
-  return (
-    <div className="page dm dm-ph">
-      <div className="ph-rail pop" style={{ "--i": 0 }}>
-        <b>{site.name}</b>
-        <span>
-          {site.nav.map((n) => (
-            <u key={n}>{n}</u>
-          ))}
-        </span>
-      </div>
-      <div className="ph-main pop" style={{ "--i": 1 }}>
-        <img src={site.hero} alt="" />
-        <div className="vf" aria-hidden="true">
-          <i className="c1" />
-          <i className="c2" />
-          <i className="c3" />
-          <i className="c4" />
-          <span className="x" />
-        </div>
-        <div className="ph-meta">
-          <span>ISO 200 · f/1.8 · 1/250</span>
-          <span className="fcount">07 / 36</span>
-        </div>
-        <div className="ph-title">
-          <h4>{site.headline}</h4>
-          <u>{site.cta} →</u>
-        </div>
-        <div className="flash" />
-      </div>
-      <div className="ph-film pop" style={{ "--i": 2 }}>
-        <div className="ph-track">
-          {strip.map((src, i) => (
-            <div key={i} className="fr">
-              <img src={src} alt="" />
-              <small>{String((i % site.strip.length) + 1).padStart(2, "0")}</small>
-            </div>
-          ))}
-        </div>
-      </div>
-      <span className="cursor" />
-    </div>
-  );
-}
 
-/* ---------- 5. SaaS: bento dashboard + ⌘K command palette ---------- */
+/* ---------- SaaS: bento dashboard + ⌘K command palette ---------- */
 function DashSite({ site }) {
   return (
     <div className="page dm dm-dash">
@@ -252,7 +164,7 @@ function DashSite({ site }) {
   );
 }
 
-/* ---------- 6. Electronics: centred product stage with the exploded phone ---------- */
+/* ---------- Electronics: centred product stage with the exploded phone ---------- */
 function TechSite({ site }) {
   return (
     <div className="page dm dm-tech">
@@ -292,7 +204,7 @@ function TechSite({ site }) {
   );
 }
 
-/* ---------- 7. Perfume store: luxury product page, glass bottle, scent notes ---------- */
+/* ---------- Perfume store: luxury product page, glass bottle, scent notes ---------- */
 function PerfumeSite({ site }) {
   return (
     <div className="page dm dm-pf">
@@ -347,61 +259,23 @@ function PerfumeSite({ site }) {
   );
 }
 
-/* ---------- 8. Gym: bold type, class booking, live capacity ring, weekly streak ---------- */
-function GymSite({ site }) {
+
+/* ---------- Real client project: the live site's own screenshot, gently scrolled ---------- */
+function RealSite({ site }) {
   return (
-    <div className="page dm dm-gym">
-      <div className="gym-nav pop" style={{ "--i": 0 }}>
-        <b>{site.name}</b>
-        <span>
-          {site.nav.map((n) => (
-            <u key={n}>{n}</u>
-          ))}
-        </span>
+    <div className="page dm dm-real" style={{ background: site.bg }}>
+      <div className="real-screen pop" style={{ "--i": 0, "--travel": site.travel ?? 0.3 }}>
+        <img src={site.shot} alt={`${site.name} website`} />
       </div>
-      <h4 className="gym-h pop" style={{ "--i": 1 }}>
-        <span>STRONGER</span>
-        <span>EVERY</span>
-        <span className="lime">DAY.</span>
-      </h4>
-      <div className="gym-ring pop" style={{ "--i": 2 }}>
-        <svg viewBox="0 0 36 36" aria-hidden="true">
-          <circle cx="18" cy="18" r="15" className="trk" />
-          <circle cx="18" cy="18" r="15" className="val" pathLength="100" />
-        </svg>
-        <b>78%</b>
-        <small>full now</small>
-      </div>
-      <div className="gym-list">
-        {site.classes.map(([t, n, l], i) => (
-          <div key={t} className={`cls pop ${i === 1 ? "pick" : ""}`} style={{ "--i": 3 + i }}>
-            <b>{t}</b>
-            <span>{n}</span>
-            <em>{l}</em>
-          </div>
-        ))}
-      </div>
-      <div className="gym-streak pop" style={{ "--i": 6 }}>
-        <small>This week</small>
-        <span>
-          {[1, 1, 1, 0, 1, 0, 0].map((v, i) => (
-            <i key={i} className={v ? "on" : ""} style={{ "--k": i }} />
-          ))}
-        </span>
-      </div>
-      <u className="gym-cta pop" style={{ "--i": 6 }}>{site.cta} →</u>
-      <span className="cursor" />
     </div>
   );
 }
 
 export const SITES = {
+  real: RealSite,
   perfume: PerfumeSite,
-  gym: GymSite,
-  interior: InteriorSite,
   estate: EstateSite,
   travel: TravelSite,
-  photo: PhotoSite,
   dash: DashSite,
   tech: TechSite,
 };

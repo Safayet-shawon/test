@@ -60,9 +60,6 @@ export default function Hero() {
       </div>
       <div className="hero-left">
         <div className="hero-copy">
-          <p className="badge">
-            <i /> Now booking new projects
-          </p>
           <h1>
             <span className="line">
               <Letters text="Websites for" />
@@ -73,12 +70,12 @@ export default function Hero() {
           </h1>
           <Tape pos={pos} item={item} />
           <p className="lead">
-            Pizza shop or SaaS startup — whatever you run, we design and build the site.
-            Fast, loud and <b>actually fun</b> to scroll.
+            Custom websites, web apps and SaaS, designed and built by one team. Whatever you run, the site is
+            made around your business, never from a template.
           </p>
           <div className="cta-row">
             <a href="#contact" className="btn btn-violet">
-              Describe your project <Arrow />
+              Start a project <Arrow />
             </a>
             <a href="#work" className="btn btn-ghost">
               See our work
@@ -91,13 +88,13 @@ export default function Hero() {
         <div className="status" data-state={phase} key={`${step}-${phase}`} aria-live="polite">
           <i />
           <span>
-                                    {phase === "site" && <>Live · {cur.url}</>}
+            {phase === "site" && <>{cur.real ? "Client project" : "Concept design"} · {cur.url}</>}
             {phase === "fall" && "Next business…"}
           </span>
         </div>
         <HeroScene onChange={onChange} />
       </div>
-          <div className="m-scroll" aria-hidden="true">
+      <div className="m-scroll" aria-hidden="true">
         <span>Scroll</span>
         <i />
       </div>

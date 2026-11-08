@@ -4,42 +4,28 @@ import { Arrow } from "./Icons";
 
 const PANELS = [
   {
-    id: "saas",
+    id: "websites",
     n: "01",
-    title: "SaaS",
-    serif: "Software people actually finish onboarding.",
-    text: "From empty repo to paying users. Auth, billing, dashboards and onboarding, built to scale from the first customer.",
-    tags: ["Dashboards", "Auth & billing", "MVP in weeks"],
-    work: [
-      { img: "/projects/microservice-2.webp", name: "EcomMS — admin console" },
-      { img: "/projects/microservice.webp", name: "EcomMS — storefront" },
-    ],
+    title: "Websites",
+    serif: "Built around your brand, not a template.",
+    text: "Company sites, portfolios and landing pages for any business: restaurant, studio, clinic, creator. Designed around your customers and quick to load.",
+    tags: ["Company sites", "Portfolios", "Landing pages"],
   },
   {
-    id: "projects",
+    id: "apps",
     n: "02",
-    title: "Projects",
-    serif: "Never a template. Always you.",
-    text: "Custom websites and web apps for any business: restaurant, studio, clinic, creator. Designed around your brand and your customers.",
-    tags: ["Brand sites", "Web apps", "Landing pages"],
-    work: [
-      { img: "/projects/tomadachis.webp", name: "tomadachis.com" },
-      { img: "/projects/singledot.webp", name: "Single Dot Studio" },
-      { img: "/projects/architect.webp", name: "Architect Shakil" },
-      { img: "/projects/moonstar.webp", name: "Moon Star Power & Technology" },
-    ],
+    title: "Web apps",
+    serif: "Software for the work behind the website.",
+    text: "Admin panels, staff portals, CRMs and SaaS products, from the first prototype to paying users. Accounts, roles, billing and reports included.",
+    tags: ["Admin panels", "Portals and CRMs", "SaaS"],
   },
   {
-    id: "products",
+    id: "stores",
     n: "03",
-    title: "Products",
-    serif: "Scrolling that ends at checkout.",
-    text: "Stores, drops and product pages that turn browsers into buyers. Fast, thumb-friendly and a little unhinged.",
-    tags: ["E-commerce", "Drops & waitlists", "Product pages"],
-    work: [
-      { img: "/projects/microservice.webp", name: "EcomMS — customer storefront" },
-      { img: "/projects/unifab.webp", name: "UNIFAB — cinematic clothing store" },
-    ],
+    title: "Stores",
+    serif: "Product pages that lead to checkout.",
+    text: "Online stores and product pages with a clear path from browsing to buying, fast on every phone.",
+    tags: ["E-commerce", "Product pages", "Checkout"],
   },
 ];
 
@@ -140,21 +126,16 @@ export default function Services() {
         <div className="progress">
           <span ref={bar} />
         </div>
-        <div className="ghost" aria-hidden="true">
-          SaaS · Projects · Products · SaaS · Projects · Products
-        </div>
         <ol className="ticks" aria-hidden="true">
-          {[0, 1, 2, 3, 4].map((i) => (
+          {Array.from({ length: PANELS.length + 1 }, (_, i) => i).map((i) => (
             <li key={i} className={i === 0 ? "on" : ""} />
           ))}
         </ol>
 
         <div className="track" ref={track}>
           <article className="panel tone-dark intro">
-            <p className="kicker">What we make</p>
-            <h2>
-              Three ways to make people <em>stop scrolling.</em>
-            </h2>
+            <p className="kicker">What we build</p>
+            <h2>Websites, web apps and online stores.</h2>
             <p className="swipe">
               Scroll <span className="line-anim" /> <Arrow />
             </p>
@@ -162,12 +143,7 @@ export default function Services() {
 
           {PANELS.map((p, i) => (
             <article key={p.id} className={`panel tone-dark alt${i % 2}`}>
-              <span className="ghostnum" aria-hidden="true">
-                {p.n}
-              </span>
-              <p className="kicker">
-                {p.n} — {p.title}
-              </p>
+              <p className="kicker">{p.n}</p>
               <h3>{p.title}</h3>
               <p className="serif">{p.serif}</p>
               <p className="desc">{p.text}</p>
@@ -176,41 +152,14 @@ export default function Services() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-              <div className="wk">
-                <span className="wk-label">Real work</span>
-                <div className="wk-row">
-                  {p.work.map((w) => (
-                    <a key={w.name} href="#work" className="wk-box" aria-label={`${w.name} — see in our work`} title={w.name}>
-                      <i style={{ backgroundImage: `url(${w.img})` }} />
-                      <b>{w.name}</b>
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <a href="#work" className="more">
-                <span>See related work</span>
+              <a href="#contact" className="more">
+                <span>Start a project</span>
                 <i>
                   <Arrow />
                 </i>
               </a>
             </article>
           ))}
-
-          <article className="panel tone-dark cta-panel">
-            <p className="kicker">Now the proof</p>
-            <h3>
-              See what
-              <br />
-              we&apos;ve built
-            </h3>
-            <p className="serif">Real projects. Real screenshots.</p>
-            <a href="#work" className="go" aria-label="Go to our work">
-              <Arrow />
-            </a>
-            <a href="#contact" className="alt-link">
-              or describe your project <Arrow />
-            </a>
-          </article>
         </div>
       </div>
     </section>

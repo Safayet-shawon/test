@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-// Site-wide life: cursor glow, hero parallax/tilt, magnetic buttons, card tilt,
+// Site-wide life: hero parallax/tilt, magnetic buttons, card tilt,
 // stacked-card depth, and a scroll progress bar. All disabled for reduced-motion.
 export default function Motion() {
   useEffect(() => {
@@ -100,7 +100,6 @@ export default function Motion() {
   return (
     <>
       <div className="scroll-prog" aria-hidden="true" />
-      <div className="cursor-glow" aria-hidden="true" />
     </>
   );
 }

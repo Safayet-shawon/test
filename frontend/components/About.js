@@ -11,8 +11,8 @@ export default function About() {
           About zerosoft
         </Reveal>
         <Reveal as="h2" delay={80} className="about-lead">
-          A small software studio that starts every project at <span className="zero">zero</span> and ends with a website, SaaS or
-          product people actually enjoy using.
+          A small software studio that starts every project at <span className="zero">zero</span> and ends with a website, web
+          app or product people enjoy using.
         </Reveal>
         <Reveal delay={160} className="about-row">
           <ul>
@@ -22,8 +22,8 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <a href="#work" className="about-link">
-            See what we&apos;ve built <Arrow />
+          <a href="#contact" className="about-link">
+            Start a project <Arrow />
           </a>
         </Reveal>
       </div>

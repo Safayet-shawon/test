@@ -2,12 +2,17 @@
 export const SITE = {
   name: "zerosoft",
   // Contact form opens the visitor's mail app addressed to this email.
-  email: "hello@zerosoft.dev",
+  email: "hello@zerosoft.dev", // placeholder: replace with a real inbox before launch
+  // Shown in the footer when set, e.g. "Dhaka, Bangladesh".
+  location: "",
+  // Footer links, e.g. { label: "GitHub", href: "https://github.com/..." }. Empty = hidden.
+  socials: [],
 };
 
 // Hero animation order: "any business" intro first, then each business -> its website.
 // `label` = sticker word (left), `single` = scene caption, `theme` = scene colour (t) + text on it (on).
 // Each demo site uses its OWN look (real photography, own fonts + colours) — not ours.
+// Concept designs are labelled "Concept design" in the hero; real client work is labelled "Client project".
 // Photos live in /public/hero (swap file-for-file with your own).
 export const INTRO = {
   kind: "any",
@@ -17,27 +22,20 @@ export const INTRO = {
 };
 
 export const BUSINESSES = [
+  // Real client projects: `layout: "real"` shows the live site's screenshot, labelled "Client project".
   {
-    kind: "interior",
-    layout: "interior",
+    kind: "real-singledot",
+    layout: "real",
+    real: true,
     tone: "light",
     label: "interior studios",
     single: "interior studio",
     theme: { t: "#8a5a3c", on: "#ffffff" },
-    url: "lumenandoak.com",
-    name: "Lumen & Oak",
-    nav: ["Projects", "Services", "Studio"],
-    navCta: "Book",
-    kicker: "Interior design studio",
-    headline: "Rooms you'll never want to leave.",
-    sub: "Homes and offices, designed end to end.",
-    cta: "Get a free estimate",
-    swatches: ["#d9c4a3", "#a47551", "#6b705c", "#2f3e46", "#e0b25a"],
-    room: "Living room · 24 m²",
-    hero: "/hero/int-hero.webp",
-    thumb: "/hero/int-after.webp",
-    before: "/hero/int-before.webp",
-    after: "/hero/int-after.webp",
+    url: "singledotstudio.com",
+    name: "Single Dot Studio",
+    shot: "/projects/singledot.webp",
+    travel: 0.32,
+    bg: "#f4efe8",
   },
   {
     kind: "estate",
@@ -83,20 +81,18 @@ export const BUSINESSES = [
     ],
   },
   {
-    kind: "photo",
-    layout: "photo",
-    tone: "dark",
-    label: "photographers",
-    single: "photographer",
-    theme: { t: "#3a3a46", on: "#f5b700" },
-    url: "framelight.studio",
-    name: "FRAME/LIGHT",
-    nav: ["Work", "Prints", "About"],
-    headline: "Moments, framed.",
-    cta: "View portfolio",
-    hero: "/hero/ph-hero.webp",
-    thumb: "/hero/ph-hero.webp",
-    strip: ["/hero/ph-1.webp", "/hero/ph-2.webp", "/hero/ph-3.webp", "/hero/ph-4.webp", "/hero/ph-5.webp", "/hero/ph-hero.webp"],
+    kind: "real-tomadachis",
+    layout: "real",
+    real: true,
+    tone: "light",
+    label: "pet care",
+    single: "pet care brand",
+    theme: { t: "#e0607e", on: "#ffffff" },
+    url: "tomadachis.com",
+    name: "tomadachis",
+    shot: "/projects/tomadachis.webp",
+    travel: 0,
+    bg: "#fff6f8",
   },
   {
     kind: "saas",
@@ -108,6 +104,20 @@ export const BUSINESSES = [
     url: "flowdesk.app",
     name: "flowdesk",
     accent: "#7c7cff",
+  },
+  {
+    kind: "real-ecomms",
+    layout: "real",
+    real: true,
+    tone: "light",
+    label: "online stores",
+    single: "online store",
+    theme: { t: "#4f46e5", on: "#ffffff" },
+    url: "EcomMS storefront",
+    name: "EcomMS",
+    shot: "/projects/microservice.webp",
+    travel: 0.3,
+    bg: "#ffffff",
   },
   {
     kind: "perfume",
@@ -126,20 +136,6 @@ export const BUSINESSES = [
     notes: [["Top", "Bergamot"], ["Heart", "Black oud"], ["Base", "Vanilla"]],
   },
   {
-    kind: "gym",
-    layout: "gym",
-    tone: "dark",
-    label: "gyms",
-    single: "gym",
-    theme: { t: "#1a1d12", on: "#c6ff00" },
-    url: "ironpulse.fit",
-    name: "IRONPULSE",
-    nav: ["Classes", "Coaches", "Join"],
-    headline: "Stronger every day.",
-    cta: "Start free trial",
-    classes: [["06:00", "HIIT Burn", "4 left"], ["08:00", "Heavy Lift", "9 left"], ["18:30", "Mobility", "12 left"]],
-  },
-  {
     kind: "hardware",
     layout: "tech",
     tone: "dark",
@@ -156,120 +152,78 @@ export const BUSINESSES = [
   },
 ];
 
-// Real work. `link` shows a "Visit site" button. Edit the copy freely.
-export const PROJECTS_CORE = [
+// Selected work, strongest first. Each needs a screenshot at public/projects/<id>.webp.
+// `link` shows a "Visit website" button. `result` = what was delivered (or a real outcome, if you have one).
+export const PROJECTS = [
+  {
+    id: "singledot",
+    tag: "Website + admin",
+    title: "Single Dot Studio",
+    blurb:
+      "An interior design site with a live cost calculator. Visitors size their rooms, get an instant estimate and receive a PDF quote by email.",
+    stack: ["Next.js", "Postgres", "Redis"],
+    result: "Public site, cost calculator, quotation PDFs, admin panel",
+    link: "https://singledotstudio.com",
+  },
   {
     id: "microservice",
-    variant: "micro",
-    tag: "SaaS",
-    title: "EcomMS — Microservice E-commerce",
-    blurb:
-      "A full e-commerce platform in two apps: a customer storefront (47 sample products across 12 departments, cart and checkout) and an admin console (catalog, inventory, orders, customers, reviews, reports). Both are built against clean Auth, Product, Order and Notification service boundaries, ready for an API gateway.",
-    stack: ["Next.js", "TypeScript", "TanStack Query", "Microservices"],
-    result: "2 apps · 4 service boundaries · API gateway",
+    tag: "E-commerce",
+    title: "EcomMS",
+    blurb: "A storefront and an admin console for a full online store, built on separate auth, product, order and notification services.",
+    stack: ["Next.js", "TypeScript", "Microservices"],
+    result: "Storefront, admin console, 4 back-end services",
     link: null,
-    video: null,
   },
   {
     id: "tomadachis",
-    variant: "flow",
-    tag: "Project",
-    title: "tomadachis.com",
-    blurb:
-      "Your complete pet ecosystem. Shop premium products, book vet appointments, adopt a new best friend, read guides and join the community — in one warm, playful site.",
-    stack: ["Pet shop", "Vet care", "Adopt", "Community"],
-    result: "Shop · Vet Care · Adopt · Community",
+    tag: "Website",
+    title: "tomadachis",
+    blurb: "A pet care platform: an online shop, vet appointments, adoption and a community, in one warm, friendly site.",
+    stack: ["Shop", "Bookings", "Community"],
+    result: "Shop, vet bookings, adoption and community in one site",
     link: "https://tomadachis.com",
-    video: null,
-  },
-  {
-    id: "architect",
-    variant: "arch",
-    tag: "Project",
-    title: "Architect Shakil Portfolio",
-    blurb:
-      "Portfolio for AR. Shakhaouth Hossain Shakil — architect, photographer, traveller, author. A counting intro that ends in a polaroid, a swiping-roles hero, galleries and a custom cursor.",
-    stack: ["Next.js", "Framer Motion", "NestJS", "Redis"],
-    result: "Full-stack: Next.js + NestJS",
-    link: null,
-    video: null,
-  },
-  {
-    id: "singledot",
-    variant: "calc",
-    tag: "Project",
-    title: "Single Dot Studio",
-    blurb:
-      "Interior design website with a live cost calculator: visitors pick room sizes, get an instant estimate and a quotation PDF by email. A full admin panel manages the content, pricing and enquiries.",
-    stack: ["Next.js", "Postgres", "Redis", "PDF + Mail"],
-    result: "Public site + admin panel + API",
-    link: "https://singledotstudio.com",
-    video: null,
-  },
-];
-
-
-// Added from the repos: read, not run. unifab + moonstar show real imagery from the projects; the other two use
-// designed stand-ins until real screenshots are added at public/projects/<id>.webp.
-export const MORE_PROJECTS = [
-  {
-    id: "unifab",
-    variant: "shot",
-    tag: "Product",
-    shotLabel: "gallery",
-    title: "UNIFAB — cinematic clothing store",
-    blurb:
-      "A scroll-driven storefront for one concept garment: a sandstone cotton panjabi. A real-time 3D scene (three.js) with GSAP and smooth scrolling walks through the cloth, the cut, the stitch and the finished looks, with photography art-directed to a written spec for colour, weave and thread.",
-    stack: ["three.js", "GSAP", "Lenis", "Vite"],
-    result: "Concept product · 3D scroll story",
-    link: null,
-    video: null,
   },
   {
     id: "moonstar",
-    variant: "shot",
-    tag: "Project",
-    shotLabel: "gallery",
+    tag: "Website + portal",
     title: "Moon Star Power & Technology",
-    blurb:
-      "A premium website for a power-equipment company (substations, transformers, panels, generators, solar, lifts), plus a private staff portal: role-based quotations, price book, approvals, PDFs and reports, with an engineering load-sizing engine behind it.",
-    stack: ["Next.js 16", "Express", "PostgreSQL", "three.js + GSAP"],
-    result: "Website + staff portal + quotation engine",
+    blurb: "A company website for a power-equipment supplier, plus a private staff portal for quotations, approvals and engineering load sizing.",
+    stack: ["Next.js", "Express", "PostgreSQL"],
+    result: "Company site, staff portal, quotation engine",
     link: null,
-    video: null,
+    shotLabel: "gallery",
   },
   {
-    id: "winner",
-    variant: "erp",
-    tag: "SaaS",
-    title: "Winner Apparels — Garments Management",
-    blurb:
-      "A management app for a garment manufacturer: product catalog, inventory (raw materials, finished goods, warehouses, reservations), manufacturing plans and material requirements, procurement, merchandising, HR and reports.",
-    stack: ["React", "Vite", "Laravel API", "Recharts"],
-    result: "Catalog → Inventory → Manufacturing",
+    id: "unifab",
+    tag: "Product",
+    title: "UNIFAB",
+    blurb: "A scroll-driven storefront for a single garment, with a real-time 3D scene and art-directed photography.",
+    stack: ["three.js", "GSAP", "Vite"],
+    result: "3D product story and storefront",
     link: null,
-    video: null,
+    shotLabel: "gallery",
   },
   {
-    id: "sohrab",
-    variant: "air",
-    tag: "Project",
-    title: "Sohrab Air International",
-    blurb:
-      "A bilingual (Bangla and English) website for a Hajj, Umrah, ticketing, recruitment and group-leader business, with an admin CRM: lead pipeline, accounts, packages and staff attendance, tasks, payroll and performance. Private passport file storage on the API.",
-    stack: ["Next.js", "Spring Boot", "PostgreSQL", "Bilingual"],
-    result: "Website + admin CRM",
+    id: "architect",
+    tag: "Portfolio",
+    title: "Architect Shakil",
+    blurb: "A portfolio for an architect, photographer and author, with galleries, an animated intro and a content back end.",
+    stack: ["Next.js", "NestJS", "Redis"],
+    result: "Portfolio site with galleries and CMS",
     link: null,
-    video: null,
   },
+];
+
+// Shipped work without screenshots yet: shown as a short list under the cards.
+export const ALSO_BUILT = [
+  ["Winner Apparels", "Garment manufacturing", "Management app for inventory, production planning, procurement and HR."],
+  ["Sohrab Air International", "Travel and Hajj services", "Bilingual Bangla and English website with an admin CRM."],
 ];
 
 // "How we work" strip
 export const PROCESS = [
-  ["01", "Discover", "We learn your business, your customers and what a win looks like."],
-  ["02", "Design", "Real brand colours, real content, a look that is unmistakably yours."],
-  ["03", "Build", "Fast, accessible code. You see progress from week one."],
-  ["04", "Launch", "We ship, measure and keep improving after day one."],
+  ["01", "Discover", "We learn your business, your customers and what a good result looks like."],
+  ["02", "Design", "Page designs with your real content and brand, reviewed together."],
+  ["03", "Build", "Fast, accessible code, with progress you can see along the way."],
+  ["04", "Launch", "We put it live, then keep it fast, safe and up to date."],
 ];
-
-export const PROJECTS = [...PROJECTS_CORE, ...MORE_PROJECTS];

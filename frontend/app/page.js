@@ -6,6 +6,7 @@ import Work from "@/components/Work";
 import Care from "@/components/Care";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import Motion from "@/components/Motion";
 import Intro from "@/components/Intro";
 
@@ -16,12 +17,13 @@ export default function Page() {
       <Motion />
       <Nav />
       <Hero />
-      <About />
-      <Services />
       <Work />
+      <Services />
       <Care />
       <Process />
+      <About />
       <Contact />
+      <Footer />
     </main>
   );
 }

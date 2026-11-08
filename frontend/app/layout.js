@@ -1,22 +1,23 @@
-import { Unbounded, Space_Grotesk, Fraunces, Inter } from "next/font/google";
+import { Unbounded, Space_Grotesk, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const display = Unbounded({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+// Our own brand uses two fonts: Unbounded (big headings) and Space Grotesk (everything else).
+// Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
-const light = Inter({ subsets: ["latin"], weight: ["300", "400"], variable: "--font-light", display: "swap" });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
-  title: "zerosoft — websites for any business",
+  title: "zerosoft · Websites, web apps and SaaS for any business",
   description:
-    "We design and build SaaS, custom websites and products that make people stop scrolling. Pizza shop or unicorn startup — we make the website.",
+    "zerosoft designs and builds custom websites, web apps and SaaS for growing businesses, and looks after them after launch.",
 };
 
 export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${light.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script

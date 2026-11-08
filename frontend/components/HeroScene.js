@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BUSINESSES } from "@/data/site";
-import { goldenSpiral } from "./Icons";
 import { SITES } from "./DemoSites";
 
-const SPIRAL = goldenSpiral(600, 12);
 const SITE_MS = 3900; // ms each website is on screen (drop-in + hold)
 const FALL_MS = 700; // the site falls away, the next one drops in
 
@@ -53,27 +51,17 @@ export default function HeroScene({ onChange }) {
     return () => clearTimeout(t);
   }, [phase, step, ready]);
 
-    const site = BUSINESSES[siteStep - 1];
+  const site = BUSINESSES[siteStep - 1];
 
   return (
     <div className="scene" data-phase={ready ? phase : "wait"}>
-      {/* golden spiral: its eye sits behind the focal object so the eye is led to the animation */}
-      <svg className="spiral" viewBox="-700 -700 1400 1400" aria-hidden="true">
-        <path d={SPIRAL} />
-      </svg>
       <div className="blob b-violet" />
-      <div className="ring" />
-      <span className="spark s1" />
-      <span className="spark s2" />
-      <span className="spark s3" />
-      <span className="chip c1">SaaS</span>
-      <span className="chip c2">Shop</span>
-      <span className="chip c3">Booking</span>
 
       <div className="site-layer">
         <div
           className="browser"
           data-tone={site.tone}
+          data-real={site.real ? "" : undefined}
           style={{ "--bg": site.bg, "--fg": site.fg, "--ac": site.accent, "--aon": site.aon }}
         >
           <div className="bar">
