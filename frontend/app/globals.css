@@ -5044,18 +5044,13 @@ html.intro-skip .brand-intro {
   }
 }
 
-/* ============ Mobile menu: glowing "Menu" pill + full-screen circular-reveal panel ============ */
+/* ============ Mobile menu: outlined "Menu" pill + full-screen panel that fades in ============ */
 .menu-btn,
 .m-menu {
   display: none;
 }
 html.menu-open {
   overflow: hidden;
-}
-@property --mb-ang {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
 }
 @media (max-width: 900px) {
   header.nav {
@@ -5078,55 +5073,28 @@ html.menu-open {
     -webkit-backdrop-filter: none;
   }
 
-  /* --- the button: dark pill, rotating gradient edge, soft glow --- */
+  /* --- the button: quiet outlined pill, word + icon so it reads as a menu --- */
   .menu-btn {
-    position: relative;
-    isolation: isolate;
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    height: 42px;
-    padding: 0 0.95rem 0 1.05rem;
-    border: 0;
+    height: 40px;
+    padding: 0 0.9rem 0 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 999px;
-    background: #141218;
+    background: rgba(255, 255, 255, 0.04);
     color: #fff;
-    font: 600 0.88rem var(--font-body);
+    font: 500 0.86rem var(--font-body);
     letter-spacing: 0.01em;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: transform 0.2s var(--ease);
+    transition: border-color 0.25s, background-color 0.25s;
   }
-  .menu-btn:active {
-    transform: scale(0.95);
-  }
-  .menu-btn::before,
-  .menu-btn::after {
-    content: "";
-    position: absolute;
-    border-radius: inherit;
-    background: conic-gradient(from var(--mb-ang), #b9a8ff, #6d4ae0, #7ec3ff, #ff6f91, #b9a8ff);
-    animation: mbSpin 3.2s linear infinite;
-  }
-  .menu-btn::before {
-    /* 1.5px gradient ring */
-    inset: -1.5px;
-    padding: 1.5px;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-    z-index: 1;
-  }
-  .menu-btn::after {
-    /* the glow behind it */
-    inset: 2px;
-    z-index: -1;
-    filter: blur(10px);
-    opacity: 0.55;
-    transition: opacity 0.3s;
-  }
-  header.nav.is-open .menu-btn::after {
-    opacity: 0.9;
+  .menu-btn:hover,
+  .menu-btn:active,
+  header.nav.is-open .menu-btn {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
   }
   .menu-btn-label {
     display: grid;
@@ -5169,7 +5137,7 @@ html.menu-open {
     transform: translateY(-4.2px) rotate(-45deg);
   }
 
-  /* --- the panel: a circle that grows out of the button --- */
+  /* --- the panel: fades in over the page --- */
   .m-menu {
     display: block;
     position: fixed;
@@ -5179,21 +5147,14 @@ html.menu-open {
     overscroll-behavior: contain;
     background: #0a0a0d;
     color: #fff;
-    clip-path: circle(0 at calc(100% - 3.4rem) 2.1rem);
+    opacity: 0;
     visibility: hidden;
-    transition: clip-path 0.45s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.45s;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
   }
   .m-menu.open {
-    clip-path: circle(150% at calc(100% - 3.4rem) 2.1rem);
+    opacity: 1;
     visibility: visible;
-    transition: clip-path 0.65s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s;
-  }
-  .m-glow {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(70% 45% at 85% 0%, rgba(109, 74, 224, 0.35), transparent 70%),
-      radial-gradient(60% 40% at 0% 100%, rgba(126, 195, 255, 0.14), transparent 70%);
+    transition: opacity 0.35s ease, visibility 0s;
   }
   .m-inner {
     position: relative;
@@ -5210,15 +5171,15 @@ html.menu-open {
   .m-links li,
   .m-foot {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
   .m-menu.open .m-links li,
   .m-menu.open .m-foot {
     opacity: 1;
     transform: none;
     transition: opacity 0.45s ease, transform 0.55s var(--ease);
-    transition-delay: calc(0.2s + var(--k) * 0.05s);
+    transition-delay: calc(0.08s + var(--k) * 0.04s);
   }
   .m-links a {
     display: grid;
@@ -5244,8 +5205,8 @@ html.menu-open {
     min-width: 0;
   }
   .m-text b {
-    font: 800 clamp(1.55rem, 7.4vw, 2.1rem) / 1.05 var(--font-display);
-    letter-spacing: -0.045em;
+    font: 500 clamp(1.5rem, 7vw, 1.9rem) / 1.1 var(--font-body);
+    letter-spacing: -0.03em;
     transition: color 0.2s;
   }
   .m-text small {
@@ -5277,7 +5238,6 @@ html.menu-open {
     margin-right: 0.35rem;
     border-radius: 50%;
     background: currentColor;
-    box-shadow: 0 0 10px currentColor;
     vertical-align: 0.1em;
   }
 
@@ -5306,16 +5266,7 @@ html.menu-open {
     text-underline-offset: 4px;
   }
 }
-@keyframes mbSpin {
-  to {
-    --mb-ang: 360deg;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .menu-btn::before,
-  .menu-btn::after {
-    animation: none;
-  }
   .m-menu,
   .m-menu.open {
     transition: visibility 0s;
@@ -5407,4 +5358,73 @@ html.menu-open {
     font-size: clamp(2.2rem, 11vw, 3rem);
   }
   
+}
+
+/* ============ Hero motion: smooth slides instead of dropping and bouncing ============ */
+/* headline: letters slide up from behind their line, a gentle left-to-right wave
+   (phones keep the simpler whole-line fade-up set in the phone rules) */
+@media (min-width: 701px) {
+  .hero h1 .ltr {
+    animation-name: heroSlide;
+    animation-duration: 0.9s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: calc(var(--l) * 14ms + 120ms);
+  }
+}
+/* demo sites: pieces rise and fade in, then leave with a short fade upward */
+.scene[data-phase="site"] .browser {
+  animation: heroBrowserIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.scene[data-phase="site"] .pop {
+  animation: heroRise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.2s + var(--i) * 0.08s);
+}
+.scene[data-phase="fall"] .browser,
+.scene[data-phase="fall"] .pop {
+  animation: heroLeave 0.5s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+@keyframes heroSlide {
+  from {
+    opacity: 0;
+    transform: translateY(105%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes heroBrowserIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes heroLeave {
+  to {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.99);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 .ltr,
+  .scene .browser,
+  .scene .pop {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
 }

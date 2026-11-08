@@ -108,7 +108,6 @@ export default function Nav() {
       </header>
 
       <div className={`m-menu ${open ? "open" : ""}`} id="mobile-menu" aria-hidden={!open} inert={!open}>
-        <div className="m-glow" aria-hidden="true" />
         <nav className="m-inner" aria-label="Sections">
           <ol className="m-links">
             {LINKS.map(([id, t, s], i) => (
