@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// Brand intro, about 1 second, once per tab:
-//   0.0–0.4s  a ring draws itself in the centre (the loader is the "0" of our mark)
-//   0.3–0.6s  the rounded tile fills in behind it, then the slash and the cursor bar
-//   0.5–0.7s  the mark slides left as "zerosoft26" appears beside it
-//   0.85–1.05s the curtain fades and the hero starts
+// Brand intro, about 2 seconds, once per tab:
+//   0.0–1.0s  loading: an arc chases twice round a faint track, then closes into a ring (the "0" of our mark)
+//   0.9–1.4s  the rounded tile grows out from behind the ring, the ring becomes the cut-out,
+//             then the slash and the cursor bar draw in
+//   1.3–1.65s the mark slides left as "zerosoft26" appears beside it, then holds
+//   1.9–2.2s  the curtain fades and the hero starts
 // Timing lives in CSS (.brand-intro). Any key, click, scroll or swipe skips it.
 // Skipped entirely for reduced-motion users and on repeat visits (see the script in app/layout.js).
 export default function Intro() {
@@ -35,8 +36,8 @@ export default function Intro() {
       setGone(true);
     };
     // Fallbacks in case the animation events were missed before hydration.
-    const t1 = setTimeout(release, 900);
-    const t2 = setTimeout(() => setGone(true), 1200);
+    const t1 = setTimeout(release, 2000);
+    const t2 = setTimeout(() => setGone(true), 2400);
     const opts = { passive: true };
     window.addEventListener("keydown", skip);
     window.addEventListener("wheel", skip, opts);
@@ -64,6 +65,7 @@ export default function Intro() {
       <div className="bi-lockup">
         <svg className="bi-mark" viewBox="0 0 32 32">
           <rect className="bi-tile" width="32" height="32" rx="8.5" />
+          <ellipse className="bi-track" cx="16" cy="15.2" rx="6.6" ry="9" />
           <ellipse className="bi-ring" cx="16" cy="15.2" rx="6.6" ry="9" pathLength="1" />
           <path className="bi-slash" d="M12.4 20.6 L19.6 9.8" pathLength="1" />
           <rect className="bi-cursor" x="20.4" y="24.2" width="5.6" height="2.2" rx="1.1" />

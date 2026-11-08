@@ -6,7 +6,7 @@ Next.js site lives in [`/frontend`](./frontend).
 Import the repo and set **Root Directory** to `frontend`. Framework preset: Next.js (auto-detected). No env vars needed.
 
 ## What's on the page
-1. **Brand intro** (`components/Intro.js`, styles under "Brand intro" in `globals.css`): about 1 second. A loader
+1. **Brand intro** (`components/Intro.js`, styles under "Brand intro" in `globals.css`): about 2 seconds. A 1-second loader
    ring draws in and becomes the "0" of the logo mark, the mark slides left and "zerosoft26" appears. Plays once per
    tab; any key, click, scroll or swipe skips it; skipped for reduced-motion users.
 2. **Hero** (`Hero.js`, `HeroScene.js`, `DemoSites.js`): "Websites for any business." with a carousel that mixes
