@@ -5,6 +5,12 @@ Next.js site lives in [`/frontend`](./frontend).
 ## Deploy on Vercel
 Import the repo and set **Root Directory** to `frontend`. Framework preset: Next.js (auto-detected). No env vars needed.
 
+- Every push to any branch creates a **preview** deployment (Vercel → Deployments).
+- Only the branch set under **Settings → Environments → Production → Branch Tracking** (older dashboards:
+  Settings → Git → Production Branch) deploys to the live site. Changing GitHub's default branch does not change it.
+- "Redeploy" rebuilds the same commit. To put a different branch live, open its newest deployment and use
+  **⋯ → Promote to Production**, or merge it into the production branch.
+
 ## What's on the page
 1. **Brand intro** (`components/Intro.js`, styles under "Brand intro" in `globals.css`): about 2 seconds. A 1-second loader
    ring draws in and becomes the "0" of the logo mark, the mark slides left and "zerosoft26" appears. Plays once per
