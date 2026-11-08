@@ -5491,3 +5491,154 @@ html.menu-open {
     flex: none;
   }
 }
+
+/* ============ Light hero ("paper white") + light top bar ============
+   One variable sets the colour. Tested: #fafaf8 paper white (chosen), #f5f3ef warm off-white,
+   #f3f4f6 cool grey-white, #ffffff pure white. Paper white lets every project in the preview stand
+   out most while staying warm enough to match the sand and cream sections below. */
+:root {
+  --hero-bg: #fafaf8;
+  --hero-bg-rgb: 250, 250, 248;
+  --hero-ink: #14121b;
+  --hero-accent: #5b3fd6;
+}
+.hero {
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+}
+.hero h1 .line {
+  color: var(--hero-ink);
+}
+.hero h1 .line.hl {
+  color: var(--hero-accent);
+}
+.hero .lead {
+  color: rgba(20, 18, 27, 0.68);
+}
+.hero .btn-violet {
+  background: var(--hero-ink);
+  color: #fff;
+}
+.hero .btn-violet:hover {
+  background: #000;
+}
+.hero .btn-ghost {
+  background: transparent;
+  color: var(--hero-ink);
+  border-color: rgba(20, 18, 27, 0.22);
+}
+.hero .btn-ghost:hover {
+  border-color: rgba(20, 18, 27, 0.45);
+}
+.hero .scroll-hint,
+.hero .m-scroll {
+  color: rgba(20, 18, 27, 0.5);
+}
+.hero .scroll-hint::before,
+.hero .m-scroll i {
+  background: rgba(20, 18, 27, 0.3);
+}
+/* the scrolling business list */
+.belt-band {
+  background-image: repeating-linear-gradient(90deg, rgba(20, 18, 27, 0.06) 0 2px, transparent 2px 28px),
+    linear-gradient(180deg, rgba(20, 18, 27, 0.035), rgba(20, 18, 27, 0.06));
+  border-block-color: rgba(20, 18, 27, 0.09);
+  box-shadow: none;
+}
+.belt-fog {
+  background: linear-gradient(90deg, rgb(var(--hero-bg-rgb)) 0%, rgba(var(--hero-bg-rgb), 0.88) 12%, rgba(var(--hero-bg-rgb), 0.4) 32%, rgba(var(--hero-bg-rgb), 0) 54%);
+}
+.t-item {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(20, 18, 27, 0.1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.t-item::before {
+  display: none;
+}
+.t-item .cat {
+  color: rgba(20, 18, 27, 0.32);
+}
+.t-item small,
+.t-item .no {
+  color: rgba(20, 18, 27, 0.42);
+}
+.t-item.on {
+  background: #fff;
+  border: 1px solid rgba(20, 18, 27, 0.12);
+  box-shadow: 0 12px 30px rgba(20, 18, 27, 0.1);
+}
+.t-item.on .cat,
+.t-item.on .no {
+  color: var(--hero-ink);
+}
+.t-item.on small {
+  color: rgba(20, 18, 27, 0.6);
+}
+/* the preview */
+.status {
+  background: #fff;
+  color: var(--hero-ink);
+  border: 1px solid rgba(20, 18, 27, 0.12);
+  box-shadow: 0 4px 14px rgba(20, 18, 27, 0.06);
+}
+.scene .steps li {
+  background: rgba(20, 18, 27, 0.16);
+}
+.scene .steps li.on {
+  background: var(--hero-ink);
+}
+.scene .browser {
+  box-shadow: 0 30px 70px -30px rgba(20, 18, 27, 0.35), 0 0 0 1px rgba(20, 18, 27, 0.08);
+}
+/* top bar: light everywhere */
+header.nav,
+header.nav.solid {
+  background: rgba(var(--hero-bg-rgb), 0.88);
+  border-bottom-color: rgba(20, 18, 27, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+header.nav nav a:not(.nav-cta) {
+  color: rgba(20, 18, 27, 0.7);
+}
+header.nav nav a:not(.nav-cta):hover {
+  color: var(--hero-ink);
+}
+header.nav .nav-cta {
+  background: var(--hero-ink);
+  color: #fff;
+}
+header.nav .nav-cta:hover {
+  background: #000;
+}
+header.nav .logo {
+  color: var(--hero-ink);
+  --cut: var(--hero-bg);
+}
+header.nav .logo-text {
+  color: var(--hero-ink);
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+.menu-btn {
+  color: var(--hero-ink);
+  border-color: rgba(20, 18, 27, 0.22);
+  background: transparent;
+}
+/* while the dark mobile menu is open, the bar turns back to white-on-dark */
+header.nav.is-open .logo,
+header.nav.is-open .logo-text {
+  color: #fff;
+  --cut: #0a0a0d;
+}
+header.nav.is-open .nav-cta {
+  background: #fff;
+  color: #0a0a0d;
+}
+header.nav.is-open .menu-btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
