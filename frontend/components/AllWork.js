@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ALL_WORK, WORK_TABS, SECTORS } from "@/data/site";
 import Clip from "./Clip";
 import { Arrow } from "./Icons";
@@ -28,7 +28,16 @@ function Tile({ p }) {
 
 // The full catalogue: one tab per service; websites grouped by the business they serve.
 export default function AllWork() {
-  const [tab, setTab] = useState(WORK_TABS[0].id);
+  const [tab, setTabState] = useState(WORK_TABS[0].id);
+  // open the tab named in the link (/work?tab=systems) and keep the address in sync
+  useEffect(() => {
+    const t = new URLSearchParams(location.search).get("tab");
+    if (WORK_TABS.some((x) => x.id === t)) setTabState(t);
+  }, []);
+  const setTab = (t) => {
+    setTabState(t);
+    history.replaceState(null, "", t === WORK_TABS[0].id ? "/work" : `/work?tab=${t}`);
+  };
   const current = WORK_TABS.find((t) => t.id === tab);
   const items = ALL_WORK.filter((p) => p.tab === tab);
   const groups = tab === "websites" ? SECTORS.map(([id, label]) => [label, items.filter((p) => p.sector === id)]).filter(([, l]) => l.length) : [[null, items]];

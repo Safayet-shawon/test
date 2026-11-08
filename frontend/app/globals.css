@@ -7020,3 +7020,19 @@ html[data-theme="dark"] .legal-date {
 html[data-theme="dark"] .hero h1 .line.hl {
   color: #b9a8ff;
 }
+
+/* home: category tabs above Selected work */
+.work-tabs-home {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.work .stack {
+  animation: fadeUp 0.45s var(--ease) both;
+}
+@media (max-width: 700px) {
+  .work-tabs-home {
+    margin-bottom: 0.4rem;
+  }
+  .work .swipe-hint {
+    margin: 0 0 0.9rem;
+  }
+}
