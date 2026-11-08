@@ -31,7 +31,7 @@ export default function Hero() {
     }
   }, []);
   const item = (j) => {
-    const k = j % BUSINESSES.length;
+    const k = ((j % BUSINESSES.length) + BUSINESSES.length) % BUSINESSES.length; // wraps, so the first business also has a "previous"
     const b = BUSINESSES[k];
     return { no: String(k + 1).padStart(2, "0"), cat: b.label, sub: `${b.name} · ${b.url}` };
   };

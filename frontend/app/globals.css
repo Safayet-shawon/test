@@ -5441,13 +5441,13 @@ html.menu-open {
   }
 }
 
-/* ============ Light hero (white with a faint onion tone) + light top bar ============
+/* ============ Light hero (light sand) + light top bar ============
    One variable sets the colour. Tested: #fafaf8 paper white (chosen), #f5f3ef warm off-white,
    #f3f4f6 cool grey-white, #ffffff pure white. Paper white lets every project in the preview stand
    out most while staying warm enough to match the sand and cream sections below. */
 :root {
-  --hero-bg: #fbf7f9; /* white with a faint onion-skin (pink-lilac) tone */
-  --hero-bg-rgb: 251, 247, 249;
+  --hero-bg: #f7f3ec; /* light sand / papery white: hero and every light section */
+  --hero-bg-rgb: 247, 243, 236;
   --hero-ink: #14121b;
   --hero-accent: #5b3fd6;
 }
@@ -5494,8 +5494,10 @@ html.menu-open {
   border-block-color: rgba(20, 18, 27, 0.09);
   box-shadow: none;
 }
-.belt-fog {
-  background: linear-gradient(90deg, rgb(var(--hero-bg-rgb)) 0%, rgba(var(--hero-bg-rgb), 0.88) 12%, rgba(var(--hero-bg-rgb), 0.4) 32%, rgba(var(--hero-bg-rgb), 0) 54%);
+@media (min-width: 701px) {
+  .belt-fog {
+    background: linear-gradient(90deg, rgb(var(--hero-bg-rgb)) 0%, rgba(var(--hero-bg-rgb), 0.88) 12%, rgba(var(--hero-bg-rgb), 0.4) 32%, rgba(var(--hero-bg-rgb), 0) 54%);
+  }
 }
 .t-item {
   background: rgba(255, 255, 255, 0.6);
@@ -6549,4 +6551,57 @@ input[type="radio"] + .q-chip-box {
 .svc-ico-2 {
   background: var(--hero-ink);
   color: #fff;
+}
+
+/* ============ One light colour for every light section ============ */
+body,
+.work,
+.about,
+.contact,
+.cta-block {
+  background: var(--hero-bg);
+}
+
+/* ============ Phone: business list = previous / current / next, centred ============ */
+@media (max-width: 700px) {
+  .belt {
+    perspective: none;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+  }
+  .belt-3d {
+    transform: none;
+  }
+  .belt-band,
+  .belt-fog {
+    display: none;
+  }
+  .t-item {
+    left: 8%;
+    right: 8%;
+    justify-content: center;
+    gap: 0.6rem;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    transition: background-color 0.35s, box-shadow 0.35s, border-color 0.35s;
+  }
+  .t-item .cat {
+    flex: 0 1 auto;
+    text-align: center;
+    font-size: 1.15rem;
+    color: rgba(20, 18, 27, 0.4);
+  }
+  .t-item .no {
+    font-size: 0.62rem;
+  }
+  .t-item.on {
+    background: #fff;
+    border: 1px solid rgba(20, 18, 27, 0.1);
+    box-shadow: 0 10px 26px rgba(20, 18, 27, 0.1);
+  }
+  .t-item.on .cat {
+    font-size: 1.3rem;
+    color: var(--hero-ink);
+  }
 }

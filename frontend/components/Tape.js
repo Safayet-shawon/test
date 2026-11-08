@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // A conveyor belt tilted in perspective: the far end is narrow and dark, so businesses seem to come up from
 // behind, grow as they approach and stop at the station (toward the website demo).
 //   laptop / tablet: horizontal belt, far end on the LEFT, items travel left -> right
-//   phone (<= 700px): vertical belt, far end on TOP, items travel top -> bottom
+//   phone (<= 700px): a flat vertical reel with three rows (previous, current, next), text centred
 // A small spring drives the motion; speed adds a mild lean + blur.
 export default function Tape({ pos, item }) {
   const wrap = useRef(null);
@@ -20,8 +20,9 @@ export default function Tape({ pos, item }) {
       const r = el.getBoundingClientRect();
       const v = window.innerWidth <= 700;
       if (v) {
-        const pitch = r.height * 0.3; // distance between tiles
-        setM({ v, w: pitch, th: pitch * 0.84, px: r.height * 0.7, ready: true });
+        // three rows: previous, current (centred), next
+        const pitch = r.height / 3;
+        setM({ v, w: pitch, th: Math.min(56, pitch * 0.82), px: r.height / 2, ready: true });
       } else {
         const small = r.width < 460;
         setM({ v, w: small ? 168 : 240, th: 0, px: r.width * (small ? 0.6 : 0.62), ready: true });
@@ -55,6 +56,16 @@ export default function Tape({ pos, item }) {
       for (const el of kids) {
         const j = Number(el.dataset.j);
         const u = p - j; // u < 0: still to come (far)   u > 0: already passed
+        if (m.v) {
+          // phone: a flat reel. The next business waits below, the current one sits in the middle,
+          // the previous one moves up and out.
+          const a = Math.abs(u);
+          const y = m.px - u * m.w - m.th / 2;
+          el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(${(1 - 0.1 * clamp(a)).toFixed(3)})`;
+          el.style.opacity = (a <= 1 ? 1 - 0.5 * a : 0.5 * clamp((1.6 - a) / 0.6)).toFixed(3);
+          el.style.filter = "none";
+          continue;
+        }
         const pos1 = m.px + u * m.w;
         const lift = 30 * clamp(1 - Math.abs(u)); // the tile at the station rises slightly
         el.style.transform = m.v
@@ -93,7 +104,7 @@ export default function Tape({ pos, item }) {
   }, [m]);
 
   const js = [];
-  for (let j = Math.max(0, pos - 2); j <= pos + 5; j++) js.push(j);
+  for (let j = pos - 2; j <= pos + 5; j++) js.push(j);
 
   return (
     <div
