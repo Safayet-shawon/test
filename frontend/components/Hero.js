@@ -73,7 +73,7 @@ export default function Hero() {
             We design and build websites, web apps and SaaS, and look after them once they&apos;re live.
           </p>
           <div className="cta-row">
-            <a href="#contact" className="btn btn-violet">
+            <a href="/quote" className="btn btn-violet">
               Start a project <Arrow />
             </a>
             <a href="#work" className="btn btn-ghost">

@@ -22,7 +22,7 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <a href="#contact" className="about-link">
+          <a href="/quote" className="about-link">
             Start a project <Arrow />
           </a>
         </Reveal>

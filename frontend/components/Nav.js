@@ -85,7 +85,7 @@ export default function Nav() {
           <a href="/#work">Our work</a>
           <a href="/#care">After launch</a>
           <a href="/#about">About</a>
-          <a href="/#contact" className="nav-cta" onClick={(e) => open && go(e, "contact")}>
+          <a href="/quote" className="nav-cta" onClick={() => open && close(false)}>
             Start a project
           </a>
           <button
@@ -128,7 +128,7 @@ export default function Nav() {
             ))}
           </ol>
           <div className="m-foot" style={{ "--k": LINKS.length }}>
-            <a href="/#contact" className="m-cta" onClick={(e) => go(e, "contact")}>
+            <a href="/quote" className="m-cta" onClick={() => close(false)}>
               Start a project <span aria-hidden="true">→</span>
             </a>
             <a href={`mailto:${SITE.email}`} className="m-mail">

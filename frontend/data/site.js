@@ -1,11 +1,20 @@
 // ---- Edit me: all copy / contact details live here ----
 export const SITE = {
   name: "zerosoft",
-  // Contact form opens the visitor's mail app addressed to this email.
-  email: "hello@zerosoft.dev", // placeholder: replace with a real inbox before launch
-  // Shown in the footer when set, e.g. "Dhaka, Bangladesh".
-  location: "",
-  // Footer links, e.g. { label: "GitHub", href: "https://github.com/..." }. Empty = hidden.
+  legalName: "zerosoft",
+  url: "https://zerosoft26.com", // used for search engines and link previews
+  // Quotations are sent from and to this inbox (see app/api/quote/route.js).
+  email: "info@zerosoft26.com",
+  phone: "", // e.g. "+880 1XXX-XXXXXX". Shown in the footer and contact block when set.
+  address: {
+    line1: "Road 32, Mohakhali DOHS",
+    city: "Dhaka",
+    postcode: "1206",
+    country: "Bangladesh",
+  },
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=Road+32+Mohakhali+DOHS+Dhaka+1206",
+  hours: "", // e.g. "Sunday to Thursday, 10 am to 7 pm". Hidden when empty.
+  // Footer links, e.g. { label: "LinkedIn", href: "https://www.linkedin.com/company/..." }. Empty = hidden.
   socials: [],
 };
 

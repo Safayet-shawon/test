@@ -3,13 +3,28 @@
 Next.js site lives in [`/frontend`](./frontend).
 
 ## Deploy on Vercel
-Import the repo and set **Root Directory** to `frontend`. Framework preset: Next.js (auto-detected). No env vars needed.
+Import the repo and set **Root Directory** to `frontend`. Framework preset: Next.js (auto-detected).
 
 - Every push to any branch creates a **preview** deployment (Vercel → Deployments).
 - Only the branch set under **Settings → Environments → Production → Branch Tracking** (older dashboards:
   Settings → Git → Production Branch) deploys to the live site. Changing GitHub's default branch does not change it.
 - "Redeploy" rebuilds the same commit. To put a different branch live, open its newest deployment and use
   **⋯ → Promote to Production**, or merge it into the production branch.
+
+### Quotation emails (required for the quotation form)
+The form at `/quote` posts to `app/api/quote/route.js`, which sends two emails from `info@zerosoft26.com`:
+one to us (reply goes to the client) and one to the client (reply comes to us). Add these in
+**Vercel → Settings → Environment Variables**, then redeploy (see `frontend/.env.example`):
+
+| Variable | Value |
+| --- | --- |
+| `SMTP_HOST` | your email provider's SMTP server, e.g. `smtp.gmail.com`, `smtp.zoho.com`, `smtp.hostinger.com` |
+| `SMTP_PORT` | `465` (or `587`) |
+| `SMTP_USER` | `info@zerosoft26.com` |
+| `SMTP_PASS` | the mailbox password or app password |
+
+Or set `RESEND_API_KEY` instead, after verifying `zerosoft26.com` in Resend. Without either, the live form shows
+"Our quotation inbox is not connected yet" and nothing is sent.
 
 ## What's on the page
 1. **Brand intro** (`components/Intro.js`, styles under "Brand intro" in `globals.css`): about 2 seconds. A 1-second loader
@@ -23,7 +38,8 @@ Import the repo and set **Root Directory** to `frontend`. Framework preset: Next
    **Footer** (`Footer.js`).
 
 ## Edit content
-- Copy, hero businesses, projects, contact email: `frontend/data/site.js`
+- Copy, hero businesses, projects, contact details (email, phone, address): `frontend/data/site.js`
+- Quotation questions, options and prices: `frontend/data/quote.js` (prices are `null` until decided)
 - **Contact email**: `SITE.email` is still a placeholder (`hello@zerosoft.dev`). Replace it before launch.
 - **Form delivery**: set `NEXT_PUBLIC_FORM_ENDPOINT` (e.g. a Formspree URL) to send messages directly. Without it,
   the form opens the visitor's email app addressed to `SITE.email`.

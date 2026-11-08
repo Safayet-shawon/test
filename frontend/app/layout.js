@@ -1,5 +1,6 @@
 import { Unbounded, Space_Grotesk, Fraunces } from "next/font/google";
 import "./globals.css";
+import { SITE } from "@/data/site";
 
 const display = Unbounded({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 // Our own brand uses two fonts: Unbounded (big headings) and Space Grotesk (everything else).
@@ -8,6 +9,7 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
+  metadataBase: new URL(SITE.url),
   title: "zerosoft · Software for any business",
   description:
     "zerosoft designs and builds websites, web apps and SaaS for any business, and looks after them once they're live.",
@@ -28,6 +30,27 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: SITE.name,
+              url: SITE.url,
+              email: SITE.email,
+              ...(SITE.phone ? { telephone: SITE.phone } : {}),
+              description: "Websites, management systems, SaaS and apps for growing businesses.",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: SITE.address.line1,
+                addressLocality: SITE.address.city,
+                postalCode: SITE.address.postcode,
+                addressCountry: "BD",
+              },
+            }),
+          }}
+        />
         <noscript>
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
