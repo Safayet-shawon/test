@@ -6610,7 +6610,7 @@ body,
    THEME SWITCH + DARK MODE
    Light is the default. html[data-theme="dark"]:
    - black (#0a0a0d, the original hero colour): hero, How we work, After launch, footer
-   - deep indigo-navy palette for the sections that are light sand in light mode
+   - espresso palette (warm near-black) for the sections that are light sand in light mode
    ============================================================================================= */
 .theme-btn {
   display: inline-grid;
@@ -6657,12 +6657,12 @@ html.theme-switching *::after {
 html[data-theme="dark"] {
   color-scheme: dark;
   --dk-black: #0a0a0d;
-  --dk-bg: #141829;
-  --dk-card: #1d2238;
-  --dk-card-2: #262c48;
+  --dk-bg: #16120e; /* espresso: warm near-black that sits calmly next to the black sections */
+  --dk-card: #211b15;
+  --dk-card-2: #2a231b;
   --dk-line: rgba(255, 255, 255, 0.09);
-  --dk-text: #eef0fa;
-  --dk-muted: rgba(226, 229, 245, 0.66);
+  --dk-text: #f5f1ea;
+  --dk-muted: rgba(245, 238, 226, 0.8);
   --hero-bg: var(--dk-bg);
   --hero-bg-rgb: 10, 10, 13; /* the bar and the business-list fade sit on the black hero */
   --hero-ink: var(--dk-text);
@@ -6888,7 +6888,7 @@ html[data-theme="dark"] .about::after {
 }
 html[data-theme="dark"] .about-kick,
 html[data-theme="dark"] .about-row li span {
-  color: rgba(226, 229, 245, 0.5);
+  color: rgba(245, 238, 226, 0.64);
 }
 html[data-theme="dark"] .about-lead,
 html[data-theme="dark"] .about-link {
@@ -6911,7 +6911,7 @@ html[data-theme="dark"] .cta-hours {
   color: var(--dk-muted);
 }
 html[data-theme="dark"] .cta-n {
-  color: rgba(226, 229, 245, 0.4);
+  color: rgba(245, 238, 226, 0.64);
 }
 html[data-theme="dark"] .cta-steps li {
   background: rgba(255, 255, 255, 0.04);
@@ -6932,7 +6932,7 @@ html[data-theme="dark"] .q-card .q-muted {
 }
 html[data-theme="dark"] .q-steps li > * {
   background: rgba(255, 255, 255, 0.05);
-  color: rgba(226, 229, 245, 0.55);
+  color: rgba(245, 238, 226, 0.64);
 }
 html[data-theme="dark"] .q-steps button {
   color: var(--dk-text);
@@ -6981,7 +6981,7 @@ html[data-theme="dark"] .q-field textarea {
 }
 html[data-theme="dark"] .q-field input::placeholder,
 html[data-theme="dark"] .q-field textarea::placeholder {
-  color: rgba(226, 229, 245, 0.35);
+  color: rgba(245, 238, 226, 0.64);
 }
 html[data-theme="dark"] .q-error {
   color: #ff9f8f;
@@ -7015,7 +7015,7 @@ html[data-theme="dark"] .legal p {
   color: var(--dk-muted);
 }
 html[data-theme="dark"] .legal-date {
-  color: rgba(226, 229, 245, 0.5);
+  color: rgba(245, 238, 226, 0.64);
 }
 html[data-theme="dark"] .hero h1 .line.hl {
   color: #b9a8ff;
@@ -7129,9 +7129,9 @@ html[data-theme="dark"] .hero h1 .line.hl {
   --hero-ink: #1f1b16;
 }
 html[data-theme="dark"] {
-  --text: #eef0fa;
-  --text-2: rgba(226, 229, 245, 0.78);
-  --text-3: rgba(226, 229, 245, 0.62);
+  --text: #f5f1ea;
+  --text-2: rgba(245, 238, 226, 0.8);
+  --text-3: rgba(245, 238, 226, 0.64);
 }
 body {
   color: var(--text);
@@ -7170,4 +7170,19 @@ html[data-theme="dark"] .q-step-n {
 html[data-theme="dark"] .q-steps li.is-on > *,
 html[data-theme="dark"] .q-steps li.is-on .q-step-n {
   color: #0a0a0d;
+}
+
+/* dark mode: project cards in the same warm family (they were a cool violet-black) */
+html[data-theme="dark"] .card.k0 {
+  background: linear-gradient(150deg, #2a2219, #17120e);
+}
+html[data-theme="dark"] .card.k2 {
+  background: linear-gradient(150deg, #231c15, #120e0b);
+}
+html[data-theme="dark"] .card.k1,
+html[data-theme="dark"] .card.k3 {
+  background: var(--dk-card-2);
+}
+html[data-theme="dark"] .card {
+  border-color: rgba(245, 238, 226, 0.1);
 }
