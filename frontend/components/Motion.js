@@ -9,35 +9,54 @@ export default function Motion() {
     const fine = window.matchMedia("(pointer: fine)").matches;
     if (reduce) return;
     const root = document.documentElement;
-    const glow = document.querySelector(".cursor-glow");
     const prog = document.querySelector(".scroll-prog");
     const hero = document.querySelector(".hero");
-    let mx = innerWidth / 2,
-      my = innerHeight / 2,
-      gx = mx,
-      gy = my,
-      raf = 0;
 
     // ---- scroll: progress bar + stacked cards get pushed back by the next card ----
-    const onScroll = () => {
+    // Runs at most once per frame, and only measures cards while the Work section is on screen.
+    const cards = document.getElementsByClassName("card"); // live list (follows the Work tabs)
+    const work = document.getElementById("work");
+    let workOn = false;
+    const io = work
+      ? new IntersectionObserver(([e]) => {
+          workOn = e.isIntersecting;
+        }, { rootMargin: "200px 0px" })
+      : null;
+    if (io) io.observe(work);
+    let scrollQueued = false;
+    const paintScroll = () => {
+      scrollQueued = false;
       const max = root.scrollHeight - innerHeight;
       if (prog) prog.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
-      const cards = document.querySelectorAll(".card");
-      cards.forEach((c, i) => {
-        const nx = cards[i + 1];
-        if (!nx || innerWidth <= 900) return c.style.removeProperty("--sc");
-        const r = c.getBoundingClientRect();
-        const n = nx.getBoundingClientRect();
-        const p = Math.min(1, Math.max(0, (r.bottom - n.top) / r.height));
-        c.style.setProperty("--sc", (1 - 0.06 * p).toFixed(3));
-        c.style.setProperty("--br", (1 - 0.18 * p).toFixed(3));
-      });
+      if (!workOn || innerWidth <= 900) return;
+      const rects = Array.from(cards, (c) => c.getBoundingClientRect()); // read everything first...
+      for (let i = 0; i < cards.length - 1; i++) {
+        const r = rects[i];
+        const p = Math.min(1, Math.max(0, (r.bottom - rects[i + 1].top) / r.height));
+        cards[i].style.setProperty("--sc", (1 - 0.06 * p).toFixed(3)); // ...then write
+        cards[i].style.setProperty("--br", (1 - 0.18 * p).toFixed(3));
+      }
+    };
+    const onScroll = () => {
+      if (!scrollQueued) {
+        scrollQueued = true;
+        requestAnimationFrame(paintScroll);
+      }
     };
 
-    // ---- pointer: glow follows, hero parallax, tilt, magnet ----
+    // ---- pointer: hero parallax, card tilt, magnetic buttons (once per frame) ----
+    let lastMove = null;
+    let moveQueued = false;
     const onMove = (e) => {
-      mx = e.clientX;
-      my = e.clientY;
+      lastMove = e;
+      if (!moveQueued) {
+        moveQueued = true;
+        requestAnimationFrame(applyMove);
+      }
+    };
+    const applyMove = () => {
+      moveQueued = false;
+      const e = lastMove;
       if (hero) {
         const r = hero.getBoundingClientRect();
         if (r.bottom > 0) {
@@ -73,24 +92,20 @@ export default function Motion() {
       }
     };
 
-    const loop = () => {
-      gx += (mx - gx) * 0.12;
-      gy += (my - gy) * 0.12;
-      if (glow) glow.style.transform = `translate3d(${gx - 190}px, ${gy - 190}px, 0)`;
-      raf = requestAnimationFrame(loop);
-    };
+    // ---- pause CSS animations in sections that are off screen ----
+    const sectionIo = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.toggleAttribute("data-off", !e.isIntersecting)),
+      { rootMargin: "100px 0px" }
+    );
+    document.querySelectorAll("main > section, .hero").forEach((el) => sectionIo.observe(el));
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-    if (fine) {
-      window.addEventListener("pointermove", onMove, { passive: true });
-      raf = requestAnimationFrame(loop);
-    } else if (glow) {
-      glow.style.display = "none";
-    }
+    if (fine) window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
-      cancelAnimationFrame(raf);
+      io?.disconnect();
+      sectionIo.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       window.removeEventListener("pointermove", onMove);

@@ -7036,3 +7036,80 @@ html[data-theme="dark"] .hero h1 .line.hl {
     margin: 0 0 0.9rem;
   }
 }
+
+/* =============================================================================================
+   SCROLL PERFORMANCE
+   ============================================================================================= */
+/* Project screenshots: a real <img> (next/image) panned with a GPU transform instead of
+   animating background-position, which repainted every frame. */
+.shots {
+  container-type: size;
+}
+.shots .shot {
+  background: #fff;
+  overflow: hidden;
+  animation: shotFade 12s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -6s);
+}
+.shots.n1 .shot {
+  animation: none;
+}
+.shots .shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 0;
+  animation: shotPanY 14s ease-in-out infinite alternate;
+}
+.card:hover .shots .shot img {
+  animation-duration: 8s;
+}
+@keyframes shotPanY {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    /* scroll to the bottom of the page; never move a short image down */
+    transform: translateY(min(0px, calc(-100% + 100cqh))) scale(1.03);
+  }
+}
+/* nothing animates in a section that is off screen (set by components/Motion.js) */
+[data-off],
+[data-off] * {
+  animation-play-state: paused !important;
+}
+/* phones: a solid top bar (no live blur of the page scrolling under it) */
+@media (max-width: 900px) {
+  header.nav,
+  header.nav.solid {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--hero-bg);
+  }
+  html[data-theme="dark"] header.nav,
+  html[data-theme="dark"] header.nav.solid {
+    background: #0a0a0d;
+  }
+}
+/* lower sections: the browser skips rendering them until they come near the screen */
+.care,
+.about,
+.cta-block,
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 760px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shots .shot,
+  .shots .shot img {
+    animation: none;
+  }
+}
+/* beat the older, more specific .shots.n2 .shot / .card:hover .shot rules */
+.shots.n2 .shot {
+  animation: shotFade 12s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -6s);
+}
+.card:hover .shots .shot {
+  animation-duration: 12s;
+}

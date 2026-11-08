@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BUSINESSES } from "@/data/site";
 import { SITES } from "./DemoSites";
 
@@ -18,6 +18,25 @@ export default function HeroScene({ onChange }) {
   const [siteStep, setSiteStep] = useState(1);
   const [phase, setPhase] = useState("site");
   const [ready, setReady] = useState(false); // hero animation starts once the pendulum intro is done
+  const [visible, setVisible] = useState(true); // paused while the hero is off screen or the tab is hidden
+  const root = useRef(null);
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    let onScreen = true;
+    const update = () => setVisible(onScreen && document.visibilityState === "visible");
+    const io = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting;
+      update();
+    });
+    io.observe(el);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
 
   useEffect(() => {
     if (!document.documentElement.classList.contains("intro-lock")) {
@@ -36,7 +55,7 @@ export default function HeroScene({ onChange }) {
 
   // loop: site (drops in, plays) -> fall away -> next site. No "pre" step.
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || !visible) return;
     let t;
     if (phase === "site") {
       t = setTimeout(() => setPhase("fall"), SITE_MS - FALL_MS);
@@ -49,12 +68,12 @@ export default function HeroScene({ onChange }) {
       }, FALL_MS);
     }
     return () => clearTimeout(t);
-  }, [phase, step, ready]);
+  }, [phase, step, ready, visible]);
 
   const site = BUSINESSES[siteStep - 1];
 
   return (
-    <div className="scene" data-phase={ready ? phase : "wait"}>
+    <div className="scene" ref={root} data-phase={ready ? phase : "wait"}>
       <div className="blob b-violet" />
 
       <div className="site-layer">

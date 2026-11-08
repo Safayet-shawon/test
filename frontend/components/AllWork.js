@@ -7,7 +7,7 @@ import { Arrow } from "./Icons";
 function Tile({ p }) {
   return (
     <article className="tile">
-      <Clip p={p} tilt={false} />
+      <Clip p={p} tilt={false} sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 380px" />
       <div className="tile-info">
         <h3>{p.title}</h3>
         <p className="tile-kind">{p.kind}</p>

@@ -11,6 +11,7 @@ export default function Tape({ pos, item }) {
   const list = useRef(null);
   const band = useRef(null);
   const posRef = useRef(pos);
+  const wake = useRef(() => {});
   const [m, setM] = useState({ w: 240, px: 360, th: 80, v: false, ready: false });
   posRef.current = pos;
 
@@ -81,6 +82,7 @@ export default function Tape({ pos, item }) {
     const tick = (now) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      raf = 0;
       const target = posRef.current;
       if (reduce) {
         p = target;
@@ -96,12 +98,26 @@ export default function Tape({ pos, item }) {
         }
       }
       apply();
-      raf = requestAnimationFrame(tick);
+      // stop once settled; a new position wakes it up again (see the effect below)
+      if (p !== posRef.current || v !== 0) raf = requestAnimationFrame(tick);
+    };
+    wake.current = () => {
+      if (!raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      }
     };
     apply();
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      wake.current = () => {};
+    };
   }, [m]);
+
+  useEffect(() => {
+    wake.current();
+  }, [pos]);
 
   const js = [];
   for (let j = pos - 2; j <= pos + 5; j++) js.push(j);
