@@ -8,9 +8,9 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 export const metadata = {
-  title: "zerosoft · Websites, web apps and SaaS for any business",
+  title: "zerosoft · Software for any business",
   description:
-    "zerosoft designs and builds custom websites, web apps and SaaS for growing businesses, and looks after them after launch.",
+    "zerosoft designs and builds websites, web apps and SaaS for any business, and looks after them once they're live.",
 };
 
 export const viewport = { themeColor: "#14121b" };

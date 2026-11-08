@@ -62,7 +62,7 @@ export default function Hero() {
         <div className="hero-copy">
           <h1>
             <span className="line">
-              <Letters text="Websites for" />
+              <Letters text="Software for" />
             </span>
             <span className="line hl">
               <Letters text="any business." base={12} />
@@ -70,8 +70,7 @@ export default function Hero() {
           </h1>
           <Tape pos={pos} item={item} />
           <p className="lead">
-            Custom websites, web apps and SaaS, designed and built by one team. Whatever you run, the site is
-            made around your business, never from a template.
+            We design and build websites, web apps and SaaS, and look after them once they&apos;re live.
           </p>
           <div className="cta-row">
             <a href="#contact" className="btn btn-violet">
