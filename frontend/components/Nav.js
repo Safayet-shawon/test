@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/data/site";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 // Page sections, in page order. Used by the mobile menu (with a one-line hint each).
 const LINKS = [
@@ -85,6 +86,7 @@ export default function Nav() {
           <a href="/#work">Our work</a>
           <a href="/#care">After launch</a>
           <a href="/#about">About</a>
+          <ThemeToggle className="theme-btn-nav" />
           <a href="/quote" className="nav-cta" onClick={() => open && close(false)}>
             Start a project
           </a>
@@ -128,6 +130,7 @@ export default function Nav() {
             ))}
           </ol>
           <div className="m-foot" style={{ "--k": LINKS.length }}>
+            <ThemeToggle className="theme-btn-menu" withLabel />
             <a href="/quote" className="m-cta" onClick={() => close(false)}>
               Start a project <span aria-hidden="true">→</span>
             </a>
