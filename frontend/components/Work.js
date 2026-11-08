@@ -80,18 +80,20 @@ export default function Work() {
         ))}
       </div>
 
-      <Reveal className="also">
-        <h3>Also built</h3>
-        <ul>
-          {ALSO_BUILT.map(([name, type, text]) => (
-            <li key={name}>
-              <b>{name}</b>
-              <span>{type}</span>
-              <p>{text}</p>
-            </li>
-          ))}
-        </ul>
-      </Reveal>
+      {ALSO_BUILT.length > 0 && (
+        <Reveal className="also">
+          <h3>Also built</h3>
+          <ul>
+            {ALSO_BUILT.map(([name, type, text]) => (
+              <li key={name}>
+                <b>{name}</b>
+                <span>{type}</span>
+                <p>{text}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      )}
     </section>
   );
 }

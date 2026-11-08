@@ -194,6 +194,26 @@ export const PROJECTS = [
     shotLabel: "gallery",
   },
   {
+    id: "sohrab",
+    tag: "Website + CRM",
+    title: "Sohrab Air International",
+    blurb:
+      "A bilingual Bangla and English website for Hajj, Umrah, air tickets and overseas jobs, with an agency CRM for leads, packages, staff, attendance and payroll.",
+    stack: ["Next.js", "Spring Boot", "PostgreSQL"],
+    result: "Bilingual website and agency CRM",
+    link: null,
+  },
+  {
+    id: "winner",
+    tag: "Web app",
+    title: "Winner Apparels",
+    blurb:
+      "A management system for a garment factory: inventory and warehouses, production plans from cutting to finishing, procurement, HR and payroll, and reports.",
+    stack: ["React", "Laravel", "Recharts"],
+    result: "Inventory, production, procurement and HR in one system",
+    link: null,
+  },
+  {
     id: "unifab",
     tag: "Product",
     title: "UNIFAB",
@@ -214,11 +234,9 @@ export const PROJECTS = [
   },
 ];
 
-// Shipped work without screenshots yet: shown as a short list under the cards.
-export const ALSO_BUILT = [
-  ["Winner Apparels", "Garment manufacturing", "Management app for inventory, production planning, procurement and HR."],
-  ["Sohrab Air International", "Travel and Hajj services", "Bilingual Bangla and English website with an admin CRM."],
-];
+// Shipped work without screenshots yet: shown as a short list under the cards (hidden when empty).
+// Each entry: [name, type, one-line description].
+export const ALSO_BUILT = [];
 
 // "How we work" strip
 export const PROCESS = [
