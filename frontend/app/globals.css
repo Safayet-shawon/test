@@ -5044,7 +5044,7 @@ html.intro-skip .brand-intro {
   }
 }
 
-/* ============ Mobile menu: outlined "Menu" pill + full-screen panel that fades in ============ */
+/* ============ Mobile menu: outlined icon button + full-screen panel that fades in ============ */
 .menu-btn,
 .m-menu {
   display: none;
@@ -5073,13 +5073,14 @@ html.menu-open {
     -webkit-backdrop-filter: none;
   }
 
-  /* --- the button: quiet outlined pill, word + icon so it reads as a menu --- */
+  /* --- the button: quiet outlined circle with the two-line menu icon --- */
   .menu-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    justify-content: center;
+    width: 40px;
     height: 40px;
-    padding: 0 0.9rem 0 1rem;
+    padding: 0;
     border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.04);
@@ -5095,18 +5096,6 @@ html.menu-open {
   header.nav.is-open .menu-btn {
     border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.08);
-  }
-  .menu-btn-label {
-    display: grid;
-    height: 1.1em;
-    overflow: hidden;
-    line-height: 1.1;
-  }
-  .menu-btn-label span {
-    transition: transform 0.45s cubic-bezier(0.7, 0, 0.2, 1);
-  }
-  header.nav.is-open .menu-btn-label span {
-    transform: translateY(-100%);
   }
   .menu-btn-icon {
     position: relative;

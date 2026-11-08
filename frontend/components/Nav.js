@@ -95,10 +95,6 @@ export default function Nav() {
             aria-controls="mobile-menu"
             onClick={() => (open ? close() : setOpen(true))}
           >
-            <span className="menu-btn-label" aria-hidden="true">
-              <span>Menu</span>
-              <span>Close</span>
-            </span>
             <span className="menu-btn-icon" aria-hidden="true">
               <i />
               <i />
