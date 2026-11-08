@@ -3,11 +3,12 @@ import Logo from "./Logo";
 import { Arrow } from "./Icons";
 
 const LINKS = [
-  ["Work", "#work"],
-  ["Services", "#services"],
-  ["Process", "#process"],
-  ["About", "#about"],
-  ["Contact", "#contact"],
+  ["Process", "/#process"],
+  ["Selected work", "/#work"],
+  ["All projects", "/work"],
+  ["DevOps & care", "/#care"],
+  ["About", "/#about"],
+  ["Contact", "/#contact"],
 ];
 
 export default function Footer() {

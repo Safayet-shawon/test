@@ -91,7 +91,7 @@ export const BUSINESSES = [
     url: "tomadachis.com",
     name: "tomadachis",
     shot: "/projects/tomadachis.webp",
-    travel: 0,
+    travel: 0.25,
     bg: "#fff6f8",
   },
   {
@@ -152,8 +152,14 @@ export const BUSINESSES = [
   },
 ];
 
-// Selected work, strongest first. Each needs a screenshot at public/projects/<id>.webp.
-// `link` shows a "Visit website" button. `result` = what was delivered (or a real outcome, if you have one).
+// ---------------------------------------------------------------------------------------------
+// WORK
+// Media per project: `shots` (screenshots in /public/projects; a second one crossfades) or
+// `video` (a scroll recording in /public/video/<id>.mp4 with <id>.poster.jpg).
+// `link` shows a "Visit website" button.
+// ---------------------------------------------------------------------------------------------
+
+// Home page "Selected work": the strongest projects, in order. The full list is on /work.
 export const PROJECTS = [
   {
     id: "singledot",
@@ -164,24 +170,18 @@ export const PROJECTS = [
     stack: ["Next.js", "Postgres", "Redis"],
     result: "Public site, cost calculator, quotation PDFs, admin panel",
     link: "https://singledotstudio.com",
+    shots: ["/projects/singledot.webp"],
   },
   {
-    id: "microservice",
-    tag: "E-commerce",
-    title: "EcomMS",
-    blurb: "A storefront and an admin console for a full online store, built on separate auth, product, order and notification services.",
-    stack: ["Next.js", "TypeScript", "Microservices"],
-    result: "Storefront, admin console, 4 back-end services",
+    id: "winner",
+    tag: "Management system",
+    title: "Winner Apparels",
+    blurb:
+      "A management system for a garment factory: inventory and warehouses, production plans from cutting to finishing, procurement, HR and payroll, and reports.",
+    stack: ["React", "Laravel", "Recharts"],
+    result: "Inventory, production, procurement and HR in one system",
     link: null,
-  },
-  {
-    id: "tomadachis",
-    tag: "Website",
-    title: "tomadachis",
-    blurb: "A pet care platform: an online shop, vet appointments, adoption and a community, in one warm, friendly site.",
-    stack: ["Shop", "Bookings", "Community"],
-    result: "Shop, vet bookings, adoption and community in one site",
-    link: "https://tomadachis.com",
+    shots: ["/projects/winner.webp", "/projects/winner-2.webp"],
   },
   {
     id: "moonstar",
@@ -190,8 +190,8 @@ export const PROJECTS = [
     blurb: "A company website for a power-equipment supplier, plus a private staff portal for quotations, approvals and engineering load sizing.",
     stack: ["Next.js", "Express", "PostgreSQL"],
     result: "Company site, staff portal, quotation engine",
-    link: null,
-    shotLabel: "gallery",
+    link: "https://moonstar-web-five.vercel.app",
+    shots: ["/projects/moonstar.webp"],
   },
   {
     id: "sohrab",
@@ -202,46 +202,104 @@ export const PROJECTS = [
     stack: ["Next.js", "Spring Boot", "PostgreSQL"],
     result: "Bilingual website and agency CRM",
     link: null,
+    shots: ["/projects/sohrab.webp", "/projects/sohrab-2.webp"],
   },
   {
-    id: "winner",
-    tag: "Web app",
-    title: "Winner Apparels",
-    blurb:
-      "A management system for a garment factory: inventory and warehouses, production plans from cutting to finishing, procurement, HR and payroll, and reports.",
-    stack: ["React", "Laravel", "Recharts"],
-    result: "Inventory, production, procurement and HR in one system",
+    id: "microservice",
+    tag: "SaaS",
+    title: "EcomMS",
+    blurb: "A storefront and an admin console for a full online store, built on separate auth, product, order and notification services.",
+    stack: ["Next.js", "TypeScript", "Microservices"],
+    result: "Storefront, admin console, 4 back-end services",
     link: null,
+    shots: ["/projects/microservice.webp", "/projects/microservice-2.webp"],
   },
   {
-    id: "unifab",
-    tag: "Product",
-    title: "UNIFAB",
-    blurb: "A scroll-driven storefront for a single garment, with a real-time 3D scene and art-directed photography.",
-    stack: ["three.js", "GSAP", "Vite"],
-    result: "3D product story and storefront",
-    link: null,
-    shotLabel: "gallery",
-  },
-  {
-    id: "architect",
-    tag: "Portfolio",
-    title: "Architect Shakil",
-    blurb: "A portfolio for an architect, photographer and author, with galleries, an animated intro and a content back end.",
-    stack: ["Next.js", "NestJS", "Redis"],
-    result: "Portfolio site with galleries and CMS",
-    link: null,
+    id: "tomadachis",
+    tag: "Website",
+    title: "tomadachis",
+    blurb: "A pet care platform: an online shop, vet appointments, adoption and a community, in one warm, friendly site.",
+    stack: ["Shop", "Bookings", "Community"],
+    result: "Shop, vet bookings, adoption and community in one site",
+    link: "https://tomadachis.com",
+    shots: ["/projects/tomadachis.webp"],
   },
 ];
 
-// Shipped work without screenshots yet: shown as a short list under the cards (hidden when empty).
-// Each entry: [name, type, one-line description].
-export const ALSO_BUILT = [];
+// The Work page: one tab per service. Websites are grouped by the business they serve.
+export const WORK_TABS = [
+  { id: "websites", label: "Websites", blurb: "Public websites, grouped by the business they serve." },
+  { id: "systems", label: "Management systems", blurb: "The software a business runs on: ERP, CRM and staff portals." },
+  { id: "saas", label: "SaaS", blurb: "Products built to be used by many customers at once." },
+  { id: "samples", label: "Samples", blurb: "Demo builds that show an idea. Their content is fictional." },
+];
 
-// "How we work" strip
+export const SECTORS = [
+  ["apparel", "Apparel and fashion"],
+  ["power", "Power and engineering"],
+  ["design", "Architecture, interiors and construction"],
+  ["lighting", "Lighting and home automation"],
+  ["travel", "Travel and pilgrimage"],
+  ["pets", "Pets"],
+  ["digital", "Digital products"],
+];
+
+const rec = (id) => ({ video: id, poster: `/video/${id}.poster.jpg` });
+
+export const ALL_WORK = [
+  // Websites
+  { id: "winner-site", tab: "websites", sector: "apparel", title: "Winner Apparels", kind: "Garment manufacturer website",
+    tags: ["Collections", "Request a quote", "FAQ"], link: "https://winner-apparels-site.vercel.app", ...rec("winner-site") },
+  { id: "unifab", tab: "websites", sector: "apparel", title: "UNIFAB", kind: "Fashion label with a 3D scroll story",
+    tags: ["three.js", "GSAP", "Vite"], link: "https://cinematic-clothing.vercel.app", shots: ["/projects/unifab.webp"] },
+  { id: "moonstar", tab: "websites", sector: "power", title: "Moon Star Power & Technology", kind: "Power equipment company website",
+    tags: ["Next.js", "Express", "PostgreSQL"], link: "https://moonstar-web-five.vercel.app", shots: ["/projects/moonstar.webp"] },
+  { id: "alphatek", tab: "websites", sector: "power", title: "Alphatek Engineering", kind: "Industrial automation website",
+    tags: ["Products", "Brands", "Request a quote"], link: "https://alphatek-engineering.vercel.app", ...rec("alphatek") },
+  { id: "singledot", tab: "websites", sector: "design", title: "Single Dot Studio", kind: "Interior design website with a cost calculator",
+    tags: ["Next.js", "PostgreSQL", "PDF quotes"], link: "https://singledotstudio.com", shots: ["/projects/singledot.webp"] },
+  { id: "kolpo", tab: "websites", sector: "design", title: "KOLPO", kind: "Architecture and construction website",
+    tags: ["Projects", "Services", "Journal"], link: "https://kolpo-tau.vercel.app", ...rec("kolpo") },
+  { id: "architect", tab: "websites", sector: "design", title: "Architect Shakil", kind: "Personal portfolio",
+    tags: ["Next.js", "NestJS", "Galleries"], link: "https://arshakil.vercel.app", shots: ["/projects/architect.webp"] },
+  { id: "wadia", tab: "websites", sector: "lighting", title: "WADIA", kind: "Lighting and home automation store",
+    tags: ["Shop", "Room planner", "Before and after"], link: "https://wahdialights.vercel.app", ...rec("wadia") },
+  { id: "sohrab", tab: "websites", sector: "travel", title: "Sohrab Air International", kind: "Bilingual Hajj, Umrah and ticketing website",
+    tags: ["Bangla + English", "Packages", "Requests"], link: null, shots: ["/projects/sohrab-2.webp"] },
+  { id: "tomadachis", tab: "websites", sector: "pets", title: "tomadachis", kind: "Pet care platform",
+    tags: ["Shop", "Vet booking", "Adoption"], link: "https://tomadachis.com", shots: ["/projects/tomadachis.webp"] },
+  { id: "praxivon", tab: "websites", sector: "digital", title: "Praxivon Labs", kind: "Studio website",
+    tags: ["Brand site"], link: "https://praxivonlabs-nine.vercel.app", ...rec("praxivon") },
+
+  // Management systems
+  { id: "winner-erp", tab: "systems", title: "Winner Apparels ERP", kind: "Garment factory management system",
+    tags: ["Inventory", "Production", "HR and payroll"], link: "https://winner-apparels-erp.vercel.app",
+    shots: ["/projects/winner.webp", "/projects/winner-2.webp"] },
+  { id: "sohrab-crm", tab: "systems", title: "Sohrab Air CRM", kind: "Travel agency CRM",
+    tags: ["Lead pipeline", "Packages", "Payroll"], link: null, shots: ["/projects/sohrab.webp"] },
+  { id: "moonstar-portal", tab: "systems", title: "Moon Star staff portal", kind: "Quotations and approvals portal",
+    tags: ["Role-based access", "Quotations", "PDF reports"], link: "https://moonstar-web-five.vercel.app/portal", ...rec("moonstar-portal") },
+
+  // SaaS
+  { id: "microservice", tab: "saas", title: "EcomMS", kind: "E-commerce platform on microservices",
+    tags: ["Next.js", "TypeScript", "Microservices"], link: null,
+    shots: ["/projects/microservice.webp", "/projects/microservice-2.webp"] },
+
+  // Samples
+  { id: "turf", tab: "samples", title: "turf.bd", kind: "Football turf booking demo",
+    tags: ["Booking", "Offers", "Demo"], link: "https://turf-sigma-nine.vercel.app", ...rec("turf") },
+  { id: "turf-admin", tab: "samples", title: "turf.bd admin", kind: "Venue admin demo",
+    tags: ["Admin", "Demo"], link: "https://turf-sigma-nine.vercel.app/admin/login", ...rec("turf-admin") },
+  { id: "moonstar-demo", tab: "samples", title: "Moon Star demo site", kind: "Demo copy of a company site",
+    tags: ["Demo", "Consultation form"], link: "https://moonstar-demo-web.vercel.app", ...rec("moonstar-demo") },
+  { id: "singledot-v2", tab: "samples", title: "Single Dot Studio v2", kind: "Redesign concept",
+    tags: ["Redesign", "Calculator"], link: "https://singledotstudio-v2.vercel.app", ...rec("singledot-v2") },
+];
+
+// "How we work": four steps, an icon each, one short line.
 export const PROCESS = [
-  ["01", "Discover", "We learn your business, your customers and what a good result looks like."],
-  ["02", "Design", "Page designs with your real content and brand, reviewed together."],
-  ["03", "Build", "Fast, accessible code, with progress you can see along the way."],
-  ["04", "Launch", "We put it live, then keep it fast, safe and up to date."],
+  { icon: "brief", title: "Brief", text: "Tell us the goal. We map how your business works." },
+  { icon: "design", title: "Design", text: "Your brand, your content. Never a template." },
+  { icon: "build", title: "Build", text: "Working pages from week one." },
+  { icon: "launch", title: "Launch & care", text: "We ship it, then keep it fast and safe." },
 ];

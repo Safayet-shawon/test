@@ -1,47 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
-import { PROJECTS, ALSO_BUILT } from "@/data/site";
+import { PROJECTS, ALL_WORK } from "@/data/site";
 import Reveal from "./Reveal";
+import Clip from "./Clip";
 import { Arrow } from "./Icons";
-
-// Screenshots: `public/projects/<id>.webp` (and optionally `<id>-2.webp`, which crossfades).
-function shotsFor(id) {
-  const dir = path.join(process.cwd(), "public", "projects");
-  const out = [];
-  for (const suffix of ["", "-2", "-3"]) {
-    for (const ext of ["webp", "png", "jpg"]) {
-      if (fs.existsSync(path.join(dir, `${id}${suffix}.${ext}`))) {
-        out.push(`/projects/${id}${suffix}.${ext}`);
-        break;
-      }
-    }
-  }
-  return out;
-}
-
-function Clip({ p }) {
-  const shots = shotsFor(p.id);
-  const host = p.link ? p.link.replace(/^https?:\/\//, "") : p.title;
-  return (
-    <div className="clip has-shot" data-tilt>
-      {shots.length > 0 && (
-        <>
-          <div className="chrome">
-            <i />
-            <i />
-            <i />
-            <span>{host}</span>
-          </div>
-          <div className={`shots n${shots.length}`}>
-            {shots.map((src, i) => (
-              <div key={src} className="shot" style={{ backgroundImage: `url(${src})`, "--i": i }} />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
 
 export default function Work() {
   return (
@@ -80,20 +40,11 @@ export default function Work() {
         ))}
       </div>
 
-      {ALSO_BUILT.length > 0 && (
-        <Reveal className="also">
-          <h3>Also built</h3>
-          <ul>
-            {ALSO_BUILT.map(([name, type, text]) => (
-              <li key={name}>
-                <b>{name}</b>
-                <span>{type}</span>
-                <p>{text}</p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      )}
+      <div className="work-more">
+        <a href="/work" className="btn btn-violet">
+          See all projects <span className="work-count">{ALL_WORK.length}</span> <Arrow />
+        </a>
+      </div>
     </section>
   );
 }

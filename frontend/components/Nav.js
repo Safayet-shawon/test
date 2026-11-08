@@ -5,10 +5,9 @@ import Logo from "./Logo";
 
 // Page sections, in page order. Used by the mobile menu (with a one-line hint each).
 const LINKS = [
-  ["work", "Work", "Selected client projects"],
-  ["services", "Services", "Websites, web apps, stores"],
-  ["care", "DevOps & care", "We keep it running"],
   ["process", "Process", "How a project runs"],
+  ["work", "Work", "Selected client projects"],
+  ["care", "DevOps & care", "We keep it running"],
   ["about", "About", "Who we are"],
   ["contact", "Contact", "Tell us about your project"],
 ];
@@ -63,10 +62,12 @@ export default function Nav() {
 
   // Close first, then scroll, so the page is unlocked before it moves.
   function go(e, id) {
+    const el = document.getElementById(id);
+    if (!el) return close(false); // section lives on the home page: let the /#id link navigate there
     e.preventDefault();
     close(false);
     requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
       history.replaceState(null, "", `#${id}`);
     });
   }
@@ -74,16 +75,15 @@ export default function Nav() {
   return (
     <>
       <header className={`nav ${solid ? "solid" : ""} ${open ? "is-open" : ""}`}>
-        <a href="#top" aria-label="zerosoft home" onClick={() => open && close(false)}>
+        <a href="/#top" aria-label="zerosoft home" onClick={() => open && close(false)}>
           <Logo />
         </a>
         <nav aria-label="Main">
-          <a href="#work">Work</a>
-          <a href="#services">Services</a>
-          <a href="#care">DevOps</a>
-          <a href="#process">Process</a>
-          <a href="#about">About</a>
-          <a href="#contact" className="nav-cta" onClick={(e) => open && go(e, "contact")}>
+          <a href="/#process">Process</a>
+          <a href="/#work">Work</a>
+          <a href="/#care">DevOps</a>
+          <a href="/#about">About</a>
+          <a href="/#contact" className="nav-cta" onClick={(e) => open && go(e, "contact")}>
             Start a project
           </a>
           <button
@@ -110,7 +110,7 @@ export default function Nav() {
               <li key={id} style={{ "--k": i }}>
                 <a
                   ref={i === 0 ? firstLink : undefined}
-                  href={`#${id}`}
+                  href={`/#${id}`}
                   onClick={(e) => go(e, id)}
                   className={active === id ? "is-active" : undefined}
                   aria-current={active === id ? "location" : undefined}
@@ -126,7 +126,7 @@ export default function Nav() {
             ))}
           </ol>
           <div className="m-foot" style={{ "--k": LINKS.length }}>
-            <a href="#contact" className="m-cta" onClick={(e) => go(e, "contact")}>
+            <a href="/#contact" className="m-cta" onClick={(e) => go(e, "contact")}>
               Start a project <span aria-hidden="true">→</span>
             </a>
             <a href={`mailto:${SITE.email}`} className="m-mail">
