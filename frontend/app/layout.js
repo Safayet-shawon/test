@@ -1,12 +1,13 @@
-import { Fraunces, Geologica, Lexend_Zetta } from "next/font/google";
+import { Fraunces, Josefin_Sans, Urbanist, Lexend_Zetta } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
 // Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
-// Brand type: Geologica for everything (thin and heavy weights mixed in headlines),
+// Brand type: Josefin Sans for headings (very thin and bold mixed), Urbanist for text,
 // Lexend Zetta for small wide labels and big numbers.
-const about = Geologica({ subsets: ["latin"], variable: "--font-about", display: "swap" });
+const head = Josefin_Sans({ subsets: ["latin"], variable: "--font-head", display: "swap" });
+const text = Urbanist({ subsets: ["latin"], variable: "--font-text", display: "swap" });
 const wide = Lexend_Zetta({ subsets: ["latin"], variable: "--font-wide", display: "swap", weight: ["200", "300", "500"], preload: false });
 
 export const metadata = {
@@ -20,7 +21,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${about.variable} ${wide.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${head.variable} ${text.variable} ${wide.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
