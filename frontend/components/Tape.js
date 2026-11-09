@@ -18,7 +18,8 @@ export default function Tape({ pos, item }) {
   useEffect(() => {
     const el = wrap.current;
     const measure = () => {
-      const r = el.getBoundingClientRect();
+      // layout size, not the on-screen box: a 3D tilt on phones would otherwise shrink the height
+      const r = { width: el.offsetWidth, height: el.offsetHeight };
       const v = window.innerWidth <= 700;
       if (v) {
         // three rows: previous, current (centred), next
