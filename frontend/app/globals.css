@@ -8402,3 +8402,32 @@ html[data-theme="dark"] .work::after {
     padding-bottom: 3.25rem;
   }
 }
+
+/* =============================================================================================
+   HERO HEADLINE IN SORA: "Software for" regular black, "any business." semibold navy.
+   Sora is wider than Josefin Sans, so the size comes down a step.
+   ============================================================================================= */
+.hero h1 {
+  font-family: var(--font-hero), var(--font-head), sans-serif;
+  letter-spacing: -0.035em;
+}
+.hero h1 .line,
+html[data-theme="dark"] .hero h1 .line {
+  font-weight: 400;
+}
+.hero h1 .line.hl,
+html[data-theme="dark"] .hero h1 .line.hl {
+  font-weight: 600;
+}
+@media (min-width: 701px) {
+  .hero h1 {
+    font-size: clamp(3.1rem, 4.7vw, 4.7rem);
+    line-height: 1.06;
+  }
+}
+@media (max-width: 700px) {
+  .hero h1 {
+    font-size: clamp(2.1rem, 9.6vw, 2.55rem);
+    line-height: 1.08;
+  }
+}

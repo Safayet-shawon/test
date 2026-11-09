@@ -1,4 +1,4 @@
-import { Fraunces, Josefin_Sans, Urbanist, Lexend_Zetta } from "next/font/google";
+import { Fraunces, Josefin_Sans, Urbanist, Lexend_Zetta, Sora } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
@@ -8,6 +8,8 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 // Lexend Zetta for small wide labels and big numbers.
 const head = Josefin_Sans({ subsets: ["latin"], variable: "--font-head", display: "swap" });
 const text = Urbanist({ subsets: ["latin"], variable: "--font-text", display: "swap" });
+// Sora: only for the hero headline, a crisp geometric face that reads professional, not casual.
+const hero = Sora({ subsets: ["latin"], variable: "--font-hero", display: "swap", weight: ["400", "600"] });
 const wide = Lexend_Zetta({ subsets: ["latin"], variable: "--font-wide", display: "swap", weight: ["200", "300", "500"], preload: false });
 
 export const metadata = {
@@ -21,7 +23,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${head.variable} ${text.variable} ${wide.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${head.variable} ${text.variable} ${wide.variable} ${hero.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
