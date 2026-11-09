@@ -28,9 +28,12 @@ function toCard(w) {
 
 const TABS = [{ id: "all", label: "All", count: ALL_WORK.length }, ...WORK_TABS.map((t) => ({ ...t, count: ALL_WORK.filter((w) => w.tab === t.id).length }))];
 
+// Cards stay short: one line saying what it is (the catalogue's short description), no long paragraph.
+const short = (p) => ({ ...p, blurb: ALL_WORK.find((w) => w.id === p.id)?.kind || p.blurb, result: null });
+
 export default function Work() {
   const [tab, setTab] = useState("all");
-  const list = tab === "all" ? PROJECTS : ALL_WORK.filter((w) => w.tab === tab).slice(0, PER_TAB).map(toCard);
+  const list = (tab === "all" ? PROJECTS : ALL_WORK.filter((w) => w.tab === tab).slice(0, PER_TAB).map(toCard)).map(short);
   const cur = TABS.find((t) => t.id === tab);
   const more =
     tab === "all"

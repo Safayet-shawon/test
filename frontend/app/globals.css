@@ -8058,7 +8058,7 @@ html[data-theme="dark"] .t-item.on small {
     mask-image: linear-gradient(90deg, transparent 0, #000 34%, #000 84%, transparent 100%);
   }
 }
-/* phones: the three rows sit on a rounded black (light mode) / white (dark mode) strip */
+/* phones: the three rows sit on a rounded see-through black (light mode) / white (dark mode) strip */
 @media (max-width: 700px) {
   html:not([data-theme="dark"]) .hero .belt,
   html[data-theme="dark"] .hero .belt {
@@ -8069,10 +8069,14 @@ html[data-theme="dark"] .t-item.on small {
     mask-image: none;
   }
   html:not([data-theme="dark"]) .hero .belt {
-    background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 18px), #111115;
+    background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 18px), rgba(17, 17, 21, 0.84);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
   html[data-theme="dark"] .hero .belt {
-    background: repeating-linear-gradient(180deg, rgba(10, 10, 14, 0.05) 0 1px, transparent 1px 18px), #f3f3f1;
+    background: repeating-linear-gradient(180deg, rgba(10, 10, 14, 0.05) 0 1px, transparent 1px 18px), rgba(243, 243, 241, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
   html:not([data-theme="dark"]) .t-item:not(.on),
   html[data-theme="dark"] .t-item:not(.on) {
@@ -8668,4 +8672,58 @@ html[data-theme="dark"] header.nav {
 }
 .apage-foot {
   margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+/* =============================================================================================
+   OUR WORK CARDS: Geist, short text. Title, one line on what it is, tags, link.
+   ============================================================================================= */
+.card .card-info,
+.card .card-info h3,
+.card .card-info p,
+.card .card-info .tags li,
+.card .card-info .pill-tag,
+.card .card-info .visit {
+  font-family: var(--font-card), var(--font-text), sans-serif;
+}
+.card .card-info h3 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+}
+.card .card-info h3 + p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 32ch;
+}
+.card .card-info .pill-tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 0.78rem;
+}
+.card .card-info .tags li {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+.card .card-info .visit {
+  font-weight: 500;
+}
+
+/* =============================================================================================
+   PHONES: no intro line under the hero headline; the business list lets the waves show through
+   ============================================================================================= */
+@media (max-width: 700px) {
+  .hero .hero-copy .lead {
+    display: none;
+  }
+  /* fade the rows at the top and bottom with transparency instead of a painted solid fog */
+  .belt-fog {
+    display: none;
+  }
+  .belt-list {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 34%, #000 66%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 34%, #000 66%, transparent 100%);
+  }
 }
