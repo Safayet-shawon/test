@@ -1,4 +1,4 @@
-# Generates public/hero/ocean.webp: a soft pastel drawing of rows of waves, as if
+# Generates public/hero/waves-day.webp (or waves-night.webp with "dark"): a soft pastel drawing of rows of waves, as if
 # drawn with a stylus pastel brush: white water, blue pastel strokes in the shadow under each crest,
 # uneven pressure, wobbly hand-drawn lines, and paper tooth showing through the pigment.
 # Run from frontend/:  python3 scripts/ocean.py public/hero   (needs numpy and Pillow)
@@ -9,7 +9,7 @@ from PIL import Image, ImageFilter
 W, H = 1920, 1080
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 DARK = len(sys.argv) > 2 and sys.argv[2] == "dark"   # python3 scripts/ocean.py public/hero dark
-NAME = "ocean-dark.webp" if DARK else "ocean.webp"
+NAME = "waves-night.webp" if DARK else "waves-day.webp"
 rng = np.random.default_rng(26)
 X = np.arange(W, dtype=np.float32)[None, :]
 Y = np.arange(H, dtype=np.float32)[:, None]
