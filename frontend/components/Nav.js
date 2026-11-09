@@ -89,14 +89,21 @@ export default function Nav() {
           <Logo />
         </a>
         <nav aria-label="Main">
-          {LINKS.slice(0, 5).map(([id, href, label]) => (
-            <a key={id} href={href} className={active === id ? "is-active" : undefined} aria-current={active === id && path !== "/" ? "page" : undefined}>
-              {label}
-            </a>
-          ))}
+          <div className="nav-links">
+            {LINKS.slice(0, 5).map(([id, href, label]) => (
+              <a key={id} href={href} className={active === id ? "is-active" : undefined} aria-current={active === id && path !== "/" ? "page" : undefined}>
+                {label}
+              </a>
+            ))}
+          </div>
           <ThemeToggle className="theme-btn-nav" />
           <a href="/quote" className="nav-cta" onClick={() => open && close(false)}>
             Start a project
+            <span className="nav-cta-arr" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </span>
           </a>
           <button
             ref={btn}

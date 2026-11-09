@@ -8404,12 +8404,12 @@ html[data-theme="dark"] .work::after {
 }
 
 /* =============================================================================================
-   HERO HEADLINE IN SORA: "Software for" regular black, "any business." semibold navy.
-   Sora is wider than Josefin Sans, so the size comes down a step.
+   HERO HEADLINE IN HANKEN GROTESK: "Software for" regular black, "any business." extra bold navy.
    ============================================================================================= */
 .hero h1 {
   font-family: var(--font-hero), var(--font-head), sans-serif;
   letter-spacing: -0.035em;
+  font-optical-sizing: auto;
 }
 .hero h1 .line,
 html[data-theme="dark"] .hero h1 .line {
@@ -8417,17 +8417,195 @@ html[data-theme="dark"] .hero h1 .line {
 }
 .hero h1 .line.hl,
 html[data-theme="dark"] .hero h1 .line.hl {
-  font-weight: 600;
+  font-weight: 800;
 }
 @media (min-width: 701px) {
   .hero h1 {
-    font-size: clamp(3.1rem, 4.7vw, 4.7rem);
+    font-size: clamp(3.3rem, 5vw, 5rem);
     line-height: 1.06;
   }
 }
 @media (max-width: 700px) {
   .hero h1 {
-    font-size: clamp(2.1rem, 9.6vw, 2.55rem);
+    font-size: clamp(2.3rem, 10.4vw, 2.75rem);
     line-height: 1.08;
+  }
+}
+
+/* =============================================================================================
+   NAV BAR: a floating glass pill on desktop. Page links sit together in one soft track, the page
+   you are on gets a raised white chip (no underline), and the CTA is a black pill with an arrow
+   in a small circle. Neutral greys, no indigo. Phones keep the full-width bar.
+   ============================================================================================= */
+header.nav {
+  --nv-bg: rgba(248, 248, 246, 0.74);
+  --nv-line: rgba(20, 20, 24, 0.08);
+  --nv-track: rgba(20, 20, 24, 0.045);
+  --nv-ink: #141418;
+  --nv-muted: #55555c;
+  --nv-hover: rgba(255, 255, 255, 0.75);
+  --nv-chip: #fff;
+  --nv-chip-shadow: 0 1px 2px rgba(20, 20, 24, 0.08), 0 6px 14px -8px rgba(20, 20, 24, 0.3);
+  --nv-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 14px 34px -20px rgba(20, 20, 24, 0.35);
+}
+html[data-theme="dark"] header.nav {
+  --nv-bg: rgba(20, 20, 24, 0.68);
+  --nv-line: rgba(255, 255, 255, 0.09);
+  --nv-track: rgba(255, 255, 255, 0.05);
+  --nv-ink: #fff;
+  --nv-muted: rgba(255, 255, 255, 0.68);
+  --nv-hover: rgba(255, 255, 255, 0.07);
+  --nv-chip: rgba(255, 255, 255, 0.14);
+  --nv-chip-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --nv-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 40px -20px rgba(0, 0, 0, 0.8);
+}
+@media (max-width: 900px) {
+  header.nav .nav-links,
+  header.nav .nav-cta-arr {
+    display: none;
+  }
+}
+@media (min-width: 901px) {
+  header.nav,
+  header.nav.solid,
+  html:not([data-theme="dark"]) header.nav,
+  html:not([data-theme="dark"]) header.nav.solid,
+  html[data-theme="dark"] header.nav,
+  html[data-theme="dark"] header.nav.solid {
+    top: 12px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(1280px, calc(100% - 32px));
+    height: 62px;
+    padding: 0 8px 0 22px;
+    border: 1px solid var(--nv-line);
+    border-radius: 999px;
+    background: var(--nv-bg);
+    backdrop-filter: blur(18px) saturate(1.6);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    box-shadow: var(--nv-shadow);
+  }
+  header.nav nav {
+    gap: 8px;
+    align-items: center;
+  }
+  header.nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    margin-right: 6px;
+    border: 1px solid var(--nv-line);
+    border-radius: 999px;
+    background: var(--nv-track);
+  }
+  header.nav nav .nav-links a,
+  html[data-theme="dark"] header.nav nav .nav-links a {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-family: var(--font-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--nv-muted);
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  }
+  header.nav nav .nav-links a:hover,
+  html[data-theme="dark"] header.nav nav .nav-links a:hover {
+    color: var(--nv-ink);
+    background: var(--nv-hover);
+  }
+  header.nav nav .nav-links a.is-active,
+  html[data-theme="dark"] header.nav nav .nav-links a.is-active {
+    color: var(--nv-ink);
+    background: var(--nv-chip);
+    box-shadow: var(--nv-chip-shadow);
+    text-decoration: none;
+  }
+  header.nav .theme-btn-nav {
+    width: 42px;
+    height: 42px;
+    border-color: var(--nv-line);
+    background: var(--nv-track);
+    color: var(--nv-ink);
+  }
+  header.nav .nav-cta,
+  html:not([data-theme="dark"]) header.nav .nav-cta,
+  html[data-theme="dark"] header.nav .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 46px;
+    padding: 0 6px 0 20px;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  header.nav .nav-cta-arr {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  html[data-theme="dark"] header.nav .nav-cta-arr {
+    background: rgba(10, 10, 13, 0.08);
+  }
+  header.nav .nav-cta:hover .nav-cta-arr {
+    transform: translateX(2px) rotate(-45deg);
+  }
+}
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+  header.nav .nav-cta:hover .nav-cta-arr {
+    transform: none;
+  }
+}
+/* phones: the same floating glass pill, a little tighter; it goes clear when the menu is open */
+@media (max-width: 900px) {
+  header.nav,
+  header.nav.solid,
+  html:not([data-theme="dark"]) header.nav,
+  html:not([data-theme="dark"]) header.nav.solid,
+  html[data-theme="dark"] header.nav,
+  html[data-theme="dark"] header.nav.solid {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    height: 58px;
+    padding: 0 6px 0 14px;
+    border: 1px solid var(--nv-line);
+    border-radius: 999px;
+    background: var(--nv-bg);
+    backdrop-filter: blur(18px) saturate(1.6);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    box-shadow: var(--nv-shadow);
+  }
+  header.nav.is-open,
+  header.nav.solid.is-open,
+  html:not([data-theme="dark"]) header.nav.is-open,
+  html[data-theme="dark"] header.nav.is-open {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  header.nav .nav-cta {
+    border-radius: 999px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+  }
+  header.nav .theme-btn-nav,
+  header.nav .menu-btn {
+    width: 42px;
+    height: 42px;
+    border-color: var(--nv-line);
+    background: var(--nv-track);
   }
 }

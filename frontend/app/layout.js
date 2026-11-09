@@ -1,4 +1,4 @@
-import { Fraunces, Josefin_Sans, Urbanist, Lexend_Zetta, Sora } from "next/font/google";
+import { Fraunces, Josefin_Sans, Urbanist, Lexend_Zetta, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
@@ -8,8 +8,8 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 // Lexend Zetta for small wide labels and big numbers.
 const head = Josefin_Sans({ subsets: ["latin"], variable: "--font-head", display: "swap" });
 const text = Urbanist({ subsets: ["latin"], variable: "--font-text", display: "swap" });
-// Sora: only for the hero headline, a crisp geometric face that reads professional, not casual.
-const hero = Sora({ subsets: ["latin"], variable: "--font-hero", display: "swap", weight: ["400", "600"] });
+// Hanken Grotesk: only for the hero headline, a neutral modern grotesk that reads professional.
+const hero = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hero", display: "swap", weight: ["400", "800"] });
 const wide = Lexend_Zetta({ subsets: ["latin"], variable: "--font-wide", display: "swap", weight: ["200", "300", "500"], preload: false });
 
 export const metadata = {
