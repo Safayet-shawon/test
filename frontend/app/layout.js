@@ -1,14 +1,12 @@
-import { Unbounded, Space_Grotesk, Fraunces, Geologica, Lexend_Zetta } from "next/font/google";
+import { Fraunces, Geologica, Lexend_Zetta } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
-const display = Unbounded({ subsets: ["latin"], variable: "--font-display", display: "swap" });
-// Our own brand uses two fonts: Unbounded (big headings) and Space Grotesk (everything else).
 // Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
-const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-// About story: Geologica (thin and heavy weights mixed in one line) and Lexend Zetta (wide labels).
-const about = Geologica({ subsets: ["latin"], variable: "--font-about", display: "swap", preload: false });
+// Brand type: Geologica for everything (thin and heavy weights mixed in headlines),
+// Lexend Zetta for small wide labels and big numbers.
+const about = Geologica({ subsets: ["latin"], variable: "--font-about", display: "swap" });
 const wide = Lexend_Zetta({ subsets: ["latin"], variable: "--font-wide", display: "swap", weight: ["200", "300", "500"], preload: false });
 
 export const metadata = {
@@ -22,7 +20,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${about.variable} ${wide.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${about.variable} ${wide.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
