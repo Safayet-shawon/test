@@ -8609,3 +8609,63 @@ html[data-theme="dark"] header.nav {
     background: var(--nv-track);
   }
 }
+
+/* =============================================================================================
+   TIGHTER SERVICES AND ABOUT
+   ============================================================================================= */
+@media (min-width: 701px) {
+  .svc,
+  html .svc {
+    padding-top: clamp(3rem, 4.5vw, 4.25rem);
+    padding-bottom: clamp(3rem, 4.5vw, 4.25rem);
+  }
+  .svc h2 {
+    margin-bottom: clamp(1.5rem, 2.4vw, 1.9rem);
+  }
+  .svc-grid {
+    gap: clamp(0.85rem, 1.4vw, 1.15rem);
+  }
+  .svc-card {
+    padding: clamp(1.4rem, 2vw, 1.7rem);
+  }
+  .svc-ico {
+    margin-bottom: 1rem;
+  }
+  .svc-card h3 {
+    margin-bottom: 0.75rem;
+  }
+}
+@media (max-width: 700px) {
+  .svc {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
+  }
+  .svc h2 {
+    margin-bottom: 1.25rem;
+  }
+}
+@media (min-width: 901px) {
+  .apage {
+    padding-top: calc(76px + clamp(1.5rem, 2.5vw, 2.25rem));
+    padding-bottom: clamp(2.5rem, 4vw, 3.25rem);
+  }
+  .subpage > .about-pages:first-of-type .apage:first-child {
+    padding-top: calc(76px + 2.75rem);
+  }
+}
+@media (max-width: 900px) {
+  .apage {
+    padding-top: 2.75rem;
+    padding-bottom: 2.5rem;
+  }
+}
+.apage-kick {
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.9rem);
+}
+.apage-text {
+  margin-top: clamp(1.5rem, 2.8vw, 2.25rem);
+  padding-top: clamp(1.1rem, 2vw, 1.5rem);
+}
+.apage-foot {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+}
