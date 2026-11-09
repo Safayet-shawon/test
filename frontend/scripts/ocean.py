@@ -1,56 +1,83 @@
-# Generates public/hero/ocean.webp and ocean-sm.webp: a flat, grainy illustration of a calm sea
-# (white water, blue only in the shadow under each crest).
+# Generates public/hero/ocean.webp and ocean-sm.webp: a soft pastel drawing of a calm sea, as if
+# drawn with a stylus pastel brush: white water, blue pastel strokes in the shadow under each crest,
+# uneven pressure, wobbly hand-drawn lines, and paper tooth showing through the pigment.
 # Run from frontend/:  python3 scripts/ocean.py public/hero   (needs numpy and Pillow)
-# Flat, grainy illustration of a calm sea: white water, rows of wave crests, blue only in the
-# shadow under each crest; grain breaks up the shadow edges like a riso print.
-import numpy as np
-from PIL import Image
 import sys, os
+import numpy as np
+from PIL import Image, ImageFilter
+
 W, H = 1920, 1080
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 rng = np.random.default_rng(26)
-x = np.arange(W, dtype=np.float32)
-paper = np.array([248, 248, 246], np.float32)
-blue = np.array([58, 98, 196], np.float32)      # shadow ink
-blue2 = np.array([138, 168, 224], np.float32)   # lighter ink for far rows
-ink = np.zeros((H, W), np.float32)              # 0 = paper, 1 = full ink
-tone = np.zeros((H, W), np.float32)             # 0 = far/light ink, 1 = near/deep ink
+X = np.arange(W, dtype=np.float32)[None, :]
 Y = np.arange(H, dtype=np.float32)[:, None]
 
-# rows from the horizon (top) to the front (bottom), spacing grows toward the viewer
-y = 0.10 * H
-rows = []
-while y < H + 40:
-    t = y / H
-    rows.append(y)
-    y += 7 + 64 * t ** 1.5
-for y0 in rows:
-    t = min(1, y0 / H)
-    amp = 1.5 + 13 * t ** 1.4               # crest height
-    k1 = rng.uniform(0.010, 0.016) / (0.35 + t)  # wider waves near the front
-    p1, p2, p3 = rng.uniform(0, 6.28, 3)
-    crest = y0 + amp * (np.sin(x * k1 + p1) + 0.45 * np.sin(x * k1 * 2.3 + p2)) + 1.5 * np.sin(x * 0.07 + p3)
-    # shadow thickness: crescents that swell and taper along the row
-    thick = (2 + 22 * t ** 1.3) * np.clip(0.55 + 0.75 * np.sin(x * k1 * 1.7 + p2 + 1.3), 0, 1) ** 1.5
-    d = (Y - crest[None, :]) / np.maximum(thick[None, :], 0.5)   # 0 at crest, 1 at shadow end
-    band = np.clip(1 - d, 0, 1) * (d >= 0)
-    band = band ** 0.6                                           # solid near the crest, fading down
-    ink = np.maximum(ink, band)
-    tone = np.where(band > 0, np.maximum(tone, t), tone)
+def smooth_noise(scale_x, scale_y, blur):
+    a = rng.random((max(2, int(H / scale_y)), max(2, int(W / scale_x)))).astype(np.float32)
+    im = Image.fromarray((a * 255).astype(np.uint8)).resize((W, H), Image.BICUBIC)
+    if blur: im = im.filter(ImageFilter.GaussianBlur(blur))
+    n = np.asarray(im, np.float32) / 255
+    return (n - n.min()) / (n.max() - n.min() + 1e-6)
 
-# horizon haze: ink fades out toward the top
-ink *= np.clip((Y / H - 0.08) / 0.25, 0, 1) ** 1.2
-# grain: stochastic threshold so soft edges dissolve into dots
-g = rng.random((H, W)).astype(np.float32)
-dots = (ink > g * 0.95).astype(np.float32)
-dots = np.maximum(dots, (ink > 0.85).astype(np.float32))         # solid cores
-col = blue2[None, None] * (1 - tone[..., None]) + blue[None, None] * tone[..., None]
-img = paper[None, None] * (1 - dots[..., None]) + col * dots[..., None]
-# paper grain over everything
-# (paper grain comes from the page itself, so the file stays small)
-img = np.clip(img, 0, 255).astype(np.uint8)
-im = Image.fromarray(img)
-# few flat colours + lossless WebP: crisp dots, small file
-im.quantize(6).convert("RGB").save(os.path.join(OUT, "ocean.webp"), "WEBP", lossless=True, method=6)
-im.resize((1200, 675), Image.NEAREST).quantize(6).convert("RGB").save(os.path.join(OUT, "ocean-sm.webp"), "WEBP", lossless=True, method=6)
-for f in ["ocean.webp", "ocean-sm.webp"]: print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
+# paper tooth: fine bumpy grain; pastel only sticks to the high points
+tooth = smooth_noise(2.2, 2.2, 0.7)
+# brush texture: streaks running along the stroke direction (horizontal)
+streak = smooth_noise(26, 1.6, 0.8)
+# slow pressure changes across the drawing
+press_map = smooth_noise(260, 120, 30)
+
+def wobble(n, amp, step):
+    v = np.cumsum(rng.normal(0, 1, n // step + 2))
+    v = np.interp(np.arange(n) / step, np.arange(len(v)), v)
+    v = v - np.convolve(v, np.ones(301) / 301, mode="same")
+    return (v / (np.abs(v).max() + 1e-6) * amp).astype(np.float32)
+
+ink = np.zeros((H, W), np.float32)
+depthmap = np.zeros((H, W), np.float32)
+x = np.arange(W, dtype=np.float32)
+y = 0.12 * H
+while y < H + 40:
+    t = min(1.0, y / H)
+    amp = 1.5 + 13 * t ** 1.4
+    k = rng.uniform(0.010, 0.016) / (0.35 + t)
+    p1, p2, p3 = rng.uniform(0, 6.28, 3)
+    crest = y + amp * (np.sin(x * k + p1) + 0.45 * np.sin(x * k * 2.3 + p2))
+    crest += wobble(W, 1.2 + 2.5 * t, 9)                       # hand-drawn wobble
+    thick = (4 + 26 * t ** 1.3) * np.clip(0.62 + 0.6 * np.sin(x * k * 1.7 + p2 + 1.3), 0.12, 1) ** 1.2
+    thick *= 0.8 + 0.4 * rng.random()
+    # stroke pressure: rises in, swells, lifts off (ends of each crescent fade)
+    pressure = np.clip(np.sin(x * k * 1.7 + p2 + 1.3) * 0.75 + 0.6, 0, 1) ** 0.7
+    d = (Y - crest[None, :]) / np.maximum(thick[None, :], 0.6)
+    body = np.clip(1 - d, 0, 1) * (d >= -0.15)
+    body = body ** 0.75 * pressure[None, :]
+    ink = 1 - (1 - ink) * (1 - body * 0.85)                    # layered strokes build up
+    # a light pencil line along the crest, and a faint wash below the stroke
+    line = np.exp(-((Y - crest[None, :]) / (0.8 + 1.2 * t)) ** 2) * (0.35 + 0.35 * t)
+    wash = np.clip(1 - (d - 1) / 2.2, 0, 1) * (d >= 1) * 0.22 * pressure[None, :]
+    ink = 1 - (1 - ink) * (1 - line) * (1 - wash)
+    depthmap = np.where(body > 0.05, np.maximum(depthmap, t), depthmap)
+    y += 7 + 64 * t ** 1.5
+
+ink *= 0.7 + 0.5 * press_map                                   # uneven hand pressure
+ink *= np.clip((Y / H - 0.08) / 0.26, 0, 1) ** 1.2             # fade toward the horizon
+# pastel on paper: pigment catches the tooth, streaks follow the stroke
+cover = ink * (0.55 + 0.45 * streak)
+cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
+cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), np.float32) / 255
+
+paper = np.array([250, 249, 246], np.float32)
+far = np.array([196, 210, 238], np.float32)    # pale powder blue
+near = np.array([124, 156, 222], np.float32)   # soft cornflower pastel
+lav = np.array([170, 160, 222], np.float32)    # a little lavender mixed in
+mix = smooth_noise(180, 90, 20)[..., None]
+col = far * (1 - depthmap[..., None]) + near * depthmap[..., None]
+col = col * (1 - 0.25 * mix) + lav * (0.25 * mix)
+img = paper * (1 - cover[..., None]) + col * cover[..., None]
+img -= (1 - tooth[..., None]) * 6                              # paper texture everywhere
+im = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
+im.save(os.path.join(OUT, "ocean.webp"), "WEBP", quality=60, method=6)
+im.resize((1200, 675), Image.LANCZOS).save(os.path.join(OUT, "ocean-sm.webp"), "WEBP", quality=60, method=6)
+if OUT == ".":
+    im.resize((960, 540), Image.LANCZOS).save("preview.png"); im.crop((700, 560, 1660, 1040)).save("preview-crop.png")
+for f in ["ocean.webp", "ocean-sm.webp"]:
+    print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
