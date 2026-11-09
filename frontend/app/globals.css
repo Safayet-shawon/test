@@ -8764,11 +8764,11 @@ html[data-theme="dark"] header.nav {
 @media (max-width: 700px) {
   html:not([data-theme="dark"]) .hero .belt,
   html[data-theme="dark"] .hero .belt {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%),
-      linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%),
-      linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
     mask-composite: intersect;
     box-shadow: none;
   }

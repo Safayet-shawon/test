@@ -25,13 +25,13 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${head.variable} ${text.variable} ${wide.variable} ${hero.variable} ${card.variable}`}>
+    <html lang="en" data-theme="dark" suppressHydrationWarning className={`${serif.variable} ${head.variable} ${text.variable} ${wide.variable} ${hero.variable} ${card.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var r=document.documentElement;if(localStorage.getItem('zerosoft-theme')==='dark'){r.dataset.theme='dark'}}catch(e){}try{var r=document.documentElement;if(location.pathname!=='/'||sessionStorage.getItem('zerosoft-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('intro-skip')}else{r.classList.add('intro-lock')}}catch(e){}",
+              "try{var r=document.documentElement;if(localStorage.getItem('zerosoft-theme')==='light'){delete r.dataset.theme}}catch(e){}try{var r=document.documentElement;if(location.pathname!=='/'||sessionStorage.getItem('zerosoft-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('intro-skip')}else{r.classList.add('intro-lock')}}catch(e){}",
           }}
         />
       </head>

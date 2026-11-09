@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "@phosphor-icons/react";
 
-// Light is the default. The choice is saved in this browser; the script in app/layout.js
-// applies it before the first paint so the page never flashes the wrong theme.
+// Dark is the default (the page is sent with data-theme="dark"). A visitor's choice is saved in
+// this browser; the script in app/layout.js applies it before the first paint, so no flash.
 export const THEME_KEY = "zerosoft-theme";
 
 export default function ThemeToggle({ className = "", withLabel = false }) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   useEffect(() => {
     const sync = () => setDark(document.documentElement.dataset.theme === "dark");
     sync();
