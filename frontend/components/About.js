@@ -2,30 +2,46 @@ import { ALL_WORK, SECTORS, SITE } from "@/data/site";
 import Reveal from "./Reveal";
 import { Arrow } from "./Icons";
 
-const CHAPTERS = [
+// About: three short "pages". On desktop each one slides over the one before it.
+const PAGES = [
   {
+    no: "i.",
+    kicker: "The beginning",
     title: (
       <>
-        We start at <em>zero.</em>
+        Every good thing we build begins with a <em>blank page.</em>
       </>
     ),
-    text: "No bought theme, no template with your logo dropped in. Every project begins with how your business actually runs: who calls you, what they ask, and where the work gets stuck. We build from there.",
+    text: [
+      "No bought theme. No template with your logo dropped in.",
+      "We sit with you first: how customers find you, what they ask, where the day gets stuck. Only then do we draw a single screen.",
+    ],
   },
   {
+    no: "ii.",
+    kicker: "The workshop",
     title: (
       <>
-        One team, <em>one table.</em>
+        One team. One table. <em>No hand-offs.</em>
       </>
     ),
-    text: "The people who design your screens are the people who write the code. Nothing gets lost in a hand-off, because there isn't one. You talk to the builders directly, and you see working pages from the first week.",
+    text: [
+      "The hands that sketch your screens are the hands that write the code.",
+      "Ideas don't get lost between departments, because there are none. You talk to the people building it, and you see working pages from the first week.",
+    ],
   },
   {
+    no: "iii.",
+    kicker: "The long run",
     title: (
       <>
-        We stay <em>after launch.</em>
+        Launch day is only the <em>middle of the story.</em>
       </>
     ),
-    text: "A website isn't finished on launch day. We host it, watch it, back it up and keep improving it, so what you paid for keeps working long after the last invoice.",
+    text: [
+      "We host what we build, watch it, back it up and keep making it better.",
+      "The site you paid for should be working just as hard a year from now.",
+    ],
   },
 ];
 
@@ -36,46 +52,51 @@ export default function About() {
     [1, "team, design to hosting"],
   ];
   return (
-    <section id="about" className="about about-story" aria-labelledby="about-title">
-      <div className="about-in">
-        <div className="story-side">
-          <Reveal as="p" className="about-kick">
-            About zerosoft
-          </Reveal>
-          <Reveal as="h2" id="about-title" delay={80} className="story-lead">
-            A small studio that builds software the way a good tailor makes a suit: <em>measured first,</em> then cut to fit.
-          </Reveal>
-          <Reveal delay={140} className="story-place">
-            {SITE.address.line1}, {SITE.address.city}
-          </Reveal>
-        </div>
-
-        <ol className="story-chapters">
-          {CHAPTERS.map((c, i) => (
-            <Reveal as="li" key={i} delay={i * 90} className="chapter">
-              <span className="chapter-n" aria-hidden="true">
-                {["i", "ii", "iii"][i]}.
+    <section id="about" className="about-pages" aria-labelledby="about-title">
+      <h2 id="about-title" className="sr-only">
+        About zerosoft
+      </h2>
+      {PAGES.map((pg, i) => (
+        <article key={pg.no} className={`apage apage-${i + 1}`} style={{ "--i": i }}>
+          <div className="apage-in">
+            <Reveal as="p" className="apage-kick">
+              <span>About zerosoft</span>
+              <span className="apage-sep" aria-hidden="true" />
+              <span>
+                {pg.no} {pg.kicker}
               </span>
-              <h3>{c.title}</h3>
-              <p>{c.text}</p>
             </Reveal>
-          ))}
-        </ol>
-      </div>
-
-      <Reveal className="story-foot">
-        <dl className="story-stats">
-          {stats.map(([n, l]) => (
-            <div key={l}>
-              <dt>{l}</dt>
-              <dd>{n}</dd>
-            </div>
-          ))}
-        </dl>
-        <a href="/quote" className="about-link">
-          Start a project <Arrow />
-        </a>
-      </Reveal>
+            <Reveal as="h3" delay={80} className="apage-title">
+              {pg.title}
+            </Reveal>
+            <Reveal delay={160} className="apage-text">
+              {pg.text.map((t) => (
+                <p key={t}>{t}</p>
+              ))}
+            </Reveal>
+            {i === PAGES.length - 1 && (
+              <Reveal delay={220} className="apage-foot">
+                <dl className="apage-stats">
+                  {stats.map(([n, l]) => (
+                    <div key={l}>
+                      <dd>{n}</dd>
+                      <dt>{l}</dt>
+                    </div>
+                  ))}
+                </dl>
+                <div className="apage-cta">
+                  <a href="/quote" className="apage-btn">
+                    Start a project <Arrow />
+                  </a>
+                  <span>
+                    {SITE.address.line1}, {SITE.address.city}
+                  </span>
+                </div>
+              </Reveal>
+            )}
+          </div>
+        </article>
+      ))}
     </section>
   );
 }

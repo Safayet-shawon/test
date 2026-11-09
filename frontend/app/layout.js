@@ -1,4 +1,4 @@
-import { Unbounded, Space_Grotesk, Fraunces, Bodoni_Moda } from "next/font/google";
+import { Unbounded, Space_Grotesk, Fraunces, Gloock } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
@@ -7,13 +7,12 @@ const display = Unbounded({ subsets: ["latin"], variable: "--font-display", disp
 // Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-// Bodoni Moda: an editorial, high-contrast serif used only for the About story.
-const editorial = Bodoni_Moda({
+// Gloock: a sharp, high-contrast display serif used only for the About story.
+const editorial = Gloock({
   subsets: ["latin"],
   variable: "--font-editorial",
   display: "swap",
-  style: ["normal", "italic"],
-  weight: ["400", "500"],
+  weight: "400",
   preload: false,
 });
 
