@@ -8108,3 +8108,21 @@ html:not([data-theme="dark"]) .hero {
       var(--hero-bg);
   }
 }
+
+/* hero headline: "Software for" black and a bit bolder; "any business." #dbd5db */
+.hero h1 .line {
+  color: #000;
+  font-weight: 300;
+}
+.hero h1 .line.hl {
+  color: #dbd5db;
+  font-weight: 700;
+}
+html[data-theme="dark"] .hero h1 .line {
+  color: #fff; /* black would vanish on the black dark-mode hero */
+  font-weight: 300;
+}
+html[data-theme="dark"] .hero h1 .line.hl {
+  color: #dbd5db;
+  font-weight: 700;
+}
