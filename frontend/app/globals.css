@@ -8095,6 +8095,7 @@ html:not([data-theme="dark"]) .hero {
   background:
     linear-gradient(180deg, rgba(var(--hero-bg-rgb), 0) 86%, rgb(var(--hero-bg-rgb)) 100%),
     radial-gradient(50% 78% at 20% 52%, rgba(var(--hero-bg-rgb), 0.78), rgba(var(--hero-bg-rgb), 0) 100%),
+    linear-gradient(rgba(var(--hero-bg-rgb), 0.3), rgba(var(--hero-bg-rgb), 0.3)),
     url("/hero/ocean.webp") center / cover no-repeat,
     var(--hero-bg);
 }
@@ -8102,6 +8103,7 @@ html:not([data-theme="dark"]) .hero {
   html:not([data-theme="dark"]) .hero {
     background:
       linear-gradient(180deg, rgba(var(--hero-bg-rgb), 0.78) 0%, rgba(var(--hero-bg-rgb), 0.7) 26%, rgba(var(--hero-bg-rgb), 0) 40%, rgba(var(--hero-bg-rgb), 0) 90%, rgb(var(--hero-bg-rgb)) 100%),
+      linear-gradient(rgba(var(--hero-bg-rgb), 0.3), rgba(var(--hero-bg-rgb), 0.3)),
       url("/hero/ocean.webp") center top / 1100px auto repeat-y,
       var(--hero-bg);
   }
@@ -8178,4 +8180,64 @@ html:not([data-theme="dark"]) header.nav.is-open .nav-cta {
   background: #fff;
   border-color: #fff;
   color: #0a0a0d !important;
+}
+
+/* dark mode hero: the night version of the wave drawing (public/hero/ocean-dark.webp) */
+html[data-theme="dark"] .hero {
+  background:
+    linear-gradient(180deg, rgba(10, 10, 13, 0) 86%, #0a0a0d 100%),
+    radial-gradient(50% 78% at 20% 52%, rgba(10, 10, 13, 0.82), rgba(10, 10, 13, 0) 100%),
+    linear-gradient(rgba(10, 10, 13, 0.35), rgba(10, 10, 13, 0.35)),
+    url("/hero/ocean-dark.webp") center / cover no-repeat,
+    #0a0a0d;
+}
+@media (max-width: 700px) {
+  html[data-theme="dark"] .hero {
+    background:
+      linear-gradient(180deg, rgba(10, 10, 13, 0.82) 0%, rgba(10, 10, 13, 0.74) 26%, rgba(10, 10, 13, 0) 40%, rgba(10, 10, 13, 0) 90%, #0a0a0d 100%),
+      linear-gradient(rgba(10, 10, 13, 0.35), rgba(10, 10, 13, 0.35)),
+      url("/hero/ocean-dark.webp") center top / 1100px auto repeat-y,
+      #0a0a0d;
+  }
+}
+
+/* phones: the light/dark button sits in the top bar too */
+@media (max-width: 900px) {
+  .theme-btn-nav {
+    display: inline-grid;
+    width: 38px;
+    height: 38px;
+  }
+}
+@media (max-width: 360px) {
+  header.nav nav {
+    gap: 0.35rem;
+  }
+  header.nav .nav-cta {
+    padding: 0.6em 0.75em;
+    font-size: 0.78rem;
+  }
+}
+html:not([data-theme="dark"]) header.nav.is-open .theme-btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* nav: the page you are on */
+header.nav nav a.is-active:not(.nav-cta) {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 7px;
+}
+html[data-theme="dark"] header.nav nav a.is-active:not(.nav-cta) {
+  color: #fff;
+}
+
+/* dedicated pages: the first section clears the fixed top bar */
+.subpage > section:first-of-type:not(.about-pages) {
+  padding-top: calc(76px + clamp(3rem, 7vw, 5.5rem));
+}
+.subpage > .about-pages:first-of-type .apage:first-child {
+  padding-top: calc(76px + 4rem);
 }

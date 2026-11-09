@@ -1,17 +1,19 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { SITE } from "@/data/site";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
-// Page sections, in page order. Used by the mobile menu (with a one-line hint each).
+// Each menu item opens its own page. The home page still shows every section in one scroll.
+// [section id on the home page, page link, label, one-line hint for the mobile menu]
 const LINKS = [
-  ["services", "Services", "What we build"],
-  ["process", "Process", "How a project runs"],
-  ["work", "Our work", "Projects we have completed"],
-  ["care", "After launch", "Hosting, updates and care"],
-  ["about", "About", "Who we are"],
-  ["contact", "Contact", "Tell us about your project"],
+  ["services", "/services", "Services", "What we build"],
+  ["process", "/process", "Process", "How a project runs"],
+  ["work", "/work", "Our work", "Projects we have completed"],
+  ["care", "/after-launch", "After launch", "Hosting, updates and care"],
+  ["about", "/about", "About", "Who we are"],
+  ["contact", "/quote", "Contact", "Tell us about your project"],
 ];
 
 export default function Nav() {
@@ -28,8 +30,14 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
-  // Highlight the section currently in view.
+  // Highlight the current page; on the home page, the section currently in view.
+  const path = usePathname();
   useEffect(() => {
+    if (path !== "/") {
+      const hit = LINKS.find(([, href]) => path === href || path.startsWith(href + "/"));
+      setActive(hit ? hit[0] : "");
+      return;
+    }
     const els = LINKS.map(([id]) => document.getElementById(id)).filter(Boolean);
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
@@ -37,7 +45,7 @@ export default function Nav() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [path]);
 
   // While open: lock page scroll, Esc closes, focus moves into the menu; closes if the screen grows to desktop.
   useEffect(() => {
@@ -77,15 +85,15 @@ export default function Nav() {
   return (
     <>
       <header className={`nav ${solid ? "solid" : ""} ${open ? "is-open" : ""}`}>
-        <a href="/#top" aria-label="zerosoft home" onClick={() => open && close(false)}>
+        <a href="/" aria-label="zerosoft home" onClick={() => open && close(false)}>
           <Logo />
         </a>
         <nav aria-label="Main">
-          <a href="/#services">Services</a>
-          <a href="/#process">Process</a>
-          <a href="/#work">Our work</a>
-          <a href="/#care">After launch</a>
-          <a href="/#about">About</a>
+          {LINKS.slice(0, 5).map(([id, href, label]) => (
+            <a key={id} href={href} className={active === id ? "is-active" : undefined} aria-current={active === id && path !== "/" ? "page" : undefined}>
+              {label}
+            </a>
+          ))}
           <ThemeToggle className="theme-btn-nav" />
           <a href="/quote" className="nav-cta" onClick={() => open && close(false)}>
             Start a project
@@ -110,12 +118,12 @@ export default function Nav() {
       <div className={`m-menu ${open ? "open" : ""}`} id="mobile-menu" aria-hidden={!open} inert={!open}>
         <nav className="m-inner" aria-label="Sections">
           <ol className="m-links">
-            {LINKS.map(([id, t, s], i) => (
+            {LINKS.map(([id, href, t, s], i) => (
               <li key={id} style={{ "--k": i }}>
                 <a
                   ref={i === 0 ? firstLink : undefined}
-                  href={`/#${id}`}
-                  onClick={(e) => go(e, id)}
+                  href={href}
+                  onClick={() => close(false)}
                   className={active === id ? "is-active" : undefined}
                   aria-current={active === id ? "location" : undefined}
                 >

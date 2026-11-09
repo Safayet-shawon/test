@@ -4,11 +4,11 @@ import Logo from "./Logo";
 import { Arrow } from "./Icons";
 
 const COMPANY = [
-  ["Process", "/#process"],
-  ["Our work", "/#work"],
-  ["All projects", "/work"],
-  ["After launch", "/#care"],
-  ["About", "/#about"],
+  ["Process", "/process"],
+  ["Our work", "/work"],
+  ["After launch", "/after-launch"],
+  ["About", "/about"],
+  ["Get a quotation", "/quote"],
 ];
 
 export default function Footer() {
@@ -32,7 +32,7 @@ export default function Footer() {
           <ul>
             {SERVICES.map((s) => (
               <li key={s.title}>
-                <a href="/#services">{s.title}</a>
+                <a href="/services">{s.title}</a>
               </li>
             ))}
           </ul>

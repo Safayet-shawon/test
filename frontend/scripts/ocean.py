@@ -8,6 +8,8 @@ from PIL import Image, ImageFilter
 
 W, H = 1920, 1080
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
+DARK = len(sys.argv) > 2 and sys.argv[2] == "dark"   # python3 scripts/ocean.py public/hero dark
+NAME = "ocean-dark.webp" if DARK else "ocean.webp"
 rng = np.random.default_rng(26)
 X = np.arange(W, dtype=np.float32)[None, :]
 Y = np.arange(H, dtype=np.float32)[:, None]
@@ -64,19 +66,25 @@ cover = ink * (0.55 + 0.45 * streak)
 cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
 cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), np.float32) / 255
 
-paper = np.array([250, 249, 246], np.float32)
-far = np.array([196, 210, 238], np.float32)    # pale powder blue
-near = np.array([124, 156, 222], np.float32)   # soft cornflower pastel
-lav = np.array([170, 160, 222], np.float32)    # a little lavender mixed in
+if DARK:  # night: near-black paper, moonlit blue pastel, a hint of violet
+    paper = np.array([13, 13, 17], np.float32)
+    far = np.array([58, 72, 120], np.float32)
+    near = np.array([112, 136, 206], np.float32)
+    lav = np.array([120, 104, 196], np.float32)
+else:     # day: white paper, soft cornflower pastel
+    paper = np.array([250, 249, 246], np.float32)
+    far = np.array([196, 210, 238], np.float32)    # pale powder blue
+    near = np.array([124, 156, 222], np.float32)   # soft cornflower pastel
+    lav = np.array([170, 160, 222], np.float32)    # a little lavender mixed in
 mix = smooth_noise(180, 90, 20)[..., None]
 col = far * (1 - depthmap[..., None]) + near * depthmap[..., None]
 col = col * (1 - 0.25 * mix) + lav * (0.25 * mix)
 img = paper * (1 - cover[..., None]) + col * cover[..., None]
-img -= (1 - tooth[..., None]) * 6                              # paper texture everywhere
+img += (1 - tooth[..., None]) * (5 if DARK else -6)          # paper texture everywhere
 im = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
-im.save(os.path.join(OUT, "ocean.webp"), "WEBP", quality=60, method=6)
+im.save(os.path.join(OUT, NAME), "WEBP", quality=60, method=6)
 
 if OUT == ".":
     im.resize((960, 540), Image.LANCZOS).save("preview.png"); im.crop((480, 300, 1440, 780)).save("preview-crop.png")
-for f in ["ocean.webp"]:
+for f in [NAME]:
     print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
