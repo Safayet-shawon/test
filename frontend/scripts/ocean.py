@@ -1,4 +1,4 @@
-# Generates public/hero/ocean.webp and ocean-sm.webp: a soft pastel drawing of a calm sea, as if
+# Generates public/hero/ocean.webp: a soft pastel drawing of rows of waves, as if
 # drawn with a stylus pastel brush: white water, blue pastel strokes in the shadow under each crest,
 # uneven pressure, wobbly hand-drawn lines, and paper tooth showing through the pigment.
 # Run from frontend/:  python3 scripts/ocean.py public/hero   (needs numpy and Pillow)
@@ -35,15 +35,15 @@ def wobble(n, amp, step):
 ink = np.zeros((H, W), np.float32)
 depthmap = np.zeros((H, W), np.float32)
 x = np.arange(W, dtype=np.float32)
-y = 0.12 * H
+y = -20.0
 while y < H + 40:
-    t = min(1.0, y / H)
-    amp = 1.5 + 13 * t ** 1.4
-    k = rng.uniform(0.010, 0.016) / (0.35 + t)
+    t = 0.8 + 0.2 * rng.random()   # flat: every row drawn like the close-up rows
+    amp = 7 + 4 * rng.random()
+    k = rng.uniform(0.008, 0.013)
     p1, p2, p3 = rng.uniform(0, 6.28, 3)
     crest = y + amp * (np.sin(x * k + p1) + 0.45 * np.sin(x * k * 2.3 + p2))
     crest += wobble(W, 1.2 + 2.5 * t, 9)                       # hand-drawn wobble
-    thick = (4 + 26 * t ** 1.3) * np.clip(0.62 + 0.6 * np.sin(x * k * 1.7 + p2 + 1.3), 0.12, 1) ** 1.2
+    thick = (5 + 20 * t ** 1.3) * np.clip(0.62 + 0.6 * np.sin(x * k * 1.7 + p2 + 1.3), 0.12, 1) ** 1.2
     thick *= 0.8 + 0.4 * rng.random()
     # stroke pressure: rises in, swells, lifts off (ends of each crescent fade)
     pressure = np.clip(np.sin(x * k * 1.7 + p2 + 1.3) * 0.75 + 0.6, 0, 1) ** 0.7
@@ -56,10 +56,9 @@ while y < H + 40:
     wash = np.clip(1 - (d - 1) / 2.2, 0, 1) * (d >= 1) * 0.22 * pressure[None, :]
     ink = 1 - (1 - ink) * (1 - line) * (1 - wash)
     depthmap = np.where(body > 0.05, np.maximum(depthmap, t), depthmap)
-    y += 7 + 64 * t ** 1.5
+    y += 44 + 6 * rng.random()
 
 ink *= 0.7 + 0.5 * press_map                                   # uneven hand pressure
-ink *= np.clip((Y / H - 0.08) / 0.26, 0, 1) ** 1.2             # fade toward the horizon
 # pastel on paper: pigment catches the tooth, streaks follow the stroke
 cover = ink * (0.55 + 0.45 * streak)
 cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
@@ -76,8 +75,8 @@ img = paper * (1 - cover[..., None]) + col * cover[..., None]
 img -= (1 - tooth[..., None]) * 6                              # paper texture everywhere
 im = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
 im.save(os.path.join(OUT, "ocean.webp"), "WEBP", quality=60, method=6)
-im.resize((1200, 675), Image.LANCZOS).save(os.path.join(OUT, "ocean-sm.webp"), "WEBP", quality=60, method=6)
+
 if OUT == ".":
-    im.resize((960, 540), Image.LANCZOS).save("preview.png"); im.crop((700, 560, 1660, 1040)).save("preview-crop.png")
-for f in ["ocean.webp", "ocean-sm.webp"]:
+    im.resize((960, 540), Image.LANCZOS).save("preview.png"); im.crop((480, 300, 1440, 780)).save("preview-crop.png")
+for f in ["ocean.webp"]:
     print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
