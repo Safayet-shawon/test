@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { BUSINESSES } from "@/data/site";
 import { SITES } from "./DemoSites";
 
-const SITE_MS = 3900; // ms each website is on screen (drop-in + hold)
-const FALL_MS = 700; // the site falls away, the next one drops in
+const SHOW_MS = 3600; // how long each website stays on screen
+const TYPE_MS = 42; // per character while the next address is typed
+const LOAD_MS = 380; // "loading" pause after the address is typed
 
 
 function SiteView({ site }) {
@@ -53,22 +54,31 @@ export default function HeroScene({ onChange }) {
     onChange?.(step, phase);
   }, [step, phase, onChange]);
 
-  // loop: site (drops in, plays) -> fall away -> next site. No "pre" step.
+  // One browser that never moves. Loop: the site is shown -> the screen clears and the next address
+  // is typed into the bar -> a short load -> the next site fades in.
+  const [typed, setTyped] = useState("");
   useEffect(() => {
     if (!ready || !visible) return;
-    let t;
     if (phase === "site") {
-      t = setTimeout(() => setPhase("fall"), SITE_MS - FALL_MS);
-    } else {
-      t = setTimeout(() => {
-        const next = (step % BUSINESSES.length) + 1;
-        setStep(next);
-        setSiteStep(next);
-        setPhase("site");
-      }, FALL_MS);
+      const t = setTimeout(() => {
+        setTyped("");
+        setPhase("type");
+      }, SHOW_MS);
+      return () => clearTimeout(t);
     }
+    const next = (step % BUSINESSES.length) + 1;
+    const url = BUSINESSES[next - 1].url;
+    if (typed.length < url.length) {
+      const t = setTimeout(() => setTyped(url.slice(0, typed.length + 1)), typed.length ? TYPE_MS : 260);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setStep(next);
+      setSiteStep(next);
+      setPhase("site");
+    }, LOAD_MS);
     return () => clearTimeout(t);
-  }, [phase, step, ready, visible]);
+  }, [phase, step, ready, visible, typed]);
 
   const site = BUSINESSES[siteStep - 1];
 
@@ -87,9 +97,13 @@ export default function HeroScene({ onChange }) {
             <i />
             <i />
             <i />
-            <span>{site.url}</span>
+            <span className="bar-url">
+              {phase === "type" ? typed : site.url}
+              {phase === "type" && <b className="bar-caret" aria-hidden="true" />}
+            </span>
+            <u className="bar-load" aria-hidden="true" />
           </div>
-          <SiteView site={site} />
+          <div className="screen">{phase === "type" ? <div className="page page-blank" /> : <SiteView key={site.url} site={site} />}</div>
         </div>
       </div>
 

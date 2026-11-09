@@ -1,4 +1,4 @@
-import { Unbounded, Space_Grotesk, Fraunces, Gloock } from "next/font/google";
+import { Unbounded, Space_Grotesk, Fraunces, Geologica, Lexend_Zetta } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
@@ -7,14 +7,9 @@ const display = Unbounded({ subsets: ["latin"], variable: "--font-display", disp
 // Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-// Gloock: a sharp, high-contrast display serif used only for the About story.
-const editorial = Gloock({
-  subsets: ["latin"],
-  variable: "--font-editorial",
-  display: "swap",
-  weight: "400",
-  preload: false,
-});
+// About story: Geologica (thin and heavy weights mixed in one line) and Lexend Zetta (wide labels).
+const about = Geologica({ subsets: ["latin"], variable: "--font-about", display: "swap", preload: false });
+const wide = Lexend_Zetta({ subsets: ["latin"], variable: "--font-wide", display: "swap", weight: ["200", "300", "500"], preload: false });
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -27,7 +22,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${editorial.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${about.variable} ${wide.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script

@@ -88,7 +88,7 @@ export default function Hero() {
           <i />
           <span>
             {phase === "site" && <>{cur.real ? "Client project" : "Concept design"} · {cur.url}</>}
-            {phase === "fall" && "Next business…"}
+            {phase === "type" && "Next business…"}
           </span>
         </div>
         <HeroScene onChange={onChange} />
