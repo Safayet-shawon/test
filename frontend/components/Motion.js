@@ -28,13 +28,39 @@ export default function Motion() {
       scrollQueued = false;
       const max = root.scrollHeight - innerHeight;
       if (prog) prog.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
-      if (!workOn || innerWidth <= 900) return;
-      const rects = Array.from(cards, (c) => c.getBoundingClientRect()); // read everything first...
-      for (let i = 0; i < cards.length - 1; i++) {
+      if (!workOn) return;
+      const vh = innerHeight;
+      const wide = innerWidth > 900;
+      const clamp = (x) => Math.min(1, Math.max(0, x));
+      // read everything first...
+      const rects = Array.from(cards, (c) => c.getBoundingClientRect());
+      const sticks = wide ? Array.from(cards, (c) => parseFloat(getComputedStyle(c).top) || 0) : [];
+      const stack = wide ? null : cards[0]?.parentElement?.getBoundingClientRect();
+      // ...then write
+      for (let i = 0; i < cards.length; i++) {
         const r = rects[i];
-        const p = Math.min(1, Math.max(0, (r.bottom - rects[i + 1].top) / r.height));
-        cards[i].style.setProperty("--sc", (1 - 0.06 * p).toFixed(3)); // ...then write
-        cards[i].style.setProperty("--br", (1 - 0.18 * p).toFixed(3));
+        const next = rects[i + 1];
+        if (wide && next) {
+          const p = clamp((r.bottom - next.top) / r.height);
+          cards[i].style.setProperty("--sc", (1 - 0.06 * p).toFixed(3));
+          cards[i].style.setProperty("--br", (1 - 0.18 * p).toFixed(3));
+        }
+        // the screenshot scrolls through the website as the card moves through the page
+        let sp;
+        if (!wide) {
+          sp = stack ? clamp((vh - stack.top) / (vh + stack.height)) : 0; // phones: one row, all together
+        } else {
+          const enter = clamp((vh - r.top) / Math.max(1, vh - sticks[i])); // sliding in: 0 -> 1
+          const leave = next
+            ? clamp((vh - next.top) / Math.max(1, vh - sticks[i + 1])) // the next card covering it
+            : clamp((vh - r.bottom) / (vh * 0.5)); // last card: as its bottom rises
+          sp = 0.35 * enter + 0.65 * leave;
+        }
+        const shots = cards[i].querySelector(".shots");
+        if (shots) {
+          shots.classList.add("scrolly");
+          shots.style.setProperty("--p", sp.toFixed(4));
+        }
       }
     };
     const onScroll = () => {

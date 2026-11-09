@@ -1,4 +1,4 @@
-import { Unbounded, Space_Grotesk, Fraunces } from "next/font/google";
+import { Unbounded, Space_Grotesk, Fraunces, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/data/site";
 
@@ -7,6 +7,15 @@ const display = Unbounded({ subsets: ["latin"], variable: "--font-display", disp
 // Fraunces is only used inside the concept demo sites in the hero, which have their own looks.
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"] });
 const body = Space_Grotesk({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+// Bodoni Moda: an editorial, high-contrast serif used only for the About story.
+const editorial = Bodoni_Moda({
+  subsets: ["latin"],
+  variable: "--font-editorial",
+  display: "swap",
+  style: ["normal", "italic"],
+  weight: ["400", "500"],
+  preload: false,
+});
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -19,7 +28,7 @@ export const viewport = { themeColor: "#14121b" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${serif.variable} ${editorial.variable}`}>
       <head>
         {/* decide before first paint whether the pendulum intro plays (once per session, not for reduced-motion) */}
         <script
