@@ -7485,12 +7485,12 @@ html:not([data-theme="dark"]) .t-item.on {
    ============================================================================================= */
 @media (min-width: 701px) {
   .svc {
-    padding-top: clamp(6rem, 10vw, 9.5rem);
-    padding-bottom: clamp(6rem, 10vw, 9.5rem);
+    padding-top: clamp(4rem, 6.5vw, 6rem);
+    padding-bottom: clamp(4rem, 6.5vw, 6rem);
   }
   .svc h2,
   .process h2 {
-    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: clamp(2rem, 3.5vw, 2.75rem);
   }
   .svc-grid {
     gap: clamp(1rem, 2vw, 1.6rem);
@@ -7499,30 +7499,30 @@ html:not([data-theme="dark"]) .t-item.on {
     padding: clamp(1.75rem, 2.6vw, 2.25rem);
   }
   .process {
-    padding-top: clamp(6rem, 10vw, 9.5rem);
-    padding-bottom: clamp(6rem, 10vw, 9.5rem);
+    padding-top: clamp(4rem, 6.5vw, 6rem);
+    padding-bottom: clamp(4rem, 6.5vw, 6rem);
   }
   .steps4 {
     gap: clamp(1rem, 2vw, 1.6rem);
   }
   .work {
-    padding-top: clamp(6rem, 10vw, 9.5rem);
-    padding-bottom: clamp(6rem, 10vw, 9.5rem);
+    padding-top: clamp(4rem, 6.5vw, 6rem);
+    padding-bottom: clamp(4rem, 6.5vw, 6rem);
   }
   .work-head {
     margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
   }
   .aftercare {
-    padding-top: clamp(6rem, 10vw, 9.5rem);
-    padding-bottom: clamp(5rem, 8vw, 7.5rem);
+    padding-top: clamp(4rem, 6.5vw, 6rem);
+    padding-bottom: clamp(3.5rem, 5.5vw, 5rem);
   }
   .aftercare-list {
     gap: 2rem;
-    margin-top: clamp(3rem, 5vw, 4.5rem);
+    margin-top: clamp(2rem, 3.5vw, 3rem);
   }
   .cta-block {
-    padding-top: clamp(6rem, 10vw, 9.5rem);
-    padding-bottom: clamp(6rem, 10vw, 9.5rem);
+    padding-top: clamp(4rem, 6.5vw, 6rem);
+    padding-bottom: clamp(4rem, 6.5vw, 6rem);
   }
   .cta-steps {
     gap: 1.25rem;
@@ -7533,17 +7533,17 @@ html:not([data-theme="dark"]) .t-item.on {
   .svc,
   .work,
   .cta-block {
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
   }
   .process,
   .aftercare {
-    padding-top: 4.5rem;
-    padding-bottom: 4rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.25rem;
   }
   .svc h2,
   .process h2 {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -8254,11 +8254,11 @@ html:not([data-theme="dark"]) .card.k0,
 html:not([data-theme="dark"]) .card.k2 {
   --text: #1c1c1f;
   --text-2: #4f4f55;
-  --text-3: #66666c;
+  --text-3: #5a5a60;
 }
 html:not([data-theme="dark"]) {
-  --mist: #ecebe7;
-  --mist-2: #e7e5e0;
+  --mist: #dfe0e2; /* dark mist: a deeper neutral grey, no blue cast */
+  --mist-2: #d8d9dc;
 }
 html:not([data-theme="dark"]) .process,
 html:not([data-theme="dark"]) .aftercare {
@@ -8308,7 +8308,7 @@ html:not([data-theme="dark"]) .step4 .n {
 /* project cards that were dark: a pale stone card with grey text */
 html:not([data-theme="dark"]) .card.k0,
 html:not([data-theme="dark"]) .card.k2 {
-  background: linear-gradient(160deg, #f1f0ec, #e8e6e1);
+  background: linear-gradient(160deg, #e6e7e9, #dcdde0);
   color: var(--text);
   border-color: rgba(20, 20, 24, 0.08);
 }
@@ -8380,4 +8380,25 @@ html[data-theme="dark"] .apage {
 }
 html[data-theme="dark"] .work::after {
   display: none;
+}
+
+/* =============================================================================================
+   TIGHTER ABOUT PAGES: no full-screen height and a softer edge where one page slides over the
+   previous one (the old deep shadow read as a grey band in light mode).
+   ============================================================================================= */
+@media (min-width: 901px) {
+  .apage {
+    min-height: 0;
+    padding-top: calc(76px + clamp(2.5rem, 4vw, 3.5rem));
+    padding-bottom: clamp(3.5rem, 6vw, 5rem);
+  }
+  html:not([data-theme="dark"]) .apage {
+    box-shadow: 0 -1px 0 rgba(20, 20, 24, 0.07), 0 -14px 30px -26px rgba(20, 20, 24, 0.22);
+  }
+}
+@media (max-width: 900px) {
+  .apage {
+    padding-top: 3.5rem;
+    padding-bottom: 3.25rem;
+  }
 }
