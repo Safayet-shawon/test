@@ -8244,17 +8244,27 @@ html[data-theme="dark"] header.nav nav a.is-active:not(.nav-cta) {
 
 /* =============================================================================================
    LIGHT MODE: no black sections. How we work, After launch, the footer and the dark project
-   cards use a soft mist blue-grey with indigo text (the hero business list stays black).
+   cards use a warm stone tone with neutral grey text (the hero business list stays black).
    ============================================================================================= */
+/* inside these sections the text is neutral grey, not the indigo used elsewhere */
+html:not([data-theme="dark"]) .process,
+html:not([data-theme="dark"]) .aftercare,
+html:not([data-theme="dark"]) .site-footer,
+html:not([data-theme="dark"]) .card.k0,
+html:not([data-theme="dark"]) .card.k2 {
+  --text: #1c1c1f;
+  --text-2: #4f4f55;
+  --text-3: #66666c;
+}
 html:not([data-theme="dark"]) {
-  --mist: #e9ecf3;
-  --mist-2: #e1e5ee;
+  --mist: #ecebe7;
+  --mist-2: #e7e5e0;
 }
 html:not([data-theme="dark"]) .process,
 html:not([data-theme="dark"]) .aftercare {
   background: var(--grain) repeat, var(--mist);
   color: var(--text);
-  border-top: 1px solid rgba(27, 33, 80, 0.06);
+  border-top: 1px solid rgba(20, 20, 24, 0.06);
 }
 html:not([data-theme="dark"]) .process h2,
 html:not([data-theme="dark"]) .aftercare-head h2,
@@ -8266,19 +8276,19 @@ html:not([data-theme="dark"]) .aftercare-list p {
   color: var(--text-2);
 }
 html:not([data-theme="dark"]) .aftercare-list li {
-  border-top-color: rgba(27, 33, 80, 0.16);
+  border-top-color: rgba(20, 20, 24, 0.16);
 }
-/* How we work cards: white on mist */
+/* How we work cards: white on stone */
 html:not([data-theme="dark"]) .step4 {
   background: #fff;
-  border: 1px solid rgba(27, 33, 80, 0.07);
-  box-shadow: 0 1px 2px rgba(27, 33, 80, 0.04), 0 14px 34px -20px rgba(27, 33, 80, 0.22);
+  border: 1px solid rgba(20, 20, 24, 0.07);
+  box-shadow: 0 1px 2px rgba(20, 20, 24, 0.04), 0 14px 34px -20px rgba(20, 20, 24, 0.22);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   color: var(--text);
 }
 html:not([data-theme="dark"]) .step4:hover {
-  box-shadow: 0 1px 2px rgba(27, 33, 80, 0.04), 0 24px 44px -20px rgba(27, 33, 80, 0.3);
+  box-shadow: 0 1px 2px rgba(20, 20, 24, 0.04), 0 24px 44px -20px rgba(20, 20, 24, 0.3);
 }
 html:not([data-theme="dark"]) .step4 h3 {
   color: var(--text);
@@ -8287,20 +8297,20 @@ html:not([data-theme="dark"]) .step4 p {
   color: var(--text-2);
 }
 html:not([data-theme="dark"]) .step-ico {
-  background: rgba(91, 63, 214, 0.08);
-  border-color: rgba(91, 63, 214, 0.14);
-  color: #5b3fd6;
+  background: rgba(20, 20, 24, 0.05);
+  border-color: rgba(20, 20, 24, 0.1);
+  color: #2a2a2e;
 }
 html:not([data-theme="dark"]) .step4 .n {
   background: #0a0a0c;
   color: #fff;
 }
-/* project cards that were dark: a pale mist card with indigo text */
+/* project cards that were dark: a pale stone card with grey text */
 html:not([data-theme="dark"]) .card.k0,
 html:not([data-theme="dark"]) .card.k2 {
-  background: linear-gradient(160deg, #eef1f7, #e4e8f1);
+  background: linear-gradient(160deg, #f1f0ec, #e8e6e1);
   color: var(--text);
-  border-color: rgba(27, 33, 80, 0.08);
+  border-color: rgba(20, 20, 24, 0.08);
 }
 html:not([data-theme="dark"]) .card.k0 h3,
 html:not([data-theme="dark"]) .card.k2 h3,
@@ -8315,25 +8325,25 @@ html:not([data-theme="dark"]) .card.k2 .card-info p:not(.result) {
 html:not([data-theme="dark"]) .card.k0 .tags li,
 html:not([data-theme="dark"]) .card.k2 .tags li {
   color: var(--text-2);
-  border-color: rgba(27, 33, 80, 0.2);
+  border-color: rgba(20, 20, 24, 0.2);
   background: rgba(255, 255, 255, 0.6);
 }
 html:not([data-theme="dark"]) .card.k0 .pill-tag,
 html:not([data-theme="dark"]) .card.k2 .pill-tag {
   background: #fff;
   color: var(--text);
-  border-color: rgba(27, 33, 80, 0.16);
+  border-color: rgba(20, 20, 24, 0.16);
 }
 html:not([data-theme="dark"]) .card.k0 .visit,
 html:not([data-theme="dark"]) .card.k2 .visit {
   color: var(--text);
-  border-color: rgba(27, 33, 80, 0.3);
+  border-color: rgba(20, 20, 24, 0.3);
 }
-/* footer: mist, indigo text, black button */
+/* footer: stone, grey text, black button */
 html:not([data-theme="dark"]) .site-footer {
   background: var(--grain) repeat, var(--mist-2);
   color: var(--text-2);
-  border-top: 1px solid rgba(27, 33, 80, 0.08);
+  border-top: 1px solid rgba(20, 20, 24, 0.08);
 }
 html:not([data-theme="dark"]) .site-footer a {
   color: var(--text-2);
@@ -8350,7 +8360,7 @@ html:not([data-theme="dark"]) .sf-col h2 {
   color: var(--text-3);
 }
 html:not([data-theme="dark"]) .sf-contact svg {
-  color: #5b3fd6;
+  color: #2a2a2e;
 }
 html:not([data-theme="dark"]) .sf-cta {
   background: #0a0a0c;
@@ -8360,5 +8370,5 @@ html:not([data-theme="dark"]) .sf-cta:hover {
   background: #2a2a2e;
 }
 html:not([data-theme="dark"]) .site-footer .sf-bottom {
-  border-top-color: rgba(27, 33, 80, 0.12);
+  border-top-color: rgba(20, 20, 24, 0.12);
 }
