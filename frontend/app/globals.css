@@ -6541,9 +6541,9 @@ html.theme-switching *::after {
 html[data-theme="dark"] {
   color-scheme: dark;
   --dk-black: #0a0a0d;
-  --dk-bg: #16120e; /* espresso: warm near-black that sits calmly next to the black sections */
-  --dk-card: #211b15;
-  --dk-card-2: #2a231b;
+  --dk-bg: #0a0a0d; /* one neutral black for every section, the same as the hero, so nothing bands */
+  --dk-card: #17171b;
+  --dk-card-2: #1f1f24;
   --dk-line: rgba(255, 255, 255, 0.09);
   --dk-text: #f5f1ea;
   --dk-muted: rgba(245, 238, 226, 0.8);
@@ -7031,10 +7031,10 @@ html[data-theme="dark"] .q-steps li.is-on .q-step-n {
 
 /* dark mode: project cards in the same warm family (they were a cool violet-black) */
 html[data-theme="dark"] .card.k0 {
-  background: linear-gradient(150deg, #2a2219, #17120e);
+  background: linear-gradient(150deg, #202024, #121215);
 }
 html[data-theme="dark"] .card.k2 {
-  background: linear-gradient(150deg, #231c15, #120e0b);
+  background: linear-gradient(150deg, #1b1b1f, #0f0f12);
 }
 html[data-theme="dark"] .card.k1,
 html[data-theme="dark"] .card.k3 {
@@ -7564,9 +7564,9 @@ html:not([data-theme="dark"]) .t-item.on {
   color: var(--ap-ink);
 }
 html[data-theme="dark"] .about-pages {
-  --ap-1: #121216;
-  --ap-2: #17171d;
-  --ap-3: #0e0e12;
+  --ap-1: #0a0a0d;
+  --ap-2: #0a0a0d;
+  --ap-3: #0a0a0d;
   --ap-ink: #f4f2ef;
   --ap-muted: rgba(244, 242, 239, 0.78);
   --ap-faint: rgba(244, 242, 239, 0.62);
@@ -8371,4 +8371,13 @@ html:not([data-theme="dark"]) .sf-cta:hover {
 }
 html:not([data-theme="dark"]) .site-footer .sf-bottom {
   border-top-color: rgba(20, 20, 24, 0.12);
+}
+
+/* DARK MODE: every section shares the hero's black. The About pages separate with a hairline
+   instead of a lighter fill, and the white glow behind Our work is for the light page only. */
+html[data-theme="dark"] .apage {
+  border-top: 1px solid rgba(244, 242, 239, 0.08);
+}
+html[data-theme="dark"] .work::after {
+  display: none;
 }
