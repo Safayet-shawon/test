@@ -9341,3 +9341,78 @@ html[data-theme="dark"] .svc-live {
   font-size: 0.68rem;
   color: var(--lb-panel);
 }
+
+/* =============================================================================================
+   SERVICES AS TEXT: no icons, no boxes. Titles with one line of what each covers, in two columns,
+   and the live build window beside them (below them on phones).
+   ============================================================================================= */
+.svc-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.svc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.6rem, 3vw, 2.4rem) clamp(1.5rem, 3.5vw, 3rem);
+}
+.svc-item h3 {
+  margin: 0 0 0.4rem;
+  font: 600 clamp(1.2rem, 1.7vw, 1.45rem) / 1.2 var(--font-text);
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+.svc-item p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.svc-live {
+  --lb-ink: #1c1c20;
+  --lb-mute: #8a8a92;
+  --lb-tag: #3f5aa8;
+  --lb-str: #a35a3a;
+  --lb-panel: #fbfbf9;
+  --lb-line: rgba(20, 20, 24, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+html[data-theme="dark"] .svc-live {
+  --lb-ink: #ecebe7;
+  --lb-mute: #7c7c84;
+  --lb-tag: #9fb2e8;
+  --lb-str: #d9a184;
+  --lb-panel: #121215;
+  --lb-line: rgba(255, 255, 255, 0.1);
+}
+.svc-live .lb {
+  min-height: 176px;
+}
+.svc-live-cap {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+@media (max-width: 900px) {
+  .svc-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .svc-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem;
+  }
+  .svc-live .lb {
+    min-height: 160px;
+  }
+}
+.svc-live {
+  padding: 0;
+}

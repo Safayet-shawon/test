@@ -304,7 +304,7 @@ export const PROCESS = [
   { icon: "launch", title: "Launch & care", text: "We ship it, then keep it fast and safe." },
 ];
 
-// "Services": what we build, right after the hero. `icon` names a hand-drawn doodle in components/Doodles.js.
+// "Services": what we build, right after the hero. Shown as text: the title and its tags as one line.
 export const SERVICES = [
   { icon: "browser", title: "Websites", tags: ["Brand sites", "Stores", "Landing pages"] },
   { icon: "cloud", title: "SaaS products", tags: ["Dashboards", "Auth and billing", "Microservices"] },
