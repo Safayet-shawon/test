@@ -304,11 +304,11 @@ export const PROCESS = [
   { icon: "launch", title: "Launch & care", text: "We ship it, then keep it fast and safe." },
 ];
 
-// "Services": what we build, right after the hero. `icon` maps to an icon in components/Services.js.
+// "Services": what we build, right after the hero. `icon` names a hand-drawn doodle in components/Doodles.js.
 export const SERVICES = [
   { icon: "browser", title: "Websites", tags: ["Brand sites", "Stores", "Landing pages"] },
   { icon: "cloud", title: "SaaS products", tags: ["Dashboards", "Auth and billing", "Microservices"] },
   { icon: "phone", title: "Apps", tags: ["Mobile", "Web apps", "Product design"] },
-  { icon: "gear", title: "Custom software", tags: ["Quotation engines", "Calculators", "Integrations"] },
+  { icon: "code", title: "Custom software", tags: ["Quotation engines", "Calculators", "Integrations"] },
   { icon: "database", title: "Management systems", tags: ["ERP", "CRM", "Staff portals"] },
 ];

@@ -2,14 +2,20 @@
 # drawn with a stylus pastel brush: white water, blue pastel strokes in the shadow under each crest,
 # uneven pressure, wobbly hand-drawn lines, and paper tooth showing through the pigment.
 # Run from frontend/:  python3 scripts/ocean.py public/hero   (needs numpy and Pillow)
+# Layers for the moving hero: python3 scripts/ocean.py public/hero [dark] layers
+#   writes waves-{day|night}-l1/l2/l3.webp: transparent images, each holding every third row of
+#   waves (row 1, 4, 7... on l1; 2, 5, 8... on l2; 3, 6, 9... on l3). The site stacks them and
+#   moves each one gently on its own, so the rows sway in a staggered rhythm.
 import sys, os
 import numpy as np
 from PIL import Image, ImageFilter
 
 W, H = 1920, 1080
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
-DARK = len(sys.argv) > 2 and sys.argv[2] == "dark"   # python3 scripts/ocean.py public/hero dark
+DARK = "dark" in sys.argv[2:]   # python3 scripts/ocean.py public/hero dark
+LAYERS = "layers" in sys.argv[2:]
 NAME = "waves-night.webp" if DARK else "waves-day.webp"
+NL = 3 if LAYERS else 1
 rng = np.random.default_rng(26)
 X = np.arange(W, dtype=np.float32)[None, :]
 Y = np.arange(H, dtype=np.float32)[:, None]
@@ -34,11 +40,13 @@ def wobble(n, amp, step):
     v = v - np.convolve(v, np.ones(301) / 301, mode="same")
     return (v / (np.abs(v).max() + 1e-6) * amp).astype(np.float32)
 
-ink = np.zeros((H, W), np.float32)
-depthmap = np.zeros((H, W), np.float32)
+inks = [np.zeros((H, W), np.float32) for _ in range(NL)]
+depths = [np.zeros((H, W), np.float32) for _ in range(NL)]
 x = np.arange(W, dtype=np.float32)
 y = -20.0
+row = 0
 while y < H + 40:
+    ink, depthmap = inks[row % NL], depths[row % NL]
     t = 0.8 + 0.2 * rng.random()   # flat: every row drawn like the close-up rows
     amp = 7 + 4 * rng.random()
     k = rng.uniform(0.008, 0.013)
@@ -58,8 +66,21 @@ while y < H + 40:
     wash = np.clip(1 - (d - 1) / 2.2, 0, 1) * (d >= 1) * 0.22 * pressure[None, :]
     ink = 1 - (1 - ink) * (1 - line) * (1 - wash)
     depthmap = np.where(body > 0.05, np.maximum(depthmap, t), depthmap)
+    inks[row % NL], depths[row % NL] = ink, depthmap
+    row += 1
     y += 44 + 6 * rng.random()
 
+def finish(ink, depthmap):
+    """Pastel cover (0..1) and colour for one set of rows."""
+    ink = ink * (0.7 + 0.5 * press_map)                        # uneven hand pressure
+    cover = ink * (0.55 + 0.45 * streak)
+    cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
+    cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), np.float32) / 255
+    col = far * (1 - depthmap[..., None]) + near * depthmap[..., None]
+    col = col * (1 - 0.25 * mix) + lav * (0.25 * mix)
+    return cover, col
+
+ink, depthmap = inks[0], depths[0]
 ink *= 0.7 + 0.5 * press_map                                   # uneven hand pressure
 # pastel on paper: pigment catches the tooth, streaks follow the stroke
 cover = ink * (0.55 + 0.45 * streak)
@@ -81,6 +102,19 @@ col = far * (1 - depthmap[..., None]) + near * depthmap[..., None]
 col = col * (1 - 0.25 * mix) + lav * (0.25 * mix)
 img = paper * (1 - cover[..., None]) + col * cover[..., None]
 img += (1 - tooth[..., None]) * (5 if DARK else -6)          # paper texture everywhere
+if LAYERS:
+    base = NAME[:-5]
+    for i in range(NL):
+        cv, cl = finish(inks[i], depths[i])
+        # colour only matters where there is pigment: flatten it elsewhere so the file stays small
+        flat = (far + near) / 2
+        cl = np.where(cv[..., None] > 0.02, cl, flat)
+        cl = np.asarray(Image.fromarray(np.clip(cl, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.2)), np.float32)
+        rgba = np.dstack([cl, np.clip(cv * 255, 0, 255)]).astype(np.uint8)
+        f = f"{base}-l{i + 1}.webp"
+        Image.fromarray(rgba, "RGBA").save(os.path.join(OUT, f), "WEBP", quality=45, alpha_quality=50, method=6)
+        print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
+    sys.exit(0)
 im = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
 im.save(os.path.join(OUT, NAME), "WEBP", quality=60, method=6)
 

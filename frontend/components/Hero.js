@@ -53,6 +53,12 @@ export default function Hero() {
       onMouseMove={onMove}
       style={{ "--t": cur.theme.t, "--on": cur.theme.on }}
     >
+      {/* the wave drawing in three layers (every third row each) that sway slowly in turn: 2, 1, 3 */}
+      <div className="hero-waves" aria-hidden="true">
+        <i className="hw hw-1" />
+        <i className="hw hw-2" />
+        <i className="hw hw-3" />
+      </div>
       <div className="aurora" aria-hidden="true">
         <i />
         <i />
