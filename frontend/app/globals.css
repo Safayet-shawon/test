@@ -8092,7 +8092,7 @@ html[data-theme="dark"] .t-item.on small {
 /* =============================================================================================
    HERO: a soft pastel drawing of rows of waves (white water, pastel blue under each crest, as if
    drawn with a stylus pastel brush). Light mode only.
-   Images: public/hero/waves-{day,night}-l1/l2/l3.webp (scripts/ocean.py ... layers), stacked and
+   Images: public/hero/waves-{day,night}-s1/s2/s3.webp (scripts/ocean.py ... layers), stacked and
    animated in .hero-waves; see MOVING WAVES at the end of this file.
    ============================================================================================= */
 html:not([data-theme="dark"]) .hero {
@@ -8769,12 +8769,12 @@ html[data-theme="dark"] header.nav {
   will-change: transform;
   animation: wave-sway 10s cubic-bezier(0.45, 0, 0.55, 1) infinite both;
 }
-html:not([data-theme="dark"]) .hw-1 { background-image: url("/hero/waves-day-l1.webp"); }
-html:not([data-theme="dark"]) .hw-2 { background-image: url("/hero/waves-day-l2.webp"); }
-html:not([data-theme="dark"]) .hw-3 { background-image: url("/hero/waves-day-l3.webp"); }
-html[data-theme="dark"] .hw-1 { background-image: url("/hero/waves-night-l1.webp"); }
-html[data-theme="dark"] .hw-2 { background-image: url("/hero/waves-night-l2.webp"); }
-html[data-theme="dark"] .hw-3 { background-image: url("/hero/waves-night-l3.webp"); }
+html:not([data-theme="dark"]) .hw-1 { background-image: url("/hero/waves-day-s1.webp"); }
+html:not([data-theme="dark"]) .hw-2 { background-image: url("/hero/waves-day-s2.webp"); }
+html:not([data-theme="dark"]) .hw-3 { background-image: url("/hero/waves-day-s3.webp"); }
+html[data-theme="dark"] .hw-1 { background-image: url("/hero/waves-night-s1.webp"); }
+html[data-theme="dark"] .hw-2 { background-image: url("/hero/waves-night-s2.webp"); }
+html[data-theme="dark"] .hw-3 { background-image: url("/hero/waves-night-s3.webp"); }
 html[data-theme="dark"] .hero-waves .hw {
   opacity: 0.6;
 }

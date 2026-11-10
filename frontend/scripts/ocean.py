@@ -3,7 +3,7 @@
 # uneven pressure, wobbly hand-drawn lines, and paper tooth showing through the pigment.
 # Run from frontend/:  python3 scripts/ocean.py public/hero   (needs numpy and Pillow)
 # Layers for the moving hero: python3 scripts/ocean.py public/hero [dark] layers
-#   writes waves-{day|night}-l1/l2/l3.webp: transparent images, each holding every third row of
+#   writes waves-{day|night}-s1/s2/s3.webp: transparent images, each holding every third row of
 #   waves (row 1, 4, 7... on l1; 2, 5, 8... on l2; 3, 6, 9... on l3). The site stacks them and
 #   moves each one gently on its own, so the rows sway in a staggered rhythm.
 import sys, os
@@ -28,7 +28,7 @@ def smooth_noise(scale_x, scale_y, blur):
     return (n - n.min()) / (n.max() - n.min() + 1e-6)
 
 # paper tooth: fine bumpy grain; pastel only sticks to the high points
-tooth = smooth_noise(2.2, 2.2, 0.7)
+tooth = smooth_noise(2.2, 2.2, 1.1)   # softer, finer paper grain
 # brush texture: streaks running along the stroke direction (horizontal)
 streak = smooth_noise(26, 1.6, 0.8)
 # slow pressure changes across the drawing
@@ -73,9 +73,9 @@ while y < H + 40:
 def finish(ink, depthmap):
     """Pastel cover (0..1) and colour for one set of rows."""
     ink = ink * (0.7 + 0.5 * press_map)                        # uneven hand pressure
-    cover = ink * (0.55 + 0.45 * streak)
-    cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
-    cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), np.float32) / 255
+    cover = ink * (0.72 + 0.28 * streak)
+    cover = np.clip((cover - (1 - tooth) * 0.32) / 0.68, 0, 1)   # less speckle: smoother pastel
+    cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.0)), np.float32) / 255
     col = far * (1 - depthmap[..., None]) + near * depthmap[..., None]
     col = col * (1 - 0.25 * mix) + lav * (0.25 * mix)
     return cover, col
@@ -83,9 +83,9 @@ def finish(ink, depthmap):
 ink, depthmap = inks[0], depths[0]
 ink *= 0.7 + 0.5 * press_map                                   # uneven hand pressure
 # pastel on paper: pigment catches the tooth, streaks follow the stroke
-cover = ink * (0.55 + 0.45 * streak)
-cover = np.clip((cover - (1 - tooth) * 0.55) / 0.45, 0, 1)
-cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), np.float32) / 255
+cover = ink * (0.72 + 0.28 * streak)
+cover = np.clip((cover - (1 - tooth) * 0.32) / 0.68, 0, 1)   # less speckle: smoother pastel
+cover = np.asarray(Image.fromarray((cover * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.0)), np.float32) / 255
 
 if DARK:  # night: near-black paper, moonlit blue pastel, a hint of violet
     paper = np.array([13, 13, 17], np.float32)
@@ -111,7 +111,7 @@ if LAYERS:
         cl = np.where(cv[..., None] > 0.02, cl, flat)
         cl = np.asarray(Image.fromarray(np.clip(cl, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.2)), np.float32)
         rgba = np.dstack([cl, np.clip(cv * 255, 0, 255)]).astype(np.uint8)
-        f = f"{base}-l{i + 1}.webp"
+        f = f"{base}-s{i + 1}.webp"   # new names (s = smooth) so cached old layers are not reused
         Image.fromarray(rgba, "RGBA").save(os.path.join(OUT, f), "WEBP", quality=45, alpha_quality=50, method=6)
         print(f, os.path.getsize(os.path.join(OUT, f)) // 1024, "KB")
     sys.exit(0)
