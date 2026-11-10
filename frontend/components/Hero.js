@@ -59,11 +59,6 @@ export default function Hero() {
         <i className="hw hw-2" />
         <i className="hw hw-3" />
       </div>
-      <div className="aurora" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
       <div className="hero-left">
         <div className="hero-copy">
           <h1>

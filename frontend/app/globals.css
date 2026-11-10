@@ -8903,24 +8903,21 @@ html[data-theme="dark"] .svc-doodle {
 }
 
 /* =============================================================================================
-   HOW WE WORK: a flow graph (components/Process.js). The line draws in left to right and the
-   nodes pop in as it reaches them; then a glowing pulse travels the line every 7 s and each node
-   lights up as it passes. Phones: the same idea on a vertical line down the left.
+   HOW WE WORK: a flow graph (components/Process.js), plain ink, no glow. The line draws in left
+   to right and each node fills as the line reaches it; then a fine dashed line drifts slowly along
+   it to show the direction of the work. Phones: the same on a vertical line down the left.
    ============================================================================================= */
 .flow {
-  --flow-ink: rgba(20, 20, 24, 0.2);
+  --flow-ink: rgba(20, 20, 24, 0.22);
   --flow-node: #1c1c20;
-  --flow-glow: #5b7fd6;
-  --flow-glow-soft: rgba(91, 127, 214, 0.22);
-  --flow-t: 7s;
+  --flow-bg: #dfe0e2; /* the How we work section colour in light mode */
   position: relative;
   margin-top: clamp(0.5rem, 1.5vw, 1rem);
 }
 html[data-theme="dark"] .flow {
-  --flow-ink: rgba(255, 255, 255, 0.2);
+  --flow-ink: rgba(255, 255, 255, 0.22);
   --flow-node: #f2efe9;
-  --flow-glow: #9db4ff;
-  --flow-glow-soft: rgba(157, 180, 255, 0.22);
+  --flow-bg: #0a0a0d;
 }
 .flow-steps {
   list-style: none;
@@ -8941,7 +8938,6 @@ html[data-theme="dark"] .flow {
   font-size: clamp(1.15rem, 1.6vw, 1.35rem);
   font-weight: 700;
   color: var(--text);
-  transition: color 0.4s ease;
 }
 .flow-step p {
   margin: 0 auto;
@@ -8953,7 +8949,6 @@ html[data-theme="dark"] .flow {
 .flow-line {
   position: absolute;
   left: calc(-1 * clamp(1rem, 2.5vw, 2rem) / 2);
-  right: calc(-1 * clamp(1rem, 2.5vw, 2rem) / 2);
   top: 0;
   width: calc(100% + clamp(1rem, 2.5vw, 2rem));
   height: 80px;
@@ -8969,43 +8964,44 @@ html[data-theme="dark"] .flow {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
-.flow-pulse {
-  stroke: var(--flow-glow);
-  stroke-width: 3;
-  stroke-dasharray: 0.06 1;
-  stroke-dashoffset: 0.06;
+.flow-march {
+  stroke: var(--flow-node);
+  stroke-width: 1.5;
+  stroke-dasharray: 0.006 0.014;
   opacity: 0;
-  filter: drop-shadow(0 0 6px var(--flow-glow));
 }
-/* the node: a solid dot with a ring */
+/* the node: a ring that fills with ink */
 .flow-node {
   position: absolute;
   left: 50%;
   top: 40px;
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
   border-radius: 50%;
-  background: var(--flow-node);
-  box-shadow: 0 0 0 6px var(--flow-glow-soft);
+  border: 1.5px solid var(--flow-node);
+  background: var(--flow-bg);
   transform: scale(0);
 }
 .flow.in .flow-track {
-  animation: flow-draw 1.6s cubic-bezier(0.6, 0.1, 0.3, 1) 0.15s forwards;
+  animation: flow-draw 1.8s cubic-bezier(0.6, 0.1, 0.3, 1) 0.15s forwards;
 }
 .flow.in .flow-node {
   animation:
-    flow-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) forwards,
-    flow-light var(--flow-t) ease-out infinite;
-  /* pop when the line reaches the node, then light up each time the pulse passes */
-  animation-delay: calc(0.3s + var(--n) * 0.4s), calc(1.9s + (0.12 + var(--n) * 0.253) * var(--flow-t));
+    flow-pop 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) forwards,
+    flow-fill 0.5s ease forwards;
+  animation-delay: calc(0.25s + var(--n) * 0.42s), calc(0.6s + var(--n) * 0.42s);
 }
-.flow.in .flow-step h3 {
-  animation: flow-title var(--flow-t) ease-out infinite;
-  animation-delay: calc(1.9s + (0.12 + var(--n) * 0.253) * var(--flow-t));
+.flow.in .flow-march {
+  animation:
+    flow-show 0.8s ease 2.1s forwards,
+    flow-march 9s linear 2.1s infinite;
 }
-.flow.in .flow-pulse {
-  animation: flow-run var(--flow-t) linear 1.9s infinite;
+.flow-step:hover .flow-node {
+  scale: 1.25;
+}
+.flow-node {
+  transition: scale 0.3s ease;
 }
 @keyframes flow-draw {
   to { stroke-dashoffset: 0; }
@@ -9013,19 +9009,14 @@ html[data-theme="dark"] .flow {
 @keyframes flow-pop {
   to { transform: scale(1); }
 }
-@keyframes flow-run {
-  0% { stroke-dashoffset: 0.06; opacity: 0; }
-  4% { opacity: 1; }
-  92% { opacity: 1; }
-  100% { stroke-dashoffset: -1; opacity: 0; }
+@keyframes flow-fill {
+  to { background: var(--flow-node); }
 }
-@keyframes flow-light {
-  0% { background: var(--flow-glow); box-shadow: 0 0 0 10px var(--flow-glow-soft), 0 0 22px var(--flow-glow); }
-  18%, 100% { background: var(--flow-node); box-shadow: 0 0 0 6px var(--flow-glow-soft); }
+@keyframes flow-show {
+  to { opacity: 0.55; }
 }
-@keyframes flow-title {
-  0% { color: var(--flow-glow); }
-  22%, 100% { color: var(--text); }
+@keyframes flow-march {
+  to { stroke-dashoffset: -0.2; }
 }
 
 /* phones and narrow tablets: a vertical line on the left, steps stacked to its right */
@@ -9042,30 +9033,27 @@ html[data-theme="dark"] .flow {
   .flow-steps::after {
     content: "";
     position: absolute;
-    left: 11px;
+    left: 11.25px;
     top: 10px;
     bottom: 3.2rem; /* ends at the last node */
-    width: 2px;
-    border-radius: 2px;
+    width: 1.5px;
   }
   .flow-steps::before {
     background: var(--flow-ink);
     transform-origin: top;
     transform: scaleY(0);
   }
-  /* the pulse: a short bright stretch running down the line */
   .flow-steps::after {
-    background: linear-gradient(180deg, transparent, var(--flow-glow) 50%, transparent);
-    height: 56px;
-    bottom: auto;
+    background: repeating-linear-gradient(180deg, var(--flow-node) 0 3px, transparent 3px 10px);
     opacity: 0;
-    filter: drop-shadow(0 0 5px var(--flow-glow));
   }
   .flow.in .flow-steps::before {
-    animation: flow-grow 1.4s cubic-bezier(0.6, 0.1, 0.3, 1) 0.15s forwards;
+    animation: flow-grow 1.5s cubic-bezier(0.6, 0.1, 0.3, 1) 0.15s forwards;
   }
   .flow.in .flow-steps::after {
-    animation: flow-fall var(--flow-t) linear 1.9s infinite;
+    animation:
+      flow-show 0.8s ease 1.8s forwards,
+      flow-fall 6s linear 1.8s infinite;
   }
   .flow-step {
     text-align: left;
@@ -9075,32 +9063,281 @@ html[data-theme="dark"] .flow {
     margin: 0;
   }
   .flow-node {
-    left: -27px;
+    left: -26.25px;
     top: 0.7rem;
     width: 14px;
     height: 14px;
     margin: -7px 0 0 -7px;
   }
   .flow.in .flow-node {
-    animation-delay: calc(0.3s + var(--n) * 0.35s), calc(1.9s + (0.06 + var(--n) * 0.27) * var(--flow-t));
-  }
-  .flow.in .flow-step h3 {
-    animation-delay: calc(1.9s + (0.06 + var(--n) * 0.27) * var(--flow-t));
+    animation-delay: calc(0.25s + var(--n) * 0.36s), calc(0.55s + var(--n) * 0.36s);
   }
 }
 @keyframes flow-grow {
   to { transform: scaleY(1); }
 }
 @keyframes flow-fall {
-  0% { top: -20px; opacity: 0; }
-  5% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { top: calc(100% - 40px); opacity: 0; }
+  to { background-position: 0 60px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .flow .flow-track { stroke-dashoffset: 0; animation: none !important; }
-  .flow .flow-pulse, .flow .flow-steps::after { display: none; }
-  .flow .flow-node { transform: none; animation: none !important; }
-  .flow .flow-step h3 { animation: none !important; }
+  .flow .flow-march, .flow .flow-steps::after { display: none; }
+  .flow .flow-node { transform: none; background: var(--flow-node); animation: none !important; }
   .flow .flow-steps::before { transform: none; animation: none !important; }
+}
+
+/* =============================================================================================
+   NO GLOWS: plain status dot in the hero browser, no light blob behind Our work
+   ============================================================================================= */
+.status i,
+.status[data-state="site"] i {
+  box-shadow: none;
+}
+.work::after,
+html[data-theme="dark"] .work::after {
+  display: none;
+}
+
+/* =============================================================================================
+   SERVICES: six equal tiles; the sixth is a live build (components/LiveBuild.js). Four lines of
+   code type themselves, "built" appears, then the window turns into the page the code describes.
+   Plain, muted colours; nothing glows.
+   ============================================================================================= */
+.svc-card,
+.svc-card.svc-wide {
+  grid-column: span 2;
+}
+@media (max-width: 900px) {
+  .svc-card,
+  .svc-card.svc-wide {
+    grid-column: span 1;
+  }
+  .svc-card:nth-child(5),
+  .svc-card.svc-live {
+    grid-column: 1 / -1;
+  }
+}
+.svc-live {
+  --lb-ink: #1c1c20;
+  --lb-mute: #8a8a92;
+  --lb-tag: #3f5aa8;
+  --lb-str: #a35a3a;
+  --lb-panel: #f4f4f2;
+  --lb-line: rgba(20, 20, 24, 0.08);
+  padding: clamp(0.9rem, 1.4vw, 1.1rem);
+  gap: 0.7rem;
+}
+html[data-theme="dark"] .svc-live {
+  --lb-ink: #ecebe7;
+  --lb-mute: #7c7c84;
+  --lb-tag: #9fb2e8;
+  --lb-str: #d9a184;
+  --lb-panel: #121215;
+  --lb-line: rgba(255, 255, 255, 0.08);
+}
+.svc-live-cap {
+  margin: 0 0.2rem;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+.lb {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 168px;
+  border-radius: 12px;
+  border: 1px solid var(--lb-line);
+  background: var(--lb-panel);
+  overflow: hidden;
+}
+.lb-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--lb-line);
+}
+.lb-bar i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lb-line);
+  border: 1px solid var(--lb-line);
+}
+.lb-tab {
+  margin-left: 8px;
+  font: 500 0.7rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--lb-mute);
+}
+.lb-body {
+  position: relative;
+  flex: 1;
+}
+.lb-code,
+.lb-app {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 12px 14px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.lb-code {
+  font: 400 0.78rem/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--lb-ink);
+  white-space: pre;
+  overflow: hidden;
+}
+.lb-num {
+  display: inline-block;
+  width: 1.6em;
+  color: var(--lb-mute);
+  opacity: 0.6;
+  user-select: none;
+}
+.lb-p,
+.lb-attr {
+  color: var(--lb-mute);
+}
+.lb-tag {
+  color: var(--lb-tag);
+}
+.lb-str,
+.lb-var {
+  color: var(--lb-str);
+}
+.lb-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -0.18em;
+  background: var(--lb-ink);
+  opacity: 0.7;
+  animation: blink 1s steps(2) infinite;
+}
+.lb-built {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--lb-mute);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lb-built.on {
+  opacity: 1;
+}
+/* the product */
+.lb-app {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+.lb[data-phase="product"] .lb-code {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+.lb[data-phase="product"] .lb-app {
+  opacity: 1;
+  transform: none;
+}
+.lb-app-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.lb-app-head b {
+  font-size: 0.95rem;
+  color: var(--lb-ink);
+}
+.lb-app-head span {
+  font-size: 0.7rem;
+  color: var(--lb-mute);
+}
+.lb-chart {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  min-height: 52px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--lb-line);
+}
+.lb-chart i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 3px 3px 0 0;
+  background: var(--lb-ink);
+  opacity: 0.18;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(0.25s + var(--k) * 0.08s);
+}
+.lb-chart i:nth-child(4),
+.lb-chart i:nth-child(6) {
+  opacity: 0.55;
+}
+.lb[data-phase="product"] .lb-chart i {
+  transform: scaleY(1);
+}
+.lb-btn {
+  align-self: flex-start;
+  padding: 0.35em 0.9em;
+  border-radius: 99px;
+  background: var(--lb-ink);
+  color: var(--lb-panel);
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease 0.75s, transform 0.4s ease 0.75s;
+}
+.lb[data-phase="product"] .lb-btn {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lb-code,
+  .lb-app,
+  .lb-chart i,
+  .lb-btn {
+    transition: none;
+  }
+}
+/* the live tile always stacks: window full width, caption below; a little shorter on desktop */
+.svc-card.svc-live {
+  flex-direction: column;
+  align-items: stretch;
+  flex-wrap: nowrap;
+}
+.lb {
+  width: 100%;
+  min-height: 136px;
+}
+.lb-code {
+  line-height: 1.6;
+  padding: 10px 14px;
+}
+.lb-app {
+  padding: 10px 14px;
+  gap: 8px;
+}
+@media (max-width: 900px) {
+  .lb {
+    min-height: 150px;
+  }
+}
+.lb-chart {
+  flex: 0 0 auto;
+  height: 56px;
+  min-height: 0;
+}
+.lb-app-head {
+  align-items: center;
+}
+.lb-app-head .lb-btn {
+  font-size: 0.68rem;
+  color: var(--lb-panel);
 }
