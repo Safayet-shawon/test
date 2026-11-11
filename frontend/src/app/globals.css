@@ -652,10 +652,13 @@ button {
 }
 .hero-meta,
 .hero-copy .eyebrow,
-.hero-sub,
-.hero-ctas,
 .hero-foot {
   animation: appear 1.2s var(--ease-out-expo) backwards;
+}
+/* the subtitle is often the LCP element on phones: move it, but keep it painted from frame one */
+.hero-sub,
+.hero-ctas {
+  animation: drift 1.2s var(--ease-out-expo) backwards;
 }
 .hero-meta { animation-delay: 0.3s; }
 .hero-copy .eyebrow { animation-delay: 0.15s; }
@@ -664,6 +667,10 @@ button {
 .hero-foot { animation-delay: 0.9s; }
 @keyframes rise {
   from { transform: translateY(110%); }
+  to { transform: none; }
+}
+@keyframes drift {
+  from { transform: translateY(18px); }
   to { transform: none; }
 }
 @keyframes appear {
@@ -797,8 +804,9 @@ button {
   display: inline-block;
   transition: none;
 }
+/* unlit words stay at 3.3:1 (AA for large text) and warm to ink as they are read */
 .js-motion .manifesto-text .w {
-  opacity: 0.16;
+  color: #8a7f70;
 }
 .stats {
   display: grid;

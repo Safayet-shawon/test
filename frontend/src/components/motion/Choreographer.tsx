@@ -8,7 +8,7 @@ import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from "@/lib/gsap
 //   data-reveal="up|fade|clip"  enter once when scrolled into view (data-delay in seconds)
 //   data-stagger                each direct child enters in sequence
 //   data-split="lines|chars"    masked line or character reveal for headings
-//   data-words                  words light up as the paragraph is scrolled (scrubbed)
+//   data-words                  words warm from muted to ink as the paragraph is scrolled (scrubbed)
 //   data-parallax="0.2"         drifts against the scroll by that fraction of its height
 //   data-count                  counts up from zero to its text value
 // Re-runs on every route change; everything is reverted on cleanup.
@@ -81,7 +81,7 @@ export default function Choreographer() {
 
         gsap.utils.toArray<HTMLElement>("[data-words]").forEach((el) => {
           gsap.to(el.querySelectorAll(".w"), {
-            opacity: 1,
+            color: "#141311",
             stagger: 0.12,
             ease: "none",
             scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 45%", scrub: 0.6 },

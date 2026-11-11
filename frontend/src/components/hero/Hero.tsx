@@ -13,7 +13,20 @@ export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const [ready, setReady] = useState(false);
+  const [field, setField] = useState(false);
   const onReady = useCallback(() => setReady(true), []);
+
+  // Start the grains once the main thread is idle (at most 1.5 s), so hydration and the first
+  // paint of the headline are never competing with shader compilation.
+  useEffect(() => {
+    const start = () => setField(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(start, { timeout: 1500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(start, 600);
+    return () => clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     const el = root.current;
@@ -68,7 +81,7 @@ export default function Hero() {
       <section ref={root} className="hero tone" data-tone="dark" aria-labelledby="hero-title">
         <div className="hero-fallback" aria-hidden="true" />
         <div className="hero-canvas" aria-hidden="true" style={{ opacity: ready ? 1 : 0, transition: "opacity 1.2s ease" }}>
-          <SandField progress={progress} onReady={onReady} />
+          {field && <SandField progress={progress} onReady={onReady} />}
         </div>
         <div className="hero-shade" aria-hidden="true" />
 
