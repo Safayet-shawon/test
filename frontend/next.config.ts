@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  images: { formats: ["image/avif", "image/webp"] },
+  // Images are already compressed WebP/JPG (<= ~300 KB). Vercel image optimisation is not
+  // available on this account (it answers 402), so they are served as they are.
+  images: { unoptimized: true },
   async headers() {
     return [
       {
