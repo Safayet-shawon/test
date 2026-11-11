@@ -70,6 +70,7 @@
 [data-tone="sand"] {
   --bg: var(--color-sand);
   --surface: var(--color-parchment);
+  --accent: var(--color-rust); /* bronze is under 3:1 on sand */
   --line: rgb(37 34 30 / 0.16);
   --muted: #5e5549;
 }
